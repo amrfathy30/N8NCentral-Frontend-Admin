@@ -1,0 +1,58 @@
+{
+  "notFound": {
+    "logoAlt": "الشعار",
+    "title": "الصفحة غير موجودة",
+    "description": "عذرًا، الصفحة التي تحاول الوصول إليها غير موجودة أو تم نقلها.",
+    "backToHome": "العودة إلى الرئيسية"
+  },
+  "Auth": {
+    "Login": {
+      "Title": "تسجيل الدخول",
+      "WelcomeBack": "مرحباً بك مجدداً",
+      "Description": "يرجى إدخال تفاصيل الدخول للوصول إلى حسابك",
+      "EmailLabel": "البريد الإلكتروني",
+      "EmailPlaceholder": "أدخل بريدك الإلكتروني",
+      "PasswordLabel": "كلمة المرور",
+      "PasswordPlaceholder": "أدخل كلمة المرور",
+      "ForgetPassword": "نسيت كلمة المرور؟",
+      "SignIn": "تسجيل الدخول",
+      "Loading": "جاري التحميل...",
+      "EmailRequired": "البريد الإلكتروني مطلوب",
+      "InvalidEmail": "بريد إلكتروني غير صالح",
+      "PasswordRequired": "كلمة المرور مطلوبة"
+    }
+  },
+  "Sidebar": {
+    "Dashboard": "لوحة التحكم",
+    "Users": "المستخدمون",
+    "Buyers": "المشترون",
+    "Sellers": "التجار",
+    "Affiliate": "الأفلييت",
+    "Suspended": "الحسابات الموقوفة",
+    "Merchants": "التجار",
+    "AffiliateProgram": "الأفلييت",
+    "Services": "الخدمات",
+    "Orders": "الطلبات",
+    "Financials": "الماليات",
+    "Analytics": "التحليلات",
+    "Complaints": "الشكاوى والنزاعات",
+    "Settings": "إعدادات المنصة",
+    "Logs": "السجلات"
+  },
+  "Dashboard": {
+    "Title": "لوحة التحكم",
+    "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة، إليك ملخص حالة المنصة اليوم.",
+    "PlatformRevenue": "إيرادات المنصة",
+    "OpenDisputes": "النزاعات المفتوحة",
+    "AffiliateCount": "عدد الأفلييت",
+    "ActiveSellers": "التجار النشطون",
+    "TotalUsers": "إجمالي المستخدمين",
+    "UserGrowth": "نمو المستخدمين",
+    "OrderGrowth": "نمو الطلبات",
+    "ConversionRate": "معدل التحويل",
+    "MonthlyRevenue": "الإيرادات الشهرية",
+    "ImportantAlerts": "التنبيهات المهمة",
+    "RecentActivity": "النشاط الأخير",
+    "ViewAll": "عرض الكل"
+  }
+}

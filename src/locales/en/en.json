@@ -1,0 +1,58 @@
+{
+  "notFound": {
+    "logoAlt": "Logo",
+    "title": "Page Not Found",
+    "description": "Sorry, the page you're trying to access doesn't exist or has been moved.",
+    "backToHome": "Back to Home"
+  },
+  "Auth": {
+    "Login": {
+      "Title": "Login",
+      "WelcomeBack": "Welcome Back",
+      "Description": "Please enter your details to access your account",
+      "EmailLabel": "Email",
+      "EmailPlaceholder": "Enter your email",
+      "PasswordLabel": "Password",
+      "PasswordPlaceholder": "Enter your password",
+      "ForgetPassword": "Forgot Password?",
+      "SignIn": "Sign In",
+      "Loading": "Loading...",
+      "EmailRequired": "Email is required",
+      "InvalidEmail": "Invalid email address",
+      "PasswordRequired": "Password is required"
+    }
+  },
+  "Sidebar": {
+    "Dashboard": "Control Panel",
+    "Users": "Users",
+    "Buyers": "Buyers",
+    "Sellers": "Sellers",
+    "Affiliate": "Affiliate",
+    "Suspended": "Suspended Accounts",
+    "Merchants": "Merchants",
+    "AffiliateProgram": "Affiliate",
+    "Services": "Services",
+    "Orders": "Orders",
+    "Financials": "Financials",
+    "Analytics": "Analytics",
+    "Complaints": "Complaints & Disputes",
+    "Settings": "Platform Settings",
+    "Logs": "Logs"
+  },
+  "Dashboard": {
+    "Title": "Dashboard",
+    "Welcome": "Welcome back to N8NCentral Admin Panel. Here is a summary of the platform state today.",
+    "PlatformRevenue": "Platform Revenue",
+    "OpenDisputes": "Open Disputes",
+    "AffiliateCount": "Affiliates",
+    "ActiveSellers": "Active Sellers",
+    "TotalUsers": "Total Users",
+    "UserGrowth": "User Growth",
+    "OrderGrowth": "Order Growth",
+    "ConversionRate": "Conversion Rate",
+    "MonthlyRevenue": "Monthly Revenue",
+    "ImportantAlerts": "Important Alerts",
+    "RecentActivity": "Recent Activity",
+    "ViewAll": "View All"
+  }
+}
