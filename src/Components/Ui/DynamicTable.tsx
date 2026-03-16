@@ -23,8 +23,10 @@ interface DynamicTableProps {
   columns?: DynamicTableColumn[];
   searchPlaceholder?: string;
   filterOptions?: FilterOption[];
+  filterField?: string;
   onFilterChange?: (value: string) => void;
   onSearchChange?: (value: string) => void;
+  showSearch?: boolean;
 }
 
 export default function DynamicTable({
@@ -32,6 +34,8 @@ export default function DynamicTable({
   columns = [],
   searchPlaceholder,
   filterOptions = [],
+  filterField = "status",
+  showSearch = true,
 }: DynamicTableProps) {
   const { t, i18n } = useTranslation();
   const [globalFilter, setGlobalFilter] = useState("");
@@ -45,7 +49,7 @@ export default function DynamicTable({
     );
 
     // Basic status filtering (if status exists)
-    const statusMatch = activeFilter === "all" || item.status === activeFilter;
+    const statusMatch = activeFilter === "all" || item[filterField] === activeFilter;
 
     return searchMatch && statusMatch;
   });
@@ -53,35 +57,37 @@ export default function DynamicTable({
   return (
     <div className="space-y-4" dir={dir}>
       {/* Search and Filters Bar */}
-      <div className="bg-white p-3 rounded-[17px] border border-gray-100 shadow-sm flex flex-col md:flex-row items-center gap-4">
-        {/* Search Input */}
-        <div className="relative flex-1 w-full">
-          <Input
-            placeholder={searchPlaceholder || t("Common.Search")}
-            value={globalFilter}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            className="mb-0"
-            inputClassName="!bg-[#F9FAFB] !border-none !rounded-xl !py-2 !h-12 !text-sm"
-          />
-          <Search className={`absolute top-6 -translate-y-1/2 text-gray-400 ${dir === 'rtl' ? 'left-4' : 'right-4'}`} size={18} />
-        </div>
+      {showSearch && (
+        <div className="bg-white p-3 rounded-[17px] border border-gray-100 shadow-sm flex flex-col md:flex-row items-center gap-4">
+          {/* Search Input */}
+          <div className="relative flex-1 w-full">
+            <Input
+              placeholder={searchPlaceholder || t("Common.Search")}
+              value={globalFilter}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="mb-0"
+              inputClassName="!bg-[#F9FAFB] !border-none !rounded-xl !py-2 !h-12 !text-sm"
+            />
+            <Search className={`absolute top-6 -translate-y-1/2 text-gray-400 ${dir === 'rtl' ? 'left-4' : 'right-4'}`} size={18} />
+          </div>
 
-        {/* Filter Buttons/Chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2  scrollbar-hide bg-[#F9FAFB] p-2 rounded-[10px]">
-          {filterOptions.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => setActiveFilter(option.value)}
-              className={`px-6 py-2 rounded-[10px] text-sm font-medium transition-all whitespace-nowrap ${activeFilter === option.value
-                ? "bg-greenDark text-white"
-                : " text-gray-500 hover:bg-gray-100"
-                }`}
-            >
-              {option.label}
-            </button>
-          ))}
+          {/* Filter Buttons/Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2  scrollbar-hide bg-[#F9FAFB] p-2 rounded-[10px]">
+            {filterOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setActiveFilter(option.value)}
+                className={`px-6 py-2 rounded-[10px] text-sm font-medium transition-all whitespace-nowrap ${activeFilter === option.value
+                  ? "bg-greenDark text-white"
+                  : " text-gray-500 hover:bg-gray-100"
+                  }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Table Section */}
       <div className="overflow-hidden rounded-[11px] border border-gray-100 shadow-sm bg-white">
@@ -100,7 +106,7 @@ export default function DynamicTable({
               body={col.body}
               alignHeader="center"
               align="center"
-              style={{ minWidth: col.width || "150px" }}
+              style={{ minWidth: col.width || "120px" }}
               headerClassName="!bg-greenDark !text-white !font-bold !py-4 !border-none !text-[15px]"
               bodyClassName="!py-4 !border-b !border-gray-50 !text-greenDark !text-[15px]"
             />

@@ -59,7 +59,7 @@ export const axiosBaseQuery =
       ) {
         Cookies.remove("N8NCentral_token");
         if (!window.location.href.endsWith("login")) {
-          window.location.href = `/${lang}/login`;
+          window.location.href = `/${lang}/admin/login`;
         }
       }
 

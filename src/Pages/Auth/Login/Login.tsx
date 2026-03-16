@@ -3,11 +3,14 @@ import { useTranslation } from "react-i18next";
 import { Input } from "../../../Components/Ui/Input";
 import Button from "../../../Components/Ui/Button";
 import { Mail, Lock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { showToastSuccess } from "../../../Components/Ui/ToastHelper";
 
 export default function Login() {
   const { t, i18n } = useTranslation();
   const dir = i18n.dir();
+  const lang = localStorage.getItem("i18nextLng") || "en"
+  const navigate = useNavigate()
 
   const {
     register,
@@ -22,7 +25,8 @@ export default function Login() {
 
   const onSubmit = (data: any) => {
     console.log("Login data:", data);
-    // Handle login logic here
+    showToastSuccess(t("Auth.Login.LoginSuccess"))
+    navigate(`/${lang}/admin/dashboard`)
   };
 
   return (

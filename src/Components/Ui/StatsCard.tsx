@@ -18,10 +18,10 @@ const StatsCard = ({ title, value, icon: Icon, color, trend }: any) => (
                 )}
             </div>
             <div>
-                <p className="text-[#64748B] text-[16px] font-medium mb-1 transition-colors duration-300 group-hover:text-white/80">
+                <p className="text-[#64748B] text-[16px] font-medium mb-1 transition-colors duration-300 group-hover:text-white/80 truncate">
                     {title}
                 </p>
-                <h3 className="text-[12px] font-semibold text-[#101828] transition-colors duration-300 group-hover:text-white">
+                <h3 className="text-[12px] font-semibold text-[#101828] transition-colors duration-300 group-hover:text-white truncate">
                     {value}
                 </h3>
             </div>

@@ -4,62 +4,62 @@ import {
     Users,
     CheckCircle,
     DollarSign,
-    UserCheck,
+    ShoppingBag,
     Ban,
     Pause,
-    Eye
+    Eye,
 } from "lucide-react";
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
 
-export default function Buyers() {
+export default function Affiliates() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const dir = i18n.dir();
     const lang = i18n.language;
 
-    const mockBuyers = Array.from({ length: 7 }).map((_, i) => ({
+    const mockAffiliates = Array.from({ length: 6 }).map((_, i) => ({
         id: i + 1,
         name: "محمد علي",
-        email: "abc@123.com",
-        phone: "12345678",
-        orders: "12 (2143 $)",
-        disputes: "0",
-        status: i % 3 === 0 ? "verified" : i % 3 === 1 ? "suspended" : "blocked",
+        userCode: "#12345",
+        clicks: "1,200",
+        sales: "350$",
+        services: "12 خدمة",
+        status: "verified",
     }));
 
     const columns = [
         {
-            header: t("Buyers.Name"),
+            header: t("Affiliates.Name"),
             field: "name",
             body: (rowData: any) => (
-                <span>{rowData.name}</span>
+                <span className="text-greenDark font-medium">{rowData.name}</span>
             ),
         },
         {
-            header: t("Buyers.Email"),
-            field: "email",
+            header: t("Affiliates.UserCode"),
+            field: "userCode",
         },
         {
-            header: t("Buyers.Phone"),
-            field: "phone",
+            header: t("Affiliates.Clicks"),
+            field: "clicks",
         },
         {
-            header: t("Buyers.OrdersCount"),
-            field: "orders",
+            header: t("Affiliates.Sales"),
+            field: "sales",
         },
         {
-            header: t("Buyers.OpenDisputes"),
-            field: "disputes",
+            header: t("Affiliates.AddedServices"),
+            field: "services",
         },
         {
-            header: t("Buyers.Status"),
+            header: t("Affiliates.Status"),
             field: "status",
             body: (rowData: any) => {
                 const isVerified = rowData.status === "verified";
                 return (
                     <div className="flex justify-center">
-                        <span className={`px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${isVerified ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
+                        <span className={`px-4 py-1 rounded-full text-[13px] font-medium flex items-center gap-1 ${isVerified ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
                             }`}>
                             {isVerified && <CheckCircle size={14} />}
                             {isVerified ? t("Common.Verified") : t("Common.Blocked")}
@@ -69,17 +69,21 @@ export default function Buyers() {
             }
         },
         {
-            header: t("Buyers.Actions"),
+            header: t("Affiliates.Actions"),
             body: (rowData: any) => (
                 <div className="flex justify-center items-center gap-3 text-gray-400">
                     <button
-                        onClick={() => navigate(`/${lang}/admin/users/details/buyer/${rowData.id}`)}
+                        onClick={() => navigate(`/${lang}/admin/users/details/affiliate/${rowData.id}`)}
                         className="text-greenDark p-1 rounded-md hover:text-white hover:bg-greenDark transition-colors"
                     >
                         <Eye size={18} />
                     </button>
-                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors"><Pause size={18} /></button>
-                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors"><Ban size={18} /></button>
+                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors">
+                        <Pause size={18} />
+                    </button>
+                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors">
+                        <Ban size={18} />
+                    </button>
                 </div>
             ),
         },
@@ -96,33 +100,33 @@ export default function Buyers() {
         <div className="space-y-8" dir={dir}>
             {/* Header */}
             <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Buyers.Title")}</h1>
-                <p className="text-gray-500 font-medium">{t("Buyers.Welcome")}</p>
+                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Affiliates.Title")}</h1>
+                <p className="text-gray-500 font-medium">{t("Affiliates.Welcome")}</p>
             </div>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard
-                    title={t("Buyers.TotalBuyers")}
-                    value="1,820 مستخدم"
+                    title={t("Affiliates.TotalAffiliates")}
+                    value="542"
                     icon={Users}
                     color="bg-[#8B5CF6]"
                 />
                 <StatsCard
-                    title={t("Buyers.ActiveBuyers")}
-                    value="1,820 مستخدم"
-                    icon={UserCheck}
+                    title={t("Affiliates.ActiveAffiliates")}
+                    value="312"
+                    icon={ShoppingBag}
                     color="bg-[#10B981]"
                 />
                 <StatsCard
-                    title={t("Buyers.SuspendedAccounts")}
-                    value="115 حساب"
+                    title={t("Affiliates.PaidCommissions")}
+                    value="$48,750"
                     icon={CheckCircle}
-                    color="bg-[#64748B4D]"
+                    color="bg-[#10B9814D]"
                 />
                 <StatsCard
-                    title={t("Buyers.TotalSpent")}
-                    value="$287,450"
+                    title={t("Affiliates.PendingCommissions")}
+                    value="$125,480"
                     icon={DollarSign}
                     color="bg-[#F59E0B]"
                 />
@@ -130,9 +134,9 @@ export default function Buyers() {
 
             {/* Dynamic Table */}
             <DynamicTable
-                data={mockBuyers}
+                data={mockAffiliates}
                 columns={columns}
-                searchPlaceholder={t("Buyers.SearchPlaceholder")}
+                searchPlaceholder={t("Affiliates.SearchPlaceholder")}
                 filterOptions={filterOptions}
             />
         </div>

@@ -4,82 +4,94 @@ import {
     Users,
     CheckCircle,
     DollarSign,
-    UserCheck,
+    ShoppingBag,
     Ban,
     Pause,
-    Eye
+    Eye,
+    Clock
 } from "lucide-react";
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
 
-export default function Buyers() {
+export default function Sellers() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const dir = i18n.dir();
     const lang = i18n.language;
 
-    const mockBuyers = Array.from({ length: 7 }).map((_, i) => ({
+    const mockSellers = Array.from({ length: 2 }).map((_, i) => ({
         id: i + 1,
         name: "محمد علي",
-        email: "abc@123.com",
-        phone: "12345678",
-        orders: "12 (2143 $)",
+        services: t("Sellers.ServicesValue", { count: 12 }),
+        sales: "$4,250",
+        country: "مصر",
         disputes: "0",
-        status: i % 3 === 0 ? "verified" : i % 3 === 1 ? "suspended" : "blocked",
+        status: i === 2 ? "pending" : "verified",
     }));
 
     const columns = [
         {
-            header: t("Buyers.Name"),
+            header: t("Sellers.Expert"),
             field: "name",
             body: (rowData: any) => (
                 <span>{rowData.name}</span>
             ),
         },
         {
-            header: t("Buyers.Email"),
-            field: "email",
+            header: t("Sellers.ServicesCount"),
+            field: "services",
+            body: (rowData: any) => (
+                <span>{rowData.services.count || "12 خدمة"}</span>
+            ),
         },
         {
-            header: t("Buyers.Phone"),
-            field: "phone",
+            header: t("Sellers.TotalSales"),
+            field: "sales",
         },
         {
-            header: t("Buyers.OrdersCount"),
-            field: "orders",
+            header: t("Sellers.Country"),
+            field: "country",
         },
         {
-            header: t("Buyers.OpenDisputes"),
+            header: t("Sellers.OpenDisputes"),
             field: "disputes",
         },
         {
-            header: t("Buyers.Status"),
+            header: t("Sellers.Status"),
             field: "status",
             body: (rowData: any) => {
                 const isVerified = rowData.status === "verified";
+                const isPending = rowData.status === "pending";
+
                 return (
                     <div className="flex justify-center">
-                        <span className={`px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${isVerified ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
+                        <span className={`px-4 py-1 rounded-full text-[13px] font-medium flex items-center gap-1 ${isVerified ? "bg-green-50 text-green-600" :
+                                isPending ? "bg-blue-50 text-blue-600" : "bg-red-50 text-red-600"
                             }`}>
                             {isVerified && <CheckCircle size={14} />}
-                            {isVerified ? t("Common.Verified") : t("Common.Blocked")}
+                            {isVerified ? t("Common.Verified") :
+                                isPending ? t("Common.PendingVerification") : t("Common.Blocked")}
                         </span>
                     </div>
                 );
             }
         },
         {
-            header: t("Buyers.Actions"),
+            header: t("Sellers.Actions"),
             body: (rowData: any) => (
                 <div className="flex justify-center items-center gap-3 text-gray-400">
                     <button
-                        onClick={() => navigate(`/${lang}/admin/users/details/buyer/${rowData.id}`)}
+                        onClick={() => navigate(`/${lang}/admin/users/details/seller/${rowData.id}`)}
                         className="text-greenDark p-1 rounded-md hover:text-white hover:bg-greenDark transition-colors"
                     >
                         <Eye size={18} />
                     </button>
-                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors"><Pause size={18} /></button>
-                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors"><Ban size={18} /></button>
+                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors">
+                        <Pause size={18} />
+                    </button>
+                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors">
+                        <Ban size={18} />
+                    </button>
                 </div>
             ),
         },
@@ -88,7 +100,7 @@ export default function Buyers() {
     const filterOptions = [
         { label: t("Common.All"), value: "all" },
         { label: t("Common.Verified"), value: "verified" },
-        { label: t("Common.Suspended"), value: "suspended" },
+        { label: t("Common.PendingVerification"), value: "pending" },
         { label: t("Common.Blocked"), value: "blocked" },
     ];
 
@@ -96,33 +108,33 @@ export default function Buyers() {
         <div className="space-y-8" dir={dir}>
             {/* Header */}
             <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Buyers.Title")}</h1>
-                <p className="text-gray-500 font-medium">{t("Buyers.Welcome")}</p>
+                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Sellers.Title")}</h1>
+                <p className="text-gray-500 font-medium">{t("Sellers.Welcome")}</p>
             </div>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard
-                    title={t("Buyers.TotalBuyers")}
-                    value="1,820 مستخدم"
+                    title={t("Sellers.TotalSellers")}
+                    value="248 تاجر"
                     icon={Users}
                     color="bg-[#8B5CF6]"
                 />
                 <StatsCard
-                    title={t("Buyers.ActiveBuyers")}
-                    value="1,820 مستخدم"
-                    icon={UserCheck}
+                    title={t("Sellers.ActiveSellers")}
+                    value="212 تاجر"
+                    icon={ShoppingBag}
                     color="bg-[#10B981]"
                 />
                 <StatsCard
-                    title={t("Buyers.SuspendedAccounts")}
-                    value="115 حساب"
-                    icon={CheckCircle}
+                    title={t("Sellers.PendingVerification")}
+                    value="18 حساب"
+                    icon={Clock}
                     color="bg-[#64748B4D]"
                 />
                 <StatsCard
-                    title={t("Buyers.TotalSpent")}
-                    value="$287,450"
+                    title={t("Sellers.TotalRevenue")}
+                    value="$125,480"
                     icon={DollarSign}
                     color="bg-[#F59E0B]"
                 />
@@ -130,9 +142,9 @@ export default function Buyers() {
 
             {/* Dynamic Table */}
             <DynamicTable
-                data={mockBuyers}
+                data={mockSellers}
                 columns={columns}
-                searchPlaceholder={t("Buyers.SearchPlaceholder")}
+                searchPlaceholder={t("Sellers.SearchPlaceholder")}
                 filterOptions={filterOptions}
             />
         </div>

@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
-import ScrollToTopButton from "../../Components/Ui/ScrollToTopButton";
 import Sidebar from "./Sidebar/Sidebar";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +15,6 @@ const Layout = () => {
     return (
       <main>
         <Outlet />
-        <ScrollToTopButton />
       </main>
     );
   }
@@ -36,7 +34,6 @@ const Layout = () => {
           <div className="max-w-[1600px] mx-auto">
             <Outlet />
           </div>
-          <ScrollToTopButton />
         </main>
       </div>
     </div>

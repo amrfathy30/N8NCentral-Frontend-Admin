@@ -13,19 +13,16 @@ const LanguageChange = () => {
   ];
 
   const toggleLanguage = () => {
-    // تغيير اللغة
     const newLang = i18n.language === "ar" ? "en" : "ar";
     i18n.changeLanguage(newLang);
     localStorage.setItem("i18nextLng", newLang);
 
-    // تحديث المسار الحالي
     const segments = location.pathname.split("/");
     segments[1] = newLang;
     const newPath = segments.join("/");
     navigate(newPath, { replace: true });
   };
 
-  // الحصول على اسم اللغة الحالي
   const currentLabel =
     languageOptions.find((opt) => opt.value === i18n.language)?.label ||
     "Language";
