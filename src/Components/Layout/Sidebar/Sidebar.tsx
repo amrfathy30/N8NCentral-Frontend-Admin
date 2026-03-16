@@ -22,7 +22,7 @@ export default function Sidebar() {
   const location = useLocation();
   const lang = i18n.language;
   const dir = i18n.dir();
-  const [usersOpen, setUsersOpen] = useState(true);
+  const [usersOpen, setUsersOpen] = useState(false);
 
   const menuItems = [
     {
@@ -64,9 +64,9 @@ export default function Sidebar() {
       path: `/${lang}/admin/orders`,
     },
     {
-      title: t("Sidebar.Financials"),
+      title: t("Sidebar.Financial"),
       icon: Wallet,
-      path: `/${lang}/admin/financials`,
+      path: `/${lang}/admin/financial`,
     },
     {
       title: t("Sidebar.Analytics"),

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    font-family: "Cairo", sans-serif;
+    font-family: "Cairo", sans-serif !important;
     background-color: #F6F6F6;
 }
 
@@ -11,14 +11,44 @@ body {
     @apply container mx-auto px-4;
 }
 
+/* Global Scrollbar Styles */
 ::-webkit-scrollbar {
-    @apply w-[4px] h-3;
+    @apply w-[6px] h-[6px];
 }
 
 ::-webkit-scrollbar-track {
-    @apply rounded-full bg-gray-200;
+    @apply rounded-full bg-gray-100;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-main rounded-full;
+    @apply bg-main rounded-full hover:bg-main/80 transition-colors;
+}
+
+/* Custom Table Styles */
+.custom-table {
+    font-family: "Cairo", sans-serif !important;
+}
+
+.custom-table .p-datatable-thead>tr>th:first-child {
+    @apply rounded-ss-[11px] !important;
+}
+
+.custom-table .p-datatable-thead>tr>th:last-child {
+    @apply rounded-se-[11px] !important;
+}
+
+.custom-table .p-datatable-tbody>tr {
+    @apply transition-colors duration-200;
+}
+
+.custom-table .p-datatable-tbody>tr:hover {
+    @apply bg-[#F9FAFB];
+}
+
+.custom-table .p-datatable-emptymessage td {
+    @apply !text-center !py-10 text-gray-400 font-medium;
+}
+
+.p-datatable-wrapper::-webkit-scrollbar {
+    @apply h-[6px];
 }

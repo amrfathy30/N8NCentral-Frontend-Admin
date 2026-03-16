@@ -5,6 +5,7 @@ import NotFound from './Pages/NotFound/NotFound';
 import Layout from './Components/Layout/Layout';
 import Login from './Pages/Auth/Login/Login';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import Buyers from './Pages/Users/Buyers/Buyers';
 
 function LocaleWrapper() {
     const { locale } = useParams();
@@ -26,6 +27,7 @@ function LocaleWrapper() {
             <Route path="admin" element={<Layout />}>
                 <Route path="login" element={<Login />} />
                 <Route path="dashboard" element={<Dashboard />} />
+                <Route path="users/buyers" element={<Buyers />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>

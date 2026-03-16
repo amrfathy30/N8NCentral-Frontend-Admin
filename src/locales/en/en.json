@@ -23,7 +23,7 @@
     }
   },
   "Sidebar": {
-    "Dashboard": "Control Panel",
+    "Dashboard": "Dashboard",
     "Users": "Users",
     "Buyers": "Buyers",
     "Sellers": "Sellers",
@@ -33,7 +33,7 @@
     "AffiliateProgram": "Affiliate",
     "Services": "Services",
     "Orders": "Orders",
-    "Financials": "Financials",
+    "Financial": "Financial",
     "Analytics": "Analytics",
     "Complaints": "Complaints & Disputes",
     "Settings": "Platform Settings",
@@ -48,11 +48,41 @@
     "ActiveSellers": "Active Sellers",
     "TotalUsers": "Total Users",
     "UserGrowth": "User Growth",
+    "Month": "Month",
+    "Week": "Week",
+    "Today": "Today",
     "OrderGrowth": "Order Growth",
     "ConversionRate": "Conversion Rate",
     "MonthlyRevenue": "Monthly Revenue",
     "ImportantAlerts": "Important Alerts",
     "RecentActivity": "Recent Activity",
     "ViewAll": "View All"
+  },
+  "Buyers": {
+    "Title": "Buyers",
+    "Welcome": "Welcome back to N8NCentral Admin Panel",
+    "TotalBuyers": "Total Buyers",
+    "ActiveBuyers": "Active Buyers",
+    "SuspendedAccounts": "Suspended Accounts",
+    "TotalSpent": "Total Buyers Spending",
+    "Name": "Name",
+    "Email": "Email",
+    "Phone": "Phone",
+    "OrdersCount": "Orders Count",
+    "OpenDisputes": "Open Disputes",
+    "Status": "Status",
+    "Actions": "Actions",
+    "Active": "Active",
+    "Suspended": "Suspended",
+    "Verified": "Verified",
+    "SearchPlaceholder": "Search for a buyer..."
+  },
+  "Common": {
+    "All": "All",
+    "Verified": "Verified",
+    "Suspended": "Suspended",
+    "Blocked": "Blocked",
+    "Search": "Search",
+    "NoDataFound": "No data found"
   }
 }
