@@ -12,7 +12,7 @@ import SuspendedAccounts from './Pages/Users/SuspendedAccounts/SuspendedAccounts
 import BuyerDetails from './Pages/Users/Buyers/BuyerDetails/BuyerDetails';
 import SellerDetails from './Pages/Users/Sellers/SellerDetails/SellerDetails';
 import AffiliateDetails from './Pages/Users/Affiliates/AffiliateDetails/AffiliateDetails';
-
+import Merchants from './Pages/Merchants/Merchants';
 // Switcher component to handle generic details route
 function UserDetailsSwitcher() {
     const { type } = useParams();
@@ -56,6 +56,7 @@ function LocaleWrapper() {
                     <Route path="suspended" element={<SuspendedAccounts />} />
                     <Route path="details/:type/:id" element={<UserDetailsSwitcher />} />
                 </Route>
+                <Route path="merchants" element={<Merchants />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
