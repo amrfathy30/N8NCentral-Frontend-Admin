@@ -195,5 +195,42 @@
     "Transactions": "المبيعات",
     "Logs": "السجل",
     "StopAccount": "وقف الحساب"
+  },
+  "Merchants": {
+  "Title": "التجار",
+  "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة",
+  "TotalMerchants": "إجمالي التجار",
+  "ActiveMerchants": "التجار النشطون",
+  "PendingVerification": "بانتظار التوثيق",
+  "TotalRevenue": "إجمالي الإيرادات",
+  "Expert": "الخبير",
+  "ExpertiseType": "نوع الخبرة",
+  "Type":"النوع",
+  "IDNumber": "رقم الهوية",
+  "BirthDate": "تاريخ الميلاد",
+  "StopReason": "سبب الإيقاف",
+  "StopDate": "تاريخ الإيقاف",
+  "RemainingBan": "مدة الحظر المتبقية",
+  "ServicesCount": "عدد الخدمات",
+  "TotalSales": "إجمالي المبيعات",
+  "Country": "الدولة",
+  "Disputes": "النزاعات",
+  "Status": "الحالة",
+  "Actions": "الإجراءات",
+  "SearchPlaceholder": "ابحث عن تاجر...",
+  "Approved": "معتمد",
+  "Verified":"موثوق",
+  "Unverified": "غير موثوق",
+  "WaitingVerification": "بانتظار التوثيق",
+  "Blocked": "محظور",
+  "View": "عرض",
+  "ViewDetails": "عرض التوثيق",
+  "VerifyAction": "توثيق",
+  "Stop": "إيقاف",
+  "Reject": "رفض",
+  "Stats": {
+    "Unit": "تاجر",
+    "AccountUnit": "حساب"
   }
+}
 }

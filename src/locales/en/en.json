@@ -196,5 +196,43 @@
     "Transactions": "Transactions",
     "Logs": "Logs",
     "StopAccount": "Stop Account"
+  },
+  "Merchants": {
+  "Title": "Merchants",
+  "Welcome": "Welcome to the Automation Platform Dashboard",
+  "TotalMerchants": "Total Merchants",
+  "ActiveMerchants": "Active Merchants",
+  "PendingVerification": "Pending Verification",
+  "TotalRevenue": "Total Revenue",
+  "Expert": "Expert",
+  "ExpertiseType": "Expertise Type",
+  "Type":"Type",
+  "IDNumber": "ID Number",
+  "BirthDate": "Date of Birth",
+  "StopReason": "Suspension Reason",
+  "StopDate": "Suspension Date",
+  "RemainingBan": "Remaining Ban Period",
+  "ServicesCount": "Services Count",
+  "TotalSales": "Total Sales",
+  "Country": "Country",
+  "Disputes": "Disputes",
+  "Status": "Status",
+  "Actions": "Actions",
+  "SearchPlaceholder": "Search for a merchant...",
+  "Approved": "Verified",
+  "Verified":"Verified",
+  "VerifiedStatus":"Verified",
+  "Unverified": "Unverified",
+  "WaitingVerification": "Waiting for Verification",
+  "Blocked": "Blocked",
+  "View": "View",
+  "ViewDetails": "View Details",
+  "VerifyAction": "Verify",
+  "Stop": "Stop",
+  "Reject": "Reject",
+  "Stats": {
+    "Unit": "Merchant",
+    "AccountUnit": "Account"
   }
+}
 }
