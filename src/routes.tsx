@@ -21,6 +21,8 @@ import Complaints from './Pages/Complaints/Complaints';
 import Setting from './Pages/Setting/Setting';
 import LogsPage from './Pages/Logs/LogsPage';
 
+import Merchants from './Pages/Merchants/Merchants';
+// Switcher component to handle generic details route
 function UserDetailsSwitcher() {
     const { type } = useParams();
 
@@ -71,6 +73,7 @@ function LocaleWrapper() {
                     <Route path="suspended" element={<SuspendedAccounts />} />
                     <Route path="details/:type/:id" element={<UserDetailsSwitcher />} />
                 </Route>
+                <Route path="merchants" element={<Merchants />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
