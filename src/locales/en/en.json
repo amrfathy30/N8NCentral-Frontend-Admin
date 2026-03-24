@@ -87,6 +87,9 @@
   "Common": {
     "All": "All",
     "Verified": "Verified",
+    "Active": "Active",
+    "Rejected": "Rejected",
+    "Inactive": "In active",
     "Suspended": "Suspended",
     "WaitVerified": "Waiting verification",
     "Blocked": "Blocked",
@@ -97,7 +100,11 @@
     "PendingReview": "Pending Review",
     "Yes": "Yes",
     "Back": "Back",
-    "No": "No"
+    "No": "No",
+    "View": "View",
+    "Stop": "Stop",
+    "ConfirmStopTitle": "Confirm Temporary Stop",
+    "Ban": "Ban"
   },
   "Sellers": {
     "Title": "Sellers",
@@ -300,6 +307,60 @@
     "Stats": {
       "Unit": "Merchant",
       "AccountUnit": "Account"
+    }
+  },
+  "Services": {
+    "Title": "Services",
+    "ConfirmStopMessage": "Are you sure you want to temporarily stop this services?",
+    "Welcome": "Welcome back to N8NCentral Admin Panel",
+    "TotalServices": "Total Services",
+    "ServicesUnderReview": "Services Under Review",
+    "FeaturedServices": "Featured Services",
+    "RejectedServices": "Rejected",
+    "ViewCategories": "View Categories",
+    "SearchPlaceholder": "Search for a service...",
+    "Active": "Active",
+    "PendingReview": "Under Review",
+    "Rejected": "Rejected",
+    "Blocked": "Blocked",
+    "Table": {
+      "Service": "Service",
+      "Merchant": "Merchant",
+      "Price": "Price",
+      "Orders": "Orders",
+      "Category": "Category",
+      "Rating": "Rating",
+      "Status": "Status",
+      "Actions": "Actions"
+    },
+    "Actions": {
+      "View": "View",
+      "Stop": "Stop",
+      "Block": "Block"
+    },
+    "Categories": {
+      "Title": "Categories",
+      "AddCategory": "Add Category",
+      "ViewServices": "View Services",
+      "DeleteCategory": "Delete Category",
+      "Service": "Service"
+    },
+    "ServiceDetails": {
+      "Title": "Service Details",
+      "Name": "Name",
+      "Merchant": "Merchant",
+      "Price": "Price",
+      "LastSale": "Last Sale",
+      "Email": "Email",
+      "Category": "Category",
+      "AdditionalServices": "Additional Services",
+      "Expert": "Expert",
+      "Rating": "Rating",
+      "ViewProfile": "View Profile",
+      "EditService": "Edit Service",
+      "ViewFullPage": "View Full Page",
+      "StopService": "Stop Service",
+      "Gold": "Gold"
     }
   }
 }

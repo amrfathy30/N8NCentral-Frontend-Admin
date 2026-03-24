@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
+import Header from "../../../Components/Ui/Header";
 
 export default function Sellers() {
     const { t, i18n } = useTranslation();
@@ -66,7 +67,7 @@ export default function Sellers() {
                 return (
                     <div className="flex justify-center">
                         <span className={`px-4 py-1 rounded-full text-[13px] font-medium flex items-center gap-1 ${isVerified ? "bg-green-50 text-green-600" :
-                                isPending ? "bg-blue-50 text-blue-600" : "bg-red-50 text-red-600"
+                            isPending ? "bg-blue-50 text-blue-600" : "bg-red-50 text-red-600"
                             }`}>
                             {isVerified && <CheckCircle size={14} />}
                             {isVerified ? t("Common.Verified") :
@@ -107,10 +108,8 @@ export default function Sellers() {
     return (
         <div className="space-y-8" dir={dir}>
             {/* Header */}
-            <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Sellers.Title")}</h1>
-                <p className="text-gray-500 font-medium">{t("Sellers.Welcome")}</p>
-            </div>
+
+            <Header title={t("Sellers.Title")} description={t("Sellers.Welcome")} />
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

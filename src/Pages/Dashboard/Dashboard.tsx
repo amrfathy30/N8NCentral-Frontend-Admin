@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import StatsCard from "./components/StatsCard";
 import DashboardChart from "./components/DashboardChart";
+import Header from "../../Components/Ui/Header";
 
 export default function Dashboard() {
   const { t, i18n } = useTranslation();
@@ -16,10 +17,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-8" dir={dir}>
       {/* Header */}
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-extrabold text-gray-900">{t("Dashboard.Title")}</h1>
-        <p className="text-gray-500 font-medium">{t("Dashboard.Welcome")}</p>
-      </div>
+      <Header title={t("Dashboard.Title")} description={t("Dashboard.Welcome")} />
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-8">

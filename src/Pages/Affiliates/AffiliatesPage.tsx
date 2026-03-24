@@ -9,6 +9,7 @@ import StatsCard from "../Dashboard/components/StatsCard";
 import DynamicTable from "../../Components/Ui/DynamicTable";
 import { Cart2, CashBag } from "../../icons";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
+import Header from "../../Components/Ui/Header";
 
 export default function AffiliatesPage() {
     const { t, i18n } = useTranslation();
@@ -100,19 +101,19 @@ export default function AffiliatesPage() {
                         onClick={() => navigate(`/${lang}/admin/users/details/affiliate/${rowData.id}`)}
                         className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark transition-colors"
                     >
-                        {t("AccountDetails.AddedServices.ViewDetails") || "عرض"}
+                        {t("Common.View") || "عرض"}
                     </button>
                     <button
                         onClick={() => handleStopClick(rowData)}
                         className="bg-[#F68713] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#F68713] transition-colors"
                     >
-                        {t("AccountDetails.AddedServices.Stop") || "إيقاف"}
+                        {t("Common.Stop") || "إيقاف"}
                     </button>
                     <button
                         onClick={() => handleBanClick(rowData)}
                         className="bg-[#D00808] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#D00808] transition-colors"
                     >
-                        {t("AccountDetails.BanAccount") || "حظر"}
+                        {t("Common.Ban") || "حظر"}
                     </button>
                 </div>
             ),
@@ -132,7 +133,7 @@ export default function AffiliatesPage() {
                 isOpen={isStopModalOpen}
                 onClose={() => setIsStopModalOpen(false)}
                 onConfirm={handleConfirmStop}
-                title={t("Affiliates.ConfirmStopTitle")}
+                title={t("Common.ConfirmStopTitle")}
                 message={t("Affiliates.ConfirmStopMessage")}
                 isStop={true}
             />
@@ -146,10 +147,7 @@ export default function AffiliatesPage() {
                 isDanger={true}
             />
 
-            <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Affiliates.Title")}</h1>
-                <p className="text-gray-500 font-medium">{t("Affiliates.Welcome")}</p>
-            </div>
+            <Header title={t("Affiliates.Title")} description={t("Affiliates.Welcome")} />
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

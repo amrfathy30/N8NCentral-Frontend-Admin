@@ -42,6 +42,32 @@ export default function DynamicTable({
   const [activeFilter, setActiveFilter] = useState("all");
   const dir = i18n.dir();
 
+  const getActiveColor = (filter: string) => {
+    switch (filter) {
+      case "active":
+        return "!bg-greenDark";
+      case "PendingReview":
+      case "pending":
+        return "!bg-[#F68713]";
+      case "WaitVerified":
+      case "waitVerified":
+        return "!bg-[#F68713]";
+      case "Rejected":
+      case "rejected":
+        return "!bg-[#D00808]";
+      case "Blocked":
+      case "blocked":
+        return "!bg-[#E7000B]";
+      case "Inactive":
+      case "inactive":
+        return "!bg-[#64748B]";
+      default:
+        return "!bg-greenDark";
+    }
+  };
+
+  const activeColorClass = getActiveColor(activeFilter);
+
   const filteredData = data.filter((item) => {
     // Basic search filtering
     const searchMatch = Object.values(item).some(
@@ -58,27 +84,27 @@ export default function DynamicTable({
     <div className="space-y-4" dir={dir}>
       {/* Search and Filters Bar */}
       {showSearch && (
-        <div className="bg-white p-3 rounded-[17px] border border-gray-100 shadow-sm flex flex-col md:flex-row items-center gap-4">
+        <div className="bg-white p-2 rounded-[17px] border border-gray-100 shadow-sm flex flex-col md:flex-row items-center gap-4">
           {/* Search Input */}
           <div className="relative flex-1 w-full">
             <Input
               placeholder={searchPlaceholder || t("Common.Search")}
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="mb-0"
+              className="!mb-0"
               inputClassName="!bg-[#F9FAFB] !border-none !rounded-xl !py-2 !h-12 !text-sm"
             />
             <Search className={`absolute top-6 -translate-y-1/2 text-gray-400 ${dir === 'rtl' ? 'left-4' : 'right-4'}`} size={18} />
           </div>
 
           {/* Filter Buttons/Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2  scrollbar-hide bg-[#F9FAFB] p-2 rounded-[10px]">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide bg-[#F9FAFB] p-2 rounded-[10px]">
             {filterOptions.map((option) => (
               <button
                 key={option.value}
                 onClick={() => setActiveFilter(option.value)}
                 className={`px-6 py-2 rounded-[10px] text-sm font-medium transition-all whitespace-nowrap ${activeFilter === option.value
-                  ? "bg-greenDark text-white"
+                  ? `${getActiveColor(option.value)} text-white`
                   : " text-gray-500 hover:bg-gray-100"
                   }`}
               >
@@ -107,7 +133,7 @@ export default function DynamicTable({
               alignHeader="center"
               align="center"
               style={{ minWidth: col.width || "120px" }}
-              headerClassName="!bg-greenDark !text-white !font-bold !py-4 !border-none !text-[15px]"
+              headerClassName={`!text-white !font-bold !py-4 !border-none !text-[15px] ${activeColorClass}`}
               bodyClassName="!py-4 !border-b !border-gray-50 !text-greenDark !text-[15px]"
             />
           ))}

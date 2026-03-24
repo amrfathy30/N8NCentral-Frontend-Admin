@@ -13,13 +13,14 @@ import { HandCoins } from "../../icons";
 import StatsCard from "../../Components/Ui/StatsCard";
 import DynamicTable from "../../Components/Ui/DynamicTable";
 import VerificationDetails from "./VerificationDetails/VerificationShow";
+import Header from "../../Components/Ui/Header";
 
 export default function Merchants() {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
     const [selectedMerchant, setSelectedMerchant] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [activeFilter, setActiveFilter] = useState("verified"); 
+    const [activeFilter, setActiveFilter] = useState("verified");
 
     const themeColors: any = {
         verified: { bg: "#2B7B4C", text: "#2B7B4C", light: "#FFFFFF" },
@@ -41,7 +42,7 @@ export default function Merchants() {
         remainingBan: "12 يوم",
     }));
 
-const getColumns = () => {
+    const getColumns = () => {
         const baseColumns = [{ header: t("Merchants.Expert"), field: "name" }];
 
         if (activeFilter === "verified") {
@@ -55,9 +56,9 @@ const getColumns = () => {
                     header: t("Merchants.Status"),
                     body: () => (
                         <div className="flex justify-center">
-                        <span className="bg-[#2B7B4C]/20 text-greenDark px-3 py-1 rounded-full text-[11px] flex items-center gap-1 w-fit">
-                            {t("Merchants.Approved")}<CheckCircle size={12} strokeWidth={3} /> 
-                        </span>
+                            <span className="bg-[#2B7B4C]/20 text-greenDark px-3 py-1 rounded-full text-[11px] flex items-center gap-1 w-fit">
+                                {t("Merchants.Approved")}<CheckCircle size={12} strokeWidth={3} />
+                            </span>
                         </div>
                     ),
                 },
@@ -83,9 +84,9 @@ const getColumns = () => {
                     header: t("Merchants.Status"),
                     body: () => (
                         <div className="flex justify-center">
-                        <span className="bg-[#F68713]/20 text-[#F68713] px-6 py-3 rounded-full text-[12px] flex items-center gap-1 w-fit">
-                            <Clock size={14} strokeWidth={3} /> {t("Merchants.WaitingVerification")}
-                        </span>
+                            <span className="bg-[#F68713]/20 text-[#F68713] px-6 py-3 rounded-full text-[12px] flex items-center gap-1 w-fit">
+                                <Clock size={14} strokeWidth={3} /> {t("Merchants.WaitingVerification")}
+                            </span>
                         </div>
                     ),
                 },
@@ -108,44 +109,44 @@ const getColumns = () => {
                 { header: t("Merchants.StopDate"), field: "stopDate" },
                 { header: t("Merchants.RemainingBan"), field: "remainingBan" },
                 {
-                header: t("Merchants.Status"), 
-                body: (row: any) => {
-                    const isVerified = row.status === "verified"; 
+                    header: t("Merchants.Status"),
+                    body: (row: any) => {
+                        const isVerified = row.status === "verified";
 
-                    return (
-                    <div className="flex justify-center">
-                    <span className={`
+                        return (
+                            <div className="flex justify-center">
+                                <span className={`
                         flex items-center gap-1 px-6 py-3 rounded-full text-[12px] font-bold w-fit
-                        ${isVerified 
-                        ? "bg-[#2B7B4C]/20 text-greenDark" 
-                        : "bg-[#E7000B]/20 text-[#E7000B]" 
-                        }
+                        ${isVerified
+                                        ? "bg-[#2B7B4C]/20 text-greenDark"
+                                        : "bg-[#E7000B]/20 text-[#E7000B]"
+                                    }
                     `}>
-                        {isVerified ? (
-                        <>
-                            <CheckCircle size={14} strokeWidth={3} />
-                            <span>{t("Merchants.Verified")}</span>
-                        </>
-                        ) : (
-                        <>
-                            <div className="relative flex items-center justify-center">
-                            <CheckCircle size={14} strokeWidth={3} />
+                                    {isVerified ? (
+                                        <>
+                                            <CheckCircle size={14} strokeWidth={3} />
+                                            <span>{t("Merchants.Verified")}</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="relative flex items-center justify-center">
+                                                <CheckCircle size={14} strokeWidth={3} />
+                                            </div>
+                                            <span>{t("Merchants.Unverified")}</span>
+                                        </>
+                                    )}
+                                </span>
                             </div>
-                            <span>{t("Merchants.Unverified")}</span>
-                        </>
-                        )}
-                    </span>
-                    </div>
-                    );
-                }
+                        );
+                    }
                 },
                 {
                     header: t("Merchants.Actions"),
                     body: () => (
                         <div className="flex gap-4 items-center justify-center">
-                             <Eye className="text-greenDark cursor-pointer hover:text-gray-400 transition-colors" size={24}/>
-                             <Play className="text-[#F68713] cursor-pointer hover:text-orange-600 transition-colors" size={24} fill="currentColor"/>
-                             <Ban className="text-[#D00808] cursor-pointer hover:text-red-600 transition-colors" size={24}/>
+                            <Eye className="text-greenDark cursor-pointer hover:text-gray-400 transition-colors" size={24} />
+                            <Play className="text-[#F68713] cursor-pointer hover:text-orange-600 transition-colors" size={24} fill="currentColor" />
+                            <Ban className="text-[#D00808] cursor-pointer hover:text-red-600 transition-colors" size={24} />
                         </div>
                     ),
                 },
@@ -155,12 +156,7 @@ const getColumns = () => {
 
     return (
         <div className="space-y-8" dir={dir}>
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold text-[#101828]">{t("Merchants.Title")}</h1>
-                    <p className="text-gray-500 font-medium">{t("Merchants.Welcome")}</p>
-                </div>
-            </div>
+            <Header title={t("Merchants.Title")} description={t("Merchants.Welcome")} />
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <StatsCard title={t("Merchants.TotalMerchants")} value={`248 ${t("Merchants.Stats.Unit")}`} icon={Users} color="bg-[#AD46FF]" />
@@ -170,36 +166,36 @@ const getColumns = () => {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                
+
                 <div className="p-4 flex items-center gap-2 justify-between">
                     <div className="relative flex-1 max-w-md">
-                        <input 
-                            type="text" 
-                            placeholder={t("Merchants.SearchPlaceholder")} 
-                            className="w-full border border-gray-200 bg-[#F9FAFB] rounded-lg pr-10 pl-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-greenDark/20 transition-all" 
+                        <input
+                            type="text"
+                            placeholder={t("Merchants.SearchPlaceholder")}
+                            className="w-full border border-gray-200 bg-[#F9FAFB] rounded-lg pr-10 pl-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-greenDark/20 transition-all"
                         />
                     </div>
                     <div className="flex bg-[#F9FAFB] p-1 rounded-lg border border-gray-100 w-fit">
-                        <button 
-                            onClick={() => setActiveFilter("verified")} 
+                        <button
+                            onClick={() => setActiveFilter("verified")}
                             className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeFilter === "verified" ? "bg-greenDark text-white shadow-md" : "text-[#98A2B3]"}`}
                         >
-                           {t("Merchants.Verified")}
+                            {t("Merchants.Verified")}
                         </button>
-                        <button 
-                            onClick={() => setActiveFilter("pending")} 
+                        <button
+                            onClick={() => setActiveFilter("pending")}
                             className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeFilter === "pending" ? "bg-[#F68713] text-white shadow-md" : "text-[#98A2B3]"}`}
                         >
-                           {t("Merchants.WaitingVerification")}
+                            {t("Merchants.WaitingVerification")}
                         </button>
-                        <button 
-                            onClick={() => setActiveFilter("blocked")} 
+                        <button
+                            onClick={() => setActiveFilter("blocked")}
                             className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeFilter === "blocked" ? "bg-[#E7000B] text-white shadow-md" : "text-[#98A2B3]"}`}
                         >
                             {t("Merchants.Blocked")}
                         </button>
                     </div>
-                    
+
                 </div>
 
                 <div className="dynamic-table-wrapper overflow-x-auto">
@@ -212,9 +208,9 @@ const getColumns = () => {
                         }
                         .dynamic-table-wrapper table { border-radius: 0 !important; }
                     `}</style>
-                    <DynamicTable 
-                        data={mockMerchants} 
-                        columns={getColumns()} 
+                    <DynamicTable
+                        data={mockMerchants}
+                        columns={getColumns()}
                         showSearch={false}
                     />
                 </div>

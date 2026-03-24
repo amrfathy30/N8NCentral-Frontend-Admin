@@ -50,7 +50,7 @@ export default function ConfirmModal({
                         {title}
                     </h2>
 
-                    <p className={`text-[22px] font-bold mb-2 ${isDanger ? 'text-[#FB2C36]' : 'text-[#2B7B4C]'} ${isStop ? 'text-[#F68713]' : 'text-[#2B7B4C]'}`}>
+                    <p className={`text-[18px] font-semibold mb-2 ${isDanger ? 'text-[#FB2C36]' : 'text-[#2B7B4C]'} ${isStop ? 'text-[#F68713]' : 'text-[#2B7B4C]'}`}>
                         {message}
                     </p>
 

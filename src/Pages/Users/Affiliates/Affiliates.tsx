@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
+import Header from "../../../Components/Ui/Header";
 
 export default function Affiliates() {
     const { t, i18n } = useTranslation();
@@ -98,10 +99,7 @@ export default function Affiliates() {
 
     return (
         <div className="space-y-8" dir={dir}>
-            <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-extrabold text-[#101828]">{t("Affiliates.Title")}</h1>
-                <p className="text-gray-500 font-medium">{t("Affiliates.Welcome")}</p>
-            </div>
+            <Header title={t("Affiliates.Title")} description={t("Affiliates.Welcome")} />
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -14,16 +14,15 @@ export default function Button({
   onClick,
   children,
   className = "",
-  bg = "bg-main",
   border = false,
 }: ButtonProps) {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`px-2 py-1 text-[14px] font-[400] text-white transition-colors cursor-pointer 
+      className={`px-6 py-3 text-[18px] font-semibold bg-greenDark hover:bg-main rounded-[8px] text-[#F9F9F9]  transition-colors cursor-pointer shadow-md
         ${border ? "border" : "border-none"} 
-        ${bg} ${className}`}
+ ${className}`}
     >
       {children}
     </button>

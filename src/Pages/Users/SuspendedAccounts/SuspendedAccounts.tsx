@@ -11,8 +11,9 @@ import {
 } from "lucide-react";
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
-import AccountDetailsDrawer from "../../../Components/Ui/AccountDetailsDrawer";
+import AccountDetailsDrawer from "../UserDetails/AccountDetailsDrawer";
 import ConfirmModal from "../../../Components/Ui/ConfirmModal";
+import Header from "../../../Components/Ui/Header";
 
 export default function SuspendedAccounts() {
     const { t, i18n } = useTranslation();
@@ -222,10 +223,7 @@ export default function SuspendedAccounts() {
                 account={drawerAccount}
             />
 
-            <div className="flex flex-col gap-2">
-                <h1 className="text-4xl font-extrabold text-[#101828]">{t("SuspendedAccounts.Title")}</h1>
-                <p className="text-gray-500 font-medium">{t("SuspendedAccounts.Welcome")}</p>
-            </div>
+            <Header title={t("SuspendedAccounts.Title")} description={t("SuspendedAccounts.Welcome")} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard

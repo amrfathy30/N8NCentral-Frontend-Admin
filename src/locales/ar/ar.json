@@ -85,18 +85,25 @@
   },
   "Common": {
     "All": "الكل",
+    "Active": "نشطة",
+    "PendingReview": "قيد المراجعة",
+    "Rejected": "مرفوضة",
+    "Blocked": "محظور",
     "Completed": "مكتمل",
     "Verified": "موثوق",
+    "Inactive": "غير نشط",
     "WaitVerified": "بانتظار التوثيق",
     "Back": "العودة",
     "Suspended": "موقوف",
-    "Blocked": "محظور",
     "Search": "بحث",
     "NoDataFound": "لا توجد بيانات متاحة",
     "PendingVerification": "بانتظار التوثيق",
-    "PendingReview": "قيد المراجعة",
     "Yes": "نعم",
-    "No": "لا"
+    "No": "لا",
+    "View": "عرض",
+    "Stop": "إيقاف",
+    "ConfirmStopTitle": "تأكيد الإيقاف المؤقت",
+    "Ban": "حظر"
   },
   "Sellers": {
     "Title": "التجار",
@@ -302,6 +309,60 @@
     "Stats": {
       "Unit": "تاجر",
       "AccountUnit": "حساب"
+    }
+  },
+  "Services": {
+    "Title": "الخدمات",
+    "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف هذه الخدمة مؤقتاً؟",
+    "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة",
+    "TotalServices": "إجمالي الخدمات",
+    "ServicesUnderReview": "خدمات قيد المراجعة",
+    "FeaturedServices": "خدمات مميزة",
+    "RejectedServices": "المرفوضة",
+    "ViewCategories": "عرض التصنيفات",
+    "SearchPlaceholder": "ابحث عن خدمة...",
+    "Active": "نشطة",
+    "PendingReview": "قيد المراجعة",
+    "Rejected": "مرفوضة",
+    "Blocked": "محظور",
+    "Table": {
+      "Service": "الخدمة",
+      "Merchant": "التاجر",
+      "Price": "السعر",
+      "Orders": "الطلبات",
+      "Category": "التصنيف",
+      "Rating": "التقييم",
+      "Status": "الحالة",
+      "Actions": "الإجراءات"
+    },
+    "Actions": {
+      "View": "عرض",
+      "Stop": "إيقاف",
+      "Block": "حظر"
+    },
+    "Categories": {
+      "Title": "التصنيفات",
+      "AddCategory": "إضافة تصنيف",
+      "ViewServices": "عرض الخدمات",
+      "DeleteCategory": "حذف التصنيف",
+      "Service": "خدمة"
+    },
+    "ServiceDetails": {
+      "Title": "تفاصيل الخدمة",
+      "Name": "الاسم",
+      "Merchant": "التاجر",
+      "Price": "السعر",
+      "LastSale": "أخر بيع",
+      "Email": "البريد الإلكتروني",
+      "Category": "التصنيف",
+      "AdditionalServices": "الخدمات الإضافية",
+      "Expert": "الخبير",
+      "Rating": "تقييم",
+      "ViewProfile": "عرض ملف الشخصي",
+      "EditService": "تعديل الخدمة",
+      "ViewFullPage": "عرض الصفحة كاملة",
+      "StopService": "وقف الخدمة",
+      "Gold": "ذهبي"
     }
   }
 }
