@@ -9,6 +9,7 @@ interface ConfirmModalProps {
     message: string;
     description?: string;
     isDanger?: boolean;
+    isStop?: boolean;
 }
 
 export default function ConfirmModal({
@@ -18,7 +19,8 @@ export default function ConfirmModal({
     title,
     message,
     description,
-    isDanger = false
+    isDanger = false,
+    isStop = false
 }: ConfirmModalProps) {
     const { t } = useTranslation()
     const lang = localStorage.getItem('i18nextLng') || 'ar';
@@ -44,11 +46,11 @@ export default function ConfirmModal({
                 </button>
 
                 <div className="flex flex-col mt-4">
-                    <h2 className={`text-[24px] font-bold mb-4 ${isDanger ? 'text-[#FB2C36]' : 'text-[#2B7B4C]'}`}>
+                    <h2 className={`text-[24px] font-bold mb-4 ${isDanger ? 'text-[#FB2C36]' : 'text-[#2B7B4C]'} ${isStop ? 'text-[#F68713]' : 'text-[#2B7B4C]'}`}>
                         {title}
                     </h2>
 
-                    <p className={`text-[22px] font-bold mb-2 ${isDanger ? 'text-[#FB2C36]' : 'text-[#2B7B4C]'}`}>
+                    <p className={`text-[22px] font-bold mb-2 ${isDanger ? 'text-[#FB2C36]' : 'text-[#2B7B4C]'} ${isStop ? 'text-[#F68713]' : 'text-[#2B7B4C]'}`}>
                         {message}
                     </p>
 
@@ -62,6 +64,11 @@ export default function ConfirmModal({
                         <button
                             onClick={onConfirm}
                             className={`flex-1 py-2 rounded-[10px] border border-[#E5E7EB] text-white font-bold text-[18px] transition-all
+
+                                ${isStop
+                                    ? 'bg-[#F68713] hover:bg-[#F68713]/90 shadow-lg shadow-[#F68713]/20'
+                                    : ''
+                                }
                                 ${isDanger
                                     ? 'bg-[#FB2C36] hover:bg-[#d9222b] shadow-lg shadow-[#FB2C36]/20'
                                     : 'bg-[#2B7B4C] hover:bg-[#23663f] shadow-lg shadow-[#2B7B4C]/20'

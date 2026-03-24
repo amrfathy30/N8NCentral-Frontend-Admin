@@ -1,48 +1,79 @@
 import { useTranslation } from "react-i18next";
 import {
-    User,
-    ShoppingBag,
-    DollarSign,
-    ShieldCheck,
-    Clock,
-    Briefcase
+    Eye,
+    Pause,
+    Ban
 } from "lucide-react";
 import { useState } from "react";
-import UserDetailLayout, { InfoItem, StatCard, VerificationItem } from "../../../../Components/Ui/UserDetailLayout";
-import DynamicTable from "../../../../Components/Ui/DynamicTable";
+import UserDetailLayout from "../../../../Components/Ui/UserDetailLayout";
+import { useNavigate } from "react-router-dom";
+import Overview from "./components/Overview";
+import Services from "./components/Services";
+import Sales from "./components/Sales";
+import Withdrawal from "./components/Withdrawal";
+import Verification from "./components/Verification";
+import Logs from "./components/Logs";
 
 export default function SellerDetails() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [activeTab, setActiveTab] = useState("overview");
+    const navigate = useNavigate()
+    const lang = i18n.language;
 
     const tabs = [
-        { id: "overview", label: t("AccountDetails.Overview"), icon: User },
-        { id: "services", label: t("AccountDetails.Services"), icon: Briefcase },
-        { id: "sales", label: t("AccountDetails.Sales"), icon: ShoppingBag },
-        { id: "earnings", label: t("AccountDetails.Earnings"), icon: DollarSign },
-        { id: "logs", label: t("AccountDetails.Logs"), icon: Clock },
+        { id: "overview", label: t("AccountDetails.Overview") },
+        { id: "services", label: t("AccountDetails.Services") },
+        { id: "withdrawal", label: t("AccountDetails.WithdrawalRequests") },
+        { id: "verification", label: t("AccountDetails.Verification") },
+        { id: "logs", label: t("AccountDetails.Logs") },
     ];
 
     const serviceColumns = [
-        { field: "id", header: "#" },
-        { field: "name", header: t("AccountDetails.ServiceName") || "الخدمة" },
-        { field: "price", header: t("AccountDetails.Price") || "السعر" },
-        { field: "sales", header: t("AccountDetails.SalesCount") || "المبيعات" },
-        { 
-            field: "status", 
-            header: t("AccountDetails.Status") || "الحالة",
-            body: () => (
-                <span className="text-[#2ECC71] font-bold">نشط</span>
+        {
+            field: "name", header: t("AccountDetails.ServiceName") || "الخدمة",
+            body: (rowData: any) => (
+                <span className="block !w-[250px]">{rowData.name}</span>
             )
         },
+        { field: "price", header: t("AccountDetails.Price") || "السعر" },
+        { field: "sales", header: t("AccountDetails.SalesCount") || "المبيعات" },
+        { field: "createdAt", header: t("AccountDetails.CreateDate") || "المبيعات" },
+        {
+            field: "status",
+            header: t("AccountDetails.Status") || "الحالة",
+            body: () => (
+                <span>مفعلة</span>
+            )
+        },
+        {
+            header: t("Affiliates.Actions"),
+            body: (rowData: any) => (
+                <div className="flex justify-center items-center gap-3 text-gray-400">
+                    <button
+                        onClick={() => navigate(`/${lang}/admin/services/details/${rowData.id}`)}
+                        className="text-greenDark p-1 rounded-md hover:text-white hover:bg-greenDark transition-colors"
+                    >
+                        <Eye size={18} />
+                    </button>
+                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors">
+                        <Pause size={18} />
+                    </button>
+                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors">
+                        <Ban size={18} />
+                    </button>
+                </div>
+            ),
+        },
+
     ];
 
-    const servicesData = Array.from({ length: 5 }).map((_, i) => ({
+    const servicesData = Array.from({ length: 2 }).map((_, i) => ({
         id: i + 1,
-        name: "تحويل البيانات إلى Google Sheets",
+        name: "ربط WhatsApp مع Google Sheets",
         price: "$45",
         sales: "24",
-        status: "Active"
+        status: "Active",
+        createdAt: "2024-05-10"
     }));
 
     const salesColumns = [
@@ -61,90 +92,68 @@ export default function SellerDetails() {
         status: "مكتمل"
     }));
 
+    const withdrawalRequests = [
+        {
+            id: "WD-2145",
+            date: "18 يونيو 2024",
+            amount: "$1,200",
+            method: t("AccountDetails.Withdrawal.BankTransfer"),
+            balance: "$1,450",
+            status: t("AccountDetails.Withdrawal.PendingReview")
+        },
+    ];
+
+    const verificationDocuments = [
+        {
+            id: "id-front",
+            title: t("AccountDetails.VerificationSection.IDFront"),
+            image: "/images/id-image.png",
+        },
+        {
+            id: "id-back",
+            title: t("AccountDetails.VerificationSection.IDBack"),
+            image: "/images/id-image.png",
+        },
+        {
+            id: "selfie",
+            title: t("AccountDetails.VerificationSection.SelfieWithID"),
+            image: "/images/id-image.png",
+        }
+    ];
+
     return (
         <UserDetailLayout
-            userName="متجر الأتمتة"
+            userName="محمد علي"
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             tabs={tabs}
             tPrefix="AccountDetails"
         >
+
             {activeTab === "overview" && (
-                <>
-                    {/* Account Information */}
-                    <div className="bg-white rounded-[24px] p-8 shadow-sm border border-gray-50">
-                        <h2 className="text-[20px] font-extrabold text-greenDark mb-6">{t("AccountDetails.AccountData")}</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-12">
-                            <InfoItem label={t("AccountDetails.Name")} value="متجر الأتمتة" />
-                            <InfoItem label={t("AccountDetails.Phone")} value="0123456789" />
-                            <InfoItem label={t("AccountDetails.Email")} value="store@example.com" />
-                            <InfoItem label={t("AccountDetails.RegistrationDate")} value="2024-01-10" />
-                            <InfoItem label={t("AccountDetails.lastActivity")} value="منذ ساعة" />
-                            <InfoItem label={t("AccountDetails.Country")} value="السعودية" />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Statistics */}
-                        <div className="space-y-4">
-                            <h2 className="text-[20px] font-extrabold text-greenDark">{t("AccountDetails.Analytics")}</h2>
-                            <div className="grid grid-cols-1 gap-4">
-                                <StatCard label={t("AccountDetails.ServicesCount")} value="8" />
-                                <StatCard label={t("AccountDetails.TotalSales")} value="150" />
-                                <StatCard label={t("AccountDetails.TotalRevenue")} value="$4,500" />
-                            </div>
-                        </div>
-
-                        {/* Verifications */}
-                        <div className="space-y-4">
-                            <h2 className="text-[20px] font-extrabold text-greenDark">{t("AccountDetails.Verifications")}</h2>
-                            <div className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-50 space-y-4">
-                                <VerificationItem
-                                    label={t("AccountDetails.EmailVerified")}
-                                    date="10 يناير 2024"
-                                    isVerified={true}
-                                    icon={ShieldCheck}
-                                    colorClass="bg-[#067647]"
-                                    verifiedOnText={t("AccountDetails.VerifiedOn")}
-                                />
-                                <VerificationItem
-                                    label={t("AccountDetails.PhoneVerified")}
-                                    date="12 يناير 2024"
-                                    isVerified={true}
-                                    icon={ShieldCheck}
-                                    colorClass="bg-[#067647]"
-                                    verifiedOnText={t("AccountDetails.VerifiedOn")}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </>
+                <Overview t={t} />
             )}
 
             {activeTab === "services" && (
-                <DynamicTable
-                    data={servicesData}
-                    columns={serviceColumns}
-                    showSearch={false}
-                />
+                <Services servicesData={servicesData} serviceColumns={serviceColumns} />
             )}
 
             {activeTab === "sales" && (
-                <DynamicTable
-                    data={salesData}
-                    columns={salesColumns}
-                    showSearch={false}
-                />
+                <Sales salesData={salesData} salesColumns={salesColumns} />
             )}
 
-            {/* Placeholder for other tabs */}
-            {activeTab !== "overview" && activeTab !== "services" && activeTab !== "sales" && (
-                <div className="bg-white rounded-[24px] p-12 shadow-sm border border-gray-50 text-center">
-                    <p className="text-gray-400 font-bold text-[20px]">
-                        {t("Common.NoDataFound")}
-                    </p>
-                </div>
+            {activeTab === "withdrawal" && (
+                <Withdrawal withdrawalRequests={withdrawalRequests} t={t} lang={lang} />
             )}
+
+            {activeTab === "verification" && (
+                <Verification verificationDocuments={verificationDocuments} t={t} />
+            )}
+
+            {activeTab === "logs" && (
+                <Logs t={t} />
+            )}
+
         </UserDetailLayout>
     );
 }

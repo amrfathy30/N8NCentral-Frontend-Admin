@@ -51,22 +51,22 @@ export default function Sidebar() {
     {
       title: t("Sidebar.AffiliateProgram"),
       icon: LinkIcon,
-      path: `/${lang}/admin/affiliate-program`,
+      path: `/${lang}/admin/affiliate-page`,
     },
     {
       title: t("Sidebar.Services"),
       icon: LayoutDashboard,
-      path: `/${lang}/admin/services`,
+      path: `/${lang}/admin/services-page`,
     },
     {
       title: t("Sidebar.Orders"),
       icon: FileText,
-      path: `/${lang}/admin/orders`,
+      path: `/${lang}/admin/orders-page`,
     },
     {
       title: t("Sidebar.Financial"),
       icon: Wallet,
-      path: `/${lang}/admin/financial`,
+      path: `/${lang}/admin/financial-page`,
     },
     {
       title: t("Sidebar.Analytics"),
@@ -119,8 +119,8 @@ export default function Sidebar() {
                           key={idx}
                           to={sub.path}
                           className={`block p-2 text-[14px] rounded-lg transition-colors ${isActive
-                              ? "bg-greenDark text-white"
-                              : "text-[#D1D5DC] hover:text-white hover:bg-white/5"
+                            ? "bg-greenDark text-white"
+                            : "text-[#D1D5DC] hover:text-white hover:bg-white/5"
                             }`}
                         >
                           {sub.title}
@@ -139,8 +139,8 @@ export default function Sidebar() {
               key={index}
               to={item.path || "#"}
               className={`flex items-center gap-3 p-3 rounded-xl transition-colors group ${isActive
-                  ? "bg-greenDark text-white shadow-lg shadow-greenDark/20"
-                  : "hover:bg-white/5 text-[#D1D5DC] hover:text-white"
+                ? "bg-greenDark text-white shadow-lg shadow-greenDark/20"
+                : "hover:bg-white/5 text-[#D1D5DC] hover:text-white"
                 }`}
             >
               <item.icon size={20} className={isActive ? "text-white" : "text-[#D1D5DC] group-hover:text-white"} />

@@ -12,8 +12,15 @@ import SuspendedAccounts from './Pages/Users/SuspendedAccounts/SuspendedAccounts
 import BuyerDetails from './Pages/Users/Buyers/BuyerDetails/BuyerDetails';
 import SellerDetails from './Pages/Users/Sellers/SellerDetails/SellerDetails';
 import AffiliateDetails from './Pages/Users/Affiliates/AffiliateDetails/AffiliateDetails';
+import AffiliatesPage from './Pages/Affiliates/AffiliatesPage';
+import ServicesPage from './Pages/Services/ServicesPage';
+import OrdersPage from './Pages/Orders/OrdersPage';
+import FinancialPage from './Pages/Financial/FinancialPage';
+import AnalyticsPage from './Pages/Analytics/AnalyticsPage';
+import Complaints from './Pages/Complaints/Complaints';
+import Setting from './Pages/Setting/Setting';
+import LogsPage from './Pages/Logs/LogsPage';
 
-// Switcher component to handle generic details route
 function UserDetailsSwitcher() {
     const { type } = useParams();
 
@@ -49,6 +56,14 @@ function LocaleWrapper() {
             <Route path="admin" element={<Layout />}>
                 <Route path="login" element={<Login />} />
                 <Route path="dashboard" element={<Dashboard />} />
+                <Route path="affiliate-page" element={<AffiliatesPage />} />
+                <Route path="services-page" element={<ServicesPage />} />
+                <Route path="orders-page" element={<OrdersPage />} />
+                <Route path="financial-page" element={<FinancialPage />} />
+                <Route path="analytics" element={<AnalyticsPage />} />
+                <Route path="complaints" element={<Complaints />} />
+                <Route path="settings" element={<Setting />} />
+                <Route path="logs" element={<LogsPage />} />
                 <Route path="users">
                     <Route path="buyers" element={<Buyers />} />
                     <Route path="sellers" element={<Sellers />} />
@@ -74,7 +89,6 @@ const AppRoutes = () => {
             <>
                 <Routes>
                     <Route path="/" element={<Navigate to="/en/admin/login" replace />} />
-
                     <Route path="/:locale/*" element={<LocaleWrapper />} />
                 </Routes>
             </>

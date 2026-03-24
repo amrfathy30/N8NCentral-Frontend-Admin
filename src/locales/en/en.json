@@ -5,6 +5,11 @@
     "description": "Sorry, the page you're trying to access doesn't exist or has been moved.",
     "backToHome": "Back to Home"
   },
+  "Navbar": {
+    "Login": "Login",
+    "Logout": "Logout",
+    "Admin": "Admin"
+  },
   "Auth": {
     "Login": {
       "Title": "Login",
@@ -83,8 +88,10 @@
     "All": "All",
     "Verified": "Verified",
     "Suspended": "Suspended",
+    "WaitVerified": "Waiting verification",
     "Blocked": "Blocked",
     "Search": "Search",
+    "Completed": "Completed",
     "NoDataFound": "No data found",
     "PendingVerification": "Pending Verification",
     "PendingReview": "Pending Review",
@@ -112,6 +119,9 @@
   },
   "Affiliates": {
     "Title": "Affiliates",
+    "TotalCommissions": "Total Commissions",
+    "TotalClicks": "Total Clicks",
+    "ConversionRate": "Conversion Rate",
     "Welcome": "Welcome back to N8NCentral Admin Panel",
     "TotalAffiliates": "Total Affiliates",
     "ActiveAffiliates": "Active Affiliates",
@@ -125,7 +135,11 @@
     "Status": "Status",
     "Actions": "Actions",
     "SearchPlaceholder": "Search for an affiliate...",
-    "ServicesValue": "Services"
+    "ServicesValue": "Services",
+    "ConfirmStopTitle": "Confirm Temporary Stop",
+    "ConfirmStopMessage": "Are you sure you want to temporarily stop this account?",
+    "ConfirmBanTitle": "Confirm Permanent Ban",
+    "ConfirmBanMessage": "Are you sure you want to permanently ban this account? This action cannot be undone."
   },
   "SuspendedAccounts": {
     "Title": "Suspended Accounts",
@@ -147,12 +161,43 @@
     "Affiliate": "Affiliate",
     "DaysValue": "Days",
     "ConfirmReactivateTitle": "Confirm Reactivation",
-    "ConfirmReactivateMessage": "Are you sure you want to reactivate this account?"
+    "ConfirmReactivateMessage": "Are you sure you want to reactivate this account?",
+    "ConfirmBanTitle": "Confirm Ban",
+    "ConfirmBanMessage": "Are you sure you want to permanently ban this account? This action cannot be undone."
   },
   "AccountDetails": {
     "Title": "Account Details",
     "AccountData": "Account Details",
+    "SellerData": "Seller Details",
+    "AffiliateData": "Affiliate Details",
+    "StoreName": "Store Name",
+    "StoreOwner": "Store Owner",
     "Name": "Name",
+    "AddedServices": {
+      "Title": "Added Services",
+      "SearchPlaceholder": "Search for a service",
+      "StatusAll": "All",
+      "StatusActive": "Active",
+      "StatusInactive": "Inactive",
+      "ExpectedCommission": "Expected Commission",
+      "Stop": "Stop",
+      "ViewDetails": "View Details"
+    },
+    "Commissions": "Commissions",
+    "UserCode": "User Code",
+    "SellingValue": "Selling Value",
+    "Commission": "Commission",
+    "Verification": "Verifications",
+    "WithdrawalRequests": "Withdrawal Requests",
+    "Services": "Services",
+    "ServicesCount": "Services Count",
+    "TotalSales": "Total Sales",
+    "TotalReview": "Total Review",
+    "Amount": "Amount",
+    "Service": "Service",
+    "Status": "Status",
+    "PurchaseDate": "PurchaseDate",
+    "OrderId": "Order Id",
     "ReferralCode": "Referral Code",
     "RegistrationDate": "Registration Date",
     "ExpiryDate": "Expiry Date",
@@ -195,6 +240,27 @@
     "Orders": "Orders",
     "Transactions": "Transactions",
     "Logs": "Logs",
-    "StopAccount": "Stop Account"
+    "StopAccount": "Stop Account",
+    "Withdrawal": {
+      "WithdrawalRequest": "Withdrawal Request #",
+      "RequestedOn": "Requested on",
+      "AmountRequested": "Amount Requested",
+      "PaymentMethod": "Payment Method",
+      "AvailableBalance": "Available Balance",
+      "RejectRequest": "Reject Request",
+      "ApproveRequest": "Approve Request",
+      "BankTransfer": "Bank Transfer",
+      "PendingReview": "Pending Review"
+    },
+    "VerificationSection": {
+      "Status": "Verification Status",
+      "SuccessMessage": "Documents reviewed successfully",
+      "Verified": "Verified",
+      "IDFront": "ID Card (Front)",
+      "IDBack": "ID Card (Back)",
+      "SelfieWithID": "Selfie with ID Card",
+      "Approve": "Approve",
+      "Reject": "Reject"
+    }
   }
 }

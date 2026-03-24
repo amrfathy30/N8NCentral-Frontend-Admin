@@ -19,6 +19,7 @@ export default function SuspendedAccounts() {
     const dir = i18n.dir();
 
     const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+    const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedAccount, setSelectedAccount] = useState<any>(null);
     const [drawerAccount, setDrawerAccount] = useState<any>(null);
@@ -85,15 +86,25 @@ export default function SuspendedAccounts() {
         setIsStatusModalOpen(true);
     };
 
+    const handleBanClick = (account: any) => {
+        setSelectedAccount(account);
+        setIsBanModalOpen(true);
+    };
+
     const handleShowDetails = (account: any) => {
         setDrawerAccount(account);
         setIsDrawerOpen(true);
     };
 
     const handleConfirmReactivate = () => {
-        // Logic to reactivate account
         console.log("Reactivating account:", selectedAccount);
         setIsStatusModalOpen(false);
+        setSelectedAccount(null);
+    };
+
+    const handleConfirmBan = () => {
+        console.log("Banning account permanently:", selectedAccount);
+        setIsBanModalOpen(false);
         setSelectedAccount(null);
     };
 
@@ -167,7 +178,10 @@ export default function SuspendedAccounts() {
                     >
                         <Play size={18} />
                     </button>
-                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors">
+                    <button
+                        onClick={() => handleBanClick(rowData)}
+                        className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors"
+                    >
                         <Ban size={18} />
                     </button>
                 </div>
@@ -184,7 +198,6 @@ export default function SuspendedAccounts() {
 
     return (
         <div className="space-y-8" dir={dir}>
-            {/* Confirm Reactivate Modal */}
             <ConfirmModal
                 isOpen={isStatusModalOpen}
                 onClose={() => setIsStatusModalOpen(false)}
@@ -194,19 +207,26 @@ export default function SuspendedAccounts() {
                 isDanger={false}
             />
 
+            <ConfirmModal
+                isOpen={isBanModalOpen}
+                onClose={() => setIsBanModalOpen(false)}
+                onConfirm={handleConfirmBan}
+                title={t("SuspendedAccounts.ConfirmBanTitle")}
+                message={t("SuspendedAccounts.ConfirmBanMessage")}
+                isDanger={true}
+            />
+
             <AccountDetailsDrawer
                 isOpen={isDrawerOpen}
                 onClose={() => setIsDrawerOpen(false)}
                 account={drawerAccount}
             />
 
-            {/* Header */}
             <div className="flex flex-col gap-2">
                 <h1 className="text-4xl font-extrabold text-[#101828]">{t("SuspendedAccounts.Title")}</h1>
                 <p className="text-gray-500 font-medium">{t("SuspendedAccounts.Welcome")}</p>
             </div>
 
-            {/* Stats Cards ... */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard
                     title={t("SuspendedAccounts.TotalSuspended")}
@@ -234,7 +254,6 @@ export default function SuspendedAccounts() {
                 />
             </div>
 
-            {/* Dynamic Table */}
             <DynamicTable
                 data={mockData}
                 columns={columns}

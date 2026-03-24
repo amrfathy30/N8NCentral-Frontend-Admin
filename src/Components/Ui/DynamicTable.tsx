@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Input } from "./Input";
 import { Search } from "lucide-react";
 
-interface DynamicTableColumn {
+export interface DynamicTableColumn {
   field?: string;
   header?: string | ReactNode;
   body?: (rowData: any) => ReactNode;

@@ -1,140 +1,134 @@
 import { useTranslation } from "react-i18next";
-import {
-    User,
-    MousePointerClick,
-    TrendingUp,
-    DollarSign,
-    Clock,
-    ShieldCheck
-} from "lucide-react";
 import { useState } from "react";
-import UserDetailLayout, { InfoItem, StatCard, VerificationItem } from "../../../../Components/Ui/UserDetailLayout";
-import DynamicTable from "../../../../Components/Ui/DynamicTable";
+import UserDetailLayout from "../../../../Components/Ui/UserDetailLayout";
+import AddedServices from "./components/AddedServices";
+import Commissions from "./components/Commissions";
+import Withdrawal from "./components/Withdrawal";
+import Verification from "./components/Verification";
+import Logs from "./components/Logs";
+import Overview from "./components/Overview";
 
 export default function AffiliateDetails() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
     const [activeTab, setActiveTab] = useState("overview");
 
     const tabs = [
-        { id: "overview", label: t("AccountDetails.Overview"), icon: User },
-        { id: "clicks", label: t("AccountDetails.Clicks"), icon: MousePointerClick },
-        { id: "conversions", label: t("AccountDetails.Conversions"), icon: TrendingUp },
-        { id: "commissions", label: t("AccountDetails.Commissions"), icon: DollarSign },
-        { id: "logs", label: t("AccountDetails.Logs"), icon: Clock },
+        { id: "overview", label: t("AccountDetails.Overview") },
+        { id: "addedServices", label: t("AccountDetails.AddedServices.Title") },
+        { id: "commissions", label: t("AccountDetails.Commissions") },
+        { id: "withdrawal", label: t("AccountDetails.WithdrawalRequests") },
+        { id: "verification", label: t("AccountDetails.Verification") },
+        { id: "logs", label: t("AccountDetails.Logs") },
     ];
 
-    const clickColumns = [
-        { field: "id", header: "#" },
-        { field: "ip", header: "IP Address" },
-        { field: "device", header: t("AccountDetails.Device") || "الجهاز" },
-        { field: "date", header: t("AccountDetails.Date") || "التاريخ" },
+    const addedServicesData = [
+        {
+            id: 1,
+            title: "أتمتة إرسال الرسائل التسويقية",
+            status: "active",
+            conversionRate: "9.1%",
+            commissionRate: "22%",
+            sales: "112",
+            totalCommissions: "$544",
+            expectedCommission: "-$44"
+        },
+        {
+            id: 2,
+            title: "أتمتة إرسال الرسائل التسويقية",
+            status: "active",
+            conversionRate: "9.1%",
+            commissionRate: "22%",
+            sales: "112",
+            totalCommissions: "$544",
+            expectedCommission: "-$44"
+        }
     ];
 
-    const clicksData = Array.from({ length: 15 }).map((_, i) => ({
-        id: i + 1,
-        ip: `192.168.1.${10 + i}`,
-        device: i % 2 === 0 ? "Desktop" : "Mobile",
-        date: "2024-05-15 14:30"
-    }));
-
-    const conversionColumns = [
+    const commissionsColumns = [
         { field: "id", header: t("AccountDetails.OrderId") || "رقم الطلب" },
-        { field: "amount", header: t("AccountDetails.Amount") || "المبلغ" },
+        { field: "service", header: t("AccountDetails.Service") || "المبلغ" },
+        { field: "sellingValue", header: t("AccountDetails.SellingValue") || "المبلغ" },
         { field: "commission", header: t("AccountDetails.Commission") || "العمولة" },
-        { field: "date", header: t("AccountDetails.Date") || "التاريخ" },
+        {
+            field: "status", header: t("AccountDetails.Status") || "مفعل",
+            body: (rowData: any) => (
+                <div className="bg-[#F6871333] text-[#F68713] p-1 rounded-full">
+                    {rowData.status}
+                </div>
+            )
+        },
     ];
 
-    const conversionsData = Array.from({ length: 8 }).map((_, i) => ({
+    const commissionsData = Array.from({ length: 8 }).map((_, i) => ({
         id: `#ORD-${5000 + i}`,
-        amount: "$120",
+        service: "أتمتة إرسال الرسائل التسويقية",
+        sellingValue: "$120",
         commission: "$18",
-        date: "2024-05-14"
+        status: "مفعل"
     }));
+
+    const withdrawalRequests = [
+        {
+            id: "WD-2145",
+            date: "18 يونيو 2024",
+            amount: "$1,200",
+            method: t("AccountDetails.Withdrawal.BankTransfer"),
+            balance: "$1,450",
+            status: t("AccountDetails.Withdrawal.PendingReview")
+        },
+    ];
+
+    const verificationDocuments = [
+        {
+            id: "id-front",
+            title: t("AccountDetails.VerificationSection.IDFront"),
+            image: "/images/id-image.png",
+        },
+        {
+            id: "id-back",
+            title: t("AccountDetails.VerificationSection.IDBack"),
+            image: "/images/id-image.png",
+        },
+        {
+            id: "selfie",
+            title: t("AccountDetails.VerificationSection.SelfieWithID"),
+            image: "/images/id-image.png",
+        }
+    ];
 
     return (
         <UserDetailLayout
-            userName="أحمد المسوق"
+            userName=" محمد علي"
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             tabs={tabs}
             tPrefix="AccountDetails"
         >
             {activeTab === "overview" && (
-                <>
-                    {/* Account Information */}
-                    <div className="bg-white rounded-[24px] p-8 shadow-sm border border-gray-50">
-                        <h2 className="text-[20px] font-extrabold text-greenDark mb-6">{t("AccountDetails.AccountData")}</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-12">
-                            <InfoItem label={t("AccountDetails.Name")} value="أحمد المسوق" />
-                            <InfoItem label={t("AccountDetails.UserCode")} value="AFF-2024" />
-                            <InfoItem label={t("AccountDetails.Phone")} value="0123456789" />
-                            <InfoItem label={t("AccountDetails.Email")} value="aff@example.com" />
-                            <InfoItem label={t("AccountDetails.RegistrationDate")} value="2024-02-15" />
-                            <InfoItem label={t("AccountDetails.Country")} value="الإمارات" />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Statistics */}
-                        <div className="space-y-4">
-                            <h2 className="text-[20px] font-extrabold text-greenDark">{t("AccountDetails.Analytics")}</h2>
-                            <div className="grid grid-cols-1 gap-4">
-                                <StatCard label={t("AccountDetails.TotalCommissions")} value="$850" />
-                                <StatCard label={t("AccountDetails.CommissionRate")} value="15%" />
-                                <StatCard label={t("AccountDetails.ConversionRate")} value="3.5%" />
-                            </div>
-                        </div>
-
-                        {/* Verifications */}
-                        <div className="space-y-4">
-                            <h2 className="text-[20px] font-extrabold text-greenDark">{t("AccountDetails.Verifications")}</h2>
-                            <div className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-50 space-y-4">
-                                <VerificationItem
-                                    label={t("AccountDetails.EmailVerified")}
-                                    date="15 فبراير 2024"
-                                    isVerified={true}
-                                    icon={ShieldCheck}
-                                    colorClass="bg-[#067647]"
-                                    verifiedOnText={t("AccountDetails.VerifiedOn")}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </>
+                <Overview t={t} />
             )}
 
-            {activeTab === "clicks" && (
-                <DynamicTable
-                    data={clicksData}
-                    columns={clickColumns}
-                    showSearch={false}
-                />
-            )}
-
-            {activeTab === "conversions" && (
-                <DynamicTable
-                    data={conversionsData}
-                    columns={conversionColumns}
-                    showSearch={false}
-                />
+            {activeTab === "addedServices" && (
+                <AddedServices addedServicesData={addedServicesData} t={t} />
             )}
 
             {activeTab === "commissions" && (
-                <DynamicTable
-                    data={conversionsData} // Reuse same data for now
-                    columns={conversionColumns}
-                    showSearch={false}
-                />
+                <Commissions commissionsColumns={commissionsColumns} t={t} commissionsData={commissionsData} />
             )}
 
-            {/* Placeholder for other tabs */}
-            {activeTab !== "overview" && activeTab !== "clicks" && activeTab !== "conversions" && activeTab !== "commissions" && (
-                <div className="bg-white rounded-[24px] p-12 shadow-sm border border-gray-50 text-center">
-                    <p className="text-gray-400 font-bold text-[20px]">
-                        {t("Common.NoDataFound")}
-                    </p>
-                </div>
+            {activeTab === "withdrawal" && (
+                <Withdrawal withdrawalRequests={withdrawalRequests} t={t} lang={lang} />
             )}
+
+            {activeTab === "verification" && (
+                <Verification verificationDocuments={verificationDocuments} t={t} />
+            )}
+
+            {activeTab === "logs" && (
+                <Logs t={t} />
+            )}
+
         </UserDetailLayout>
     );
 }
