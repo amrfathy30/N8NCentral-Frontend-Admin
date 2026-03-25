@@ -99,19 +99,19 @@ export default function AffiliatesPage() {
                 <div className="flex justify-center items-center gap-3 text-gray-400">
                     <button
                         onClick={() => navigate(`/${lang}/admin/users/details/affiliate/${rowData.id}`)}
-                        className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark transition-colors"
+                        className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark/90 transition-colors"
                     >
                         {t("Common.View") || "عرض"}
                     </button>
                     <button
                         onClick={() => handleStopClick(rowData)}
-                        className="bg-[#F68713] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#F68713] transition-colors"
+                        className="bg-[#F68713] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#F68713]/90 transition-colors"
                     >
                         {t("Common.Stop") || "إيقاف"}
                     </button>
                     <button
                         onClick={() => handleBanClick(rowData)}
-                        className="bg-[#D00808] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#D00808] transition-colors"
+                        className="bg-[#D00808] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#D00808]/90 transition-colors"
                     >
                         {t("Common.Ban") || "حظر"}
                     </button>
@@ -128,7 +128,7 @@ export default function AffiliatesPage() {
     ];
 
     return (
-        <div className="space-y-8" dir={dir}>
+        <div className="flex flex-col gap-4" dir={dir}>
             <ConfirmModal
                 isOpen={isStopModalOpen}
                 onClose={() => setIsStopModalOpen(false)}

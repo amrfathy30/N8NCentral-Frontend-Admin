@@ -78,7 +78,6 @@ export default function DynamicTable({
     }
   };
 
-  const activeColorClass = getActiveColor(activeFilter);
 
   const filteredData = data.filter((item) => {
     // Basic search filtering
@@ -145,7 +144,7 @@ export default function DynamicTable({
               alignHeader="center"
               align="center"
               style={{ minWidth: col.width || "120px" }}
-              headerClassName={`!text-white !font-bold !py-4 !border-none !text-[15px] ${activeColorClass}`}
+              headerClassName={`!text-white !font-bold !py-4 !border-none !text-[15px] !bg-greenDark`}
               bodyClassName="!py-4 !border-b !border-gray-50 !text-greenDark !text-[15px]"
             />
           ))}

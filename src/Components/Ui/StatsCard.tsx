@@ -19,7 +19,7 @@ const StatsCard = ({
         <div>
             <div className="flex justify-between items-start mb-6">
                 {Icon && (
-                    <div className={`p-4 rounded-2xl ${color} text-white shadow-lg shadow-gray-200 transition-all duration-300 group-hover:bg-white/20 group-hover:shadow-none`}>
+                    <div className={`rounded-2xl ${color} text-white shadow-lg shadow-gray-200 transition-all duration-300 group-hover:bg-white/20 group-hover:shadow-none`}>
                         <div className={`p-4 rounded-2xl ${color}`}>
                             <Icon size={28} />
                         </div>

@@ -1,23 +1,24 @@
 
 import { useTranslation } from "react-i18next";
 import Header from "../../Components/Ui/Header";
-import DynamicTable from "../../Components/Ui/DynamicTable";
 import { FinancialSidebar } from "./components/FinancialSidebar/FinancialSidebar";
 import { RevenuePerformanceChart, UsedFinancial } from "./components/FinancialCharts";
-import { useState } from "react";
 import Button from "../../Components/Ui/Button";
+import WithdrawalRequests from "./components/WithdrawalRequests";
+import Stats from "./components/Stats";
 
 interface WithdrawalRequest {
   id: string;
-  city: string;
+  name: string;
   amount: string;
   type: string;
+  userId: string;
+  status: string;
 }
 
 export default function FinancialPage() {
   const { t, i18n } = useTranslation();
   const dir = i18n.dir();
-  const [activeFilter, setActiveFilter] = useState("all");
 
   const stats = [
     {
@@ -48,66 +49,103 @@ export default function FinancialPage() {
   ];
 
   const withdrawalRequests: WithdrawalRequest[] = [
-    {
-      id: "3954845",
-      city: "محمد علي",
-      amount: "$1,200",
-      type: "أفلييت",
-    },
-    {
-      id: "4325672",
-      city: "أحمد حسن",
-      amount: "$850",
-      type: "تاجر",
-    },
-    {
-      id: "4325673",
-      city: "ياسين علي",
-      amount: "$2,400",
-      type: "تاجر",
-    },
-    {
-      id: "4325674",
-      city: "سارة محمود",
-      amount: "$1,500",
-      type: "تاجر",
-    },
-    {
-      id: "4325675",
-      city: "خالد محمد",
-      amount: "$3,200",
-      type: "أفلييت",
-    }
+    { id: "WD-9012", status: "PendingReview", name: "محمد علي", userId: "AFF-1021", type: "Affiliate", amount: "350$" },
+    { id: "WD-9012", status: "Approved", name: "محمد علي", userId: "AFF-1021", type: "Merchant", amount: "350$" },
+    { id: "WD-9012", status: "PendingReview", name: "محمد علي", userId: "AFF-1021", type: "Affiliate", amount: "350$" },
+    { id: "WD-9012", status: "PendingReview", name: "محمد علي", userId: "AFF-1021", type: "Affiliate", amount: "350$" },
+    { id: "WD-9012", status: "PendingReview", name: "محمد علي", userId: "AFF-1021", type: "Affiliate", amount: "350$" },
+    { id: "WD-9012", status: "PendingReview", name: "محمد علي", userId: "AFF-1021", type: "Affiliate", amount: "350$" },
+    { id: "WD-9012", status: "PendingReview", name: "محمد علي", userId: "AFF-1021", type: "Affiliate", amount: "350$" },
+
   ];
 
-  const ActionButtons = () => (
-    <div className="flex justify-center items-center gap-2">
-      <button className="bg-greenDark text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-opacity-90 transition-all flex items-center gap-1">
-        {t("Common.View")}
-      </button>
-      <button className="bg-orange-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-opacity-90 transition-all flex items-center gap-1">
-        {t("Common.Adoption")}
-      </button>
-      <button className="bg-red-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-opacity-90 transition-all flex items-center gap-1">
-        {t("Common.Reject")}
-      </button>
-    </div>
-  );
-
-  const columns = [
-    { field: "id", header: t("Financial.Table.ID"), width: "100px" },
-    { field: "city", header: t("Financial.Table.City") },
-    { field: "type", header: t("Financial.Table.Type") },
-    { field: "amount", header: t("Financial.Table.Amount") },
-    {
-      header: t("Financial.Table.Actions"),
-      body: () => <ActionButtons />,
-      // width: "350px"
-    }
+  const UsedFinancialData = [
+    { name: t("Charts.Days.Sat"), visa: 4000, stripe: 2400, digitalCurrencies: 2400 },
+    { name: t("Charts.Days.Sun"), visa: 3000, stripe: 1398, digitalCurrencies: 2210 },
+    { name: t("Charts.Days.Mon"), visa: 2000, stripe: 9800, digitalCurrencies: 2290 },
+    { name: t("Charts.Days.Tue"), visa: 2780, stripe: 3908, digitalCurrencies: 2000 },
+    { name: t("Charts.Days.Wed"), visa: 1890, stripe: 4800, digitalCurrencies: 2181 },
+    { name: t("Charts.Days.Thu"), visa: 2390, stripe: 3800, digitalCurrencies: 2500 },
+    { name: t("Charts.Days.Fri"), visa: 3490, stripe: 4300, digitalCurrencies: 2100 },
   ];
 
-  const filterOptions = [
-    { label: t("Financial.AllRequests"), value: "all" },
+  const RevenuePerformanceChartData = [
+    { name: t("Charts.Days.Sat"), merchant: 4000, platform: 2400, affiliates: 2400 },
+    { name: t("Charts.Days.Sun"), merchant: 3000, platform: 1398, affiliates: 2210 },
+    { name: t("Charts.Days.Mon"), merchant: 2000, platform: 9800, affiliates: 2290 },
+    { name: t("Charts.Days.Tue"), merchant: 2780, platform: 3908, affiliates: 2000 },
+    { name: t("Charts.Days.Wed"), merchant: 1890, platform: 4800, affiliates: 2181 },
+    { name: t("Charts.Days.Thu"), merchant: 2390, platform: 3800, affiliates: 2500 },
+    { name: t("Charts.Days.Fri"), merchant: 3490, platform: 4300, affiliates: 2100 },
+  ];
+
+  const transactions = [
+    {
+      id: 1,
+      amount: "+$260",
+      code: "#ORD-45552",
+      type: "OrderPayment",
+      txId: "TX-78911",
+      time: "11:25 م",
+      date: t("Dashboard.Today"),
+      description: "خدمة أتمتة رسائل واتساب",
+      status: "positive"
+    },
+    {
+      id: 2,
+      amount: "+$26",
+      code: "#ORD-45553",
+      type: "PlatformCommission",
+      txId: "TX-78912",
+      time: "11:20 م",
+      date: t("Dashboard.Today"),
+      description: "10% من إجمالي الطلب",
+      status: "positive"
+    },
+    {
+      id: 3,
+      amount: "+$15",
+      code: "#AFF-521",
+      type: "AffiliateCommission",
+      txId: "TX-78913",
+      time: "11:05 م",
+      date: t("Dashboard.Today"),
+      description: "عمولة %2",
+      status: "positive"
+    },
+    {
+      id: 4,
+      amount: "$120",
+      code: "#ORD-43102",
+      type: "Refund",
+      txId: "TX-78914",
+      time: "10:10 م",
+      date: "أمس",
+      description: "سار الملف قبل التنفيذ",
+      status: "negative"
+    },
+    {
+      id: 5,
+      amount: "$540",
+      code: "#WDR-5014",
+      type: "Withdrawal",
+      txId: "TX-78915",
+      time: "12:00 م",
+      date: "أمس",
+      description: "أفلييت",
+      status: "negative"
+    },
+    {
+      id: 6,
+      amount: "+$90",
+      code: "#ORD-44501",
+      type: "OrderPayment",
+      txId: "TX-78916",
+      time: "10:15 م",
+      date: "أمس",
+      description: "خدمة تحرير PDF تلقائي",
+      status: "positive"
+    }
   ];
 
   return (
@@ -119,82 +157,21 @@ export default function FinancialPage() {
         </Button>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-        {stats.map((stat, index) => (
-          <div key={index} className="bg-white p-6 rounded-[16px] shadow-md h-full flex flex-col justify-between">
-            <h2 className="text-[#6B7280] text-[14px] mb-2">{stat?.title}</h2>
-            <p className="text-[#101828] text-[20px] font-extrabold mb-2">{stat?.value}</p>
-            {stat?.netCommission &&
-              <p className="text-[#4B5563] text-[12px] font-bold">{t("Financial.NetCommission")}</p>
-            }
-            {stat?.includesPendingAndCompletedProjects &&
-              <p className="text-[#4B5563] text-[12px] font-bold">{t("Financial.IncludesPendingAndCompletedProjects")}</p>
-            }
-            {stat?.lastMonth &&
-              <div className="text-greenDark font-bold bg-[#EFF6FF] p-2 rounded-full w-fit text-[12px] flex gap-1">
-                <span>
-                  {stat?.lastMonth}
-                </span>
-                <span>
-                  {t("Financial.LastMonth")}
-                </span>
-              </div>
-            }
-            {stat?.refundRate &&
-              <div className="text-[#B91C1C] font-bold bg-[#EFF6FF] p-2 rounded-full w-fit text-[12px] flex gap-1">
-                <span>
-                  {stat?.refundRate}
-                </span>
-                <span>
-                  {t("Financial.RefundRate")}
-                </span>
-              </div>
-            }
-            {stat?.underReview &&
-              <div className="text-[#A16207] font-bold bg-[#FEFCE8] p-2 rounded-full w-fit text-[12px] flex gap-1">
-                <span>
-                  {t("Financial.underReview")}
-                </span>
-                <span>
-                  {stat?.underReview}
-                </span>
-              </div>
-            }
-          </div>
-        ))}
-      </div>
+      {/* Stats */}
+      <Stats stats={stats} />
 
       {/* Main Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
-        {/* Right Column (Charts & Table) - Using 3/4 based on layout */}
+        {/* Right Column */}
         <div className="lg:col-span-4 space-y-8">
-          <RevenuePerformanceChart />
-          <UsedFinancial />
-
-          <div className="custom-card">
-            <div className="flex flex-col items-start mb-6">
-              <h4 className="font-bold text-gray-800">
-                {t("Financial.WithdrawalRequests")}
-              </h4>
-              <p className="text-[#6B7280] text-sm">
-                مراجعة/اعتماد/رفض/تحويل
-              </p>
-            </div>
-            <DynamicTable
-              data={withdrawalRequests}
-              columns={columns}
-              filterOptions={filterOptions}
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
-              searchPlaceholder={t("Financial.SearchPlaceholder")}
-            />
-          </div>
+          <RevenuePerformanceChart RevenuePerformanceChartData={RevenuePerformanceChartData} />
+          <UsedFinancial UsedFinancialData={UsedFinancialData} />
+          <WithdrawalRequests withdrawalRequests={withdrawalRequests} />
         </div>
 
-        {/* Left Column (Sidebar) - Using 1/4 */}
+        {/* Left Column */}
         <div className="lg:col-span-2">
-          <FinancialSidebar />
+          <FinancialSidebar transactions={transactions} />
         </div>
       </div>
     </div>

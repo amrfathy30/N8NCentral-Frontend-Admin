@@ -4,7 +4,7 @@ import CustomSelect from "../../../../Components/Ui/CustomSelect";
 import { Search } from "lucide-react";
 import { Input } from "../../../../Components/Ui/Input";
 
-export default function TransactionHistory() {
+export default function TransactionHistory({ transactions }: { transactions: any[] }) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
 
@@ -15,75 +15,6 @@ export default function TransactionHistory() {
         { value: "AffiliateCommission", label: t("Financial.Sidebar.AffiliateCommission") },
         { value: "Refund", label: t("Financial.Sidebar.Refund") },
         { value: "Withdrawal", label: t("Financial.Sidebar.Withdrawal") },
-    ];
-
-    const transactions = [
-        {
-            id: 1,
-            amount: "+$260",
-            code: "#ORD-45552",
-            type: "OrderPayment",
-            txId: "TX-78911",
-            time: "11:25 م",
-            date: t("Dashboard.Today"),
-            description: "خدمة أتمتة رسائل واتساب",
-            status: "positive"
-        },
-        {
-            id: 2,
-            amount: "+$26",
-            code: "#ORD-45553",
-            type: "PlatformCommission",
-            txId: "TX-78912",
-            time: "11:20 م",
-            date: t("Dashboard.Today"),
-            description: "10% من إجمالي الطلب",
-            status: "positive"
-        },
-        {
-            id: 3,
-            amount: "+$15",
-            code: "#AFF-521",
-            type: "AffiliateCommission",
-            txId: "TX-78913",
-            time: "11:05 م",
-            date: t("Dashboard.Today"),
-            description: "عمولة %2",
-            status: "positive"
-        },
-        {
-            id: 4,
-            amount: "$120",
-            code: "#ORD-43102",
-            type: "Refund",
-            txId: "TX-78914",
-            time: "10:10 م",
-            date: "أمس",
-            description: "سار الملف قبل التنفيذ",
-            status: "negative"
-        },
-        {
-            id: 5,
-            amount: "$540",
-            code: "#WDR-5014",
-            type: "Withdrawal",
-            txId: "TX-78915",
-            time: "12:00 م",
-            date: "أمس",
-            description: "أفلييت",
-            status: "negative"
-        },
-        {
-            id: 6,
-            amount: "+$90",
-            code: "#ORD-44501",
-            type: "OrderPayment",
-            txId: "TX-78916",
-            time: "10:15 م",
-            date: "أمس",
-            description: "خدمة تحرير PDF تلقائي",
-            status: "positive"
-        }
     ];
 
     const getBadgeStyles = (type: string) => {

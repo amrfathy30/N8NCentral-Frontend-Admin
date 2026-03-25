@@ -94,7 +94,7 @@ export default function Buyers() {
     ];
 
     return (
-        <div className="space-y-8" dir={dir}>
+    <div className="flex flex-col gap-4" dir={dir}>
             {/* Header */}
             <Header title={t("Buyers.Title")} description={t("Buyers.Welcome")} />
 

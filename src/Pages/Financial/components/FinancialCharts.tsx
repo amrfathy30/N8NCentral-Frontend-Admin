@@ -11,19 +11,9 @@ import {
 } from "recharts";
 import { useTranslation } from "react-i18next";
 
-export const RevenuePerformanceChart = () => {
+export const RevenuePerformanceChart = ({RevenuePerformanceChartData}: {RevenuePerformanceChartData: any[]}) => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.dir() === "rtl";
-
-    const data = [
-        { name: t("Charts.Days.Sat"), merchant: 4000, platform: 2400, affiliates: 2400 },
-        { name: t("Charts.Days.Sun"), merchant: 3000, platform: 1398, affiliates: 2210 },
-        { name: t("Charts.Days.Mon"), merchant: 2000, platform: 9800, affiliates: 2290 },
-        { name: t("Charts.Days.Tue"), merchant: 2780, platform: 3908, affiliates: 2000 },
-        { name: t("Charts.Days.Wed"), merchant: 1890, platform: 4800, affiliates: 2181 },
-        { name: t("Charts.Days.Thu"), merchant: 2390, platform: 3800, affiliates: 2500 },
-        { name: t("Charts.Days.Fri"), merchant: 3490, platform: 4300, affiliates: 2100 },
-    ];
 
     return (
         <div className="custom-card h-[400px]">
@@ -36,7 +26,7 @@ export const RevenuePerformanceChart = () => {
                 </p>
             </div>
             <ResponsiveContainer width="100%" height="80%">
-                <LineChart data={data} margin={{ top: 10, right: isRtl ? 0 : 0, left: isRtl ? 0 : 0, bottom: 0 }}>
+                <LineChart data={RevenuePerformanceChartData} margin={{ top: 10, right: isRtl ? 0 : 0, left: isRtl ? 0 : 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                     <XAxis
                         dataKey="name"
@@ -75,19 +65,9 @@ export const RevenuePerformanceChart = () => {
     );
 };
 
-export const UsedFinancial = () => {
+export const UsedFinancial = ({UsedFinancialData}: {UsedFinancialData: any[]}) => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.dir() === "rtl";
-
-    const data = [
-        { name: t("Charts.Days.Sat"), visa: 4000, stripe: 2400, digitalCurrencies: 2400 },
-        { name: t("Charts.Days.Sun"), visa: 3000, stripe: 1398, digitalCurrencies: 2210 },
-        { name: t("Charts.Days.Mon"), visa: 2000, stripe: 9800, digitalCurrencies: 2290 },
-        { name: t("Charts.Days.Tue"), visa: 2780, stripe: 3908, digitalCurrencies: 2000 },
-        { name: t("Charts.Days.Wed"), visa: 1890, stripe: 4800, digitalCurrencies: 2181 },
-        { name: t("Charts.Days.Thu"), visa: 2390, stripe: 3800, digitalCurrencies: 2500 },
-        { name: t("Charts.Days.Fri"), visa: 3490, stripe: 4300, digitalCurrencies: 2100 },
-    ];
 
     return (
         <div className="custom-card h-[400px]">
@@ -100,7 +80,7 @@ export const UsedFinancial = () => {
                 </p>
             </div>
             <ResponsiveContainer width="100%" height="80%">
-                <LineChart data={data} margin={{ top: 10, right: isRtl ? 0 : 0, left: isRtl ? 0 : 0, bottom: 0 }}>
+                <LineChart data={UsedFinancialData} margin={{ top: 10, right: isRtl ? 0 : 0, left: isRtl ? 0 : 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                     <XAxis
                         dataKey="name"

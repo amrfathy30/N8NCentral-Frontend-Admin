@@ -21,7 +21,7 @@ export default function CustomCheckbox({
         inputId={id}
         checked={checked}
         onChange={onChange}
-        className="custom-orange-checkbox"
+        className="custom-green-checkbox"
       />
       <label htmlFor={id} className="cursor-pointer">
         {label}

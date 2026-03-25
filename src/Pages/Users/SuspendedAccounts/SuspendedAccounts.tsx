@@ -198,7 +198,7 @@ export default function SuspendedAccounts() {
     ];
 
     return (
-        <div className="space-y-8" dir={dir}>
+    <div className="flex flex-col gap-4" dir={dir}>
             <ConfirmModal
                 isOpen={isStatusModalOpen}
                 onClose={() => setIsStatusModalOpen(false)}

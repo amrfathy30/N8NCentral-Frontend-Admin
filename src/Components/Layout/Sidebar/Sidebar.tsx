@@ -23,6 +23,7 @@ export default function Sidebar() {
   const lang = i18n.language;
   const dir = i18n.dir();
   const [usersOpen, setUsersOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const menuItems = [
     {
@@ -82,6 +83,14 @@ export default function Sidebar() {
       title: t("Sidebar.Settings"),
       icon: Settings,
       path: `/${lang}/admin/settings`,
+      isSubmenu: true,
+      isOpen: settingsOpen,
+      setOpen: setSettingsOpen,
+      submenu: [
+        { title: t("Sidebar.Permissions"), path: `/${lang}/admin/permissions` },
+        { title: t("Sidebar.GeneralSettings"), path: `/${lang}/admin/general-settings` },
+        { title: t("Sidebar.DropDownMenuSettings"), path: `/${lang}/admin/drop-down-menu-settings` },
+      ],
     },
     {
       title: t("Sidebar.Logs"),

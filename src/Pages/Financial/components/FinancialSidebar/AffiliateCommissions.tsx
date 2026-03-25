@@ -10,7 +10,6 @@ export default function AffiliateCommissions() {
         { value: "month", label: "افلييت 2" },
     ];
 
-
     return (
         <div className="custom-card">
             <h4 className="font-bold text-gray-800 mb-2">{t("Financial.Sidebar.AffiliateCommissions")}</h4>
@@ -75,7 +74,7 @@ export default function AffiliateCommissions() {
                     </Button>
                 </div>
             </div>
-{/* 
+            {/* 
             <div className="mt-8 space-y-4">
                 <div className="p-4 bg-green-50 rounded-[16px] flex justify-between items-center">
                     <div>

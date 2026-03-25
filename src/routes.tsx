@@ -18,12 +18,13 @@ import OrdersPage from './Pages/Orders/OrdersPage';
 import FinancialPage from './Pages/Financial/FinancialPage';
 import AnalyticsPage from './Pages/Analytics/AnalyticsPage';
 import Complaints from './Pages/Complaints/Complaints';
-import Setting from './Pages/Setting/Setting';
 import LogsPage from './Pages/Logs/LogsPage';
-
 import Merchants from './Pages/Merchants/Merchants';
 import ServicesDetails from './Pages/Services/ServicesDetails';
-// Switcher component to handle generic details route
+import PermissionsPage from './Pages/Setting/Permissions/PermissionsPage';
+import DropDownMenuSettings from './Pages/Setting/DropDownMenuSettings/DropDownMenuSettings';
+import GeneralSettings from './Pages/Setting/GeneralSettings/GeneralSettings';
+
 function UserDetailsSwitcher() {
     const { type } = useParams();
 
@@ -65,8 +66,10 @@ function LocaleWrapper() {
                 <Route path="financial-page" element={<FinancialPage />} />
                 <Route path="analytics" element={<AnalyticsPage />} />
                 <Route path="complaints" element={<Complaints />} />
-                <Route path="settings" element={<Setting />} />
+                <Route path="general-settings" element={<GeneralSettings />} />
+                <Route path="drop-down-menu-settings" element={<DropDownMenuSettings />} />
                 <Route path="logs" element={<LogsPage />} />
+                <Route path="permissions" element={<PermissionsPage />} />
                 <Route path="services-details/:id" element={<ServicesDetails />} />
                 <Route path="users">
                     <Route path="buyers" element={<Buyers />} />

@@ -8,6 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: { message: string };
   className?: string;
   inputClassName?: string;
+  labelClassName?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -20,6 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       error,
       className = "",
       inputClassName = "",
+      labelClassName = "",
       ...props
     },
     ref,
@@ -33,13 +35,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div
-        className={`flex flex-col gap-1 mb-4 relative ${className}`}
+        className={`flex flex-col gap-1 relative ${className}`}
         dir={dir}
       >
         {label && (
           <label
             htmlFor={props.name}
-            className="text-[#0B0B0B] font-medium text-[18px] mb-2 flex items-center gap-2"
+            className={`text-[#0B0B0B] font-semibold text-[18px] mb-2 flex items-center gap-2 ${labelClassName}`}
           >
             {Icon && <Icon className="text-[#0B0B0B]" />}
             {label}
@@ -55,7 +57,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             placeholder={placeholder}
             className={`w-full p-3 outline-none border ${
               error ? "border-red-500" : "border-[#909090]"
-            } rounded-2xl pr-10 focus:border-main transition-all ${inputClassName}`}
+            } rounded-2xl pr-5 focus:border-main transition-all ${inputClassName}`}
           />
 
           {isPassword && (

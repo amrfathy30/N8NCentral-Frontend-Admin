@@ -102,7 +102,7 @@ export default function OrdersPage() {
     ];
 
     return (
-        <div className="space-y-8" dir={dir}>
+    <div className="flex flex-col gap-4" dir={dir}>
             <Header 
                 title={t("Orders.Title")} 
                 description={t("Orders.Welcome")} 

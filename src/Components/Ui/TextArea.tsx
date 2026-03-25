@@ -39,14 +39,14 @@ const TextArea: React.FC<TextareaProps> = ({
     }
   };
 
-  let textareaClasses = `w-full rounded-[10px] border border-[#E5E7EB] px-4 py-2.5 text-sm shadow-theme-xs focus:outline-hidden ${className} `;
+  let textareaClasses = `w-full rounded-[10px] border border-[#E5E7EB] px-4 py-2.5 text-sm shadow-theme-xs focus:outline-none ${className} `;
 
   if (disabled) {
-    textareaClasses += ` bg-gray-100 opacity-50 text-gray-500 border-gray-300 cursor-not-allowed opacity40 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 placeholder:text-[#0A0A0A80]`;
+    textareaClasses += ` bg-gray-100 opacity-50 text-gray-500 border-gray-300 cursor-not-allowed dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 placeholder:text-[#0A0A0A80]`;
   } else if (error) {
-    textareaClasses += ` bg-transparent  border-gray-300 focus:border-error-300 focus:ring-3 focus:ring-error-500/10 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white/90 dark:focus:border-error-800 placeholder:text-[#0A0A0A80]`;
+    textareaClasses += ` bg-transparent focus:border-greenDark focus:ring-2 focus:ring-greenDark dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white/90 dark:focus:border-greenDark placeholder:text-[#0A0A0A80]`;
   } else {
-    textareaClasses += ` bg-transparent text-gray-900 dark:text-gray-300 text-gray-900 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white/90 dark:focus:border-brand-800 placeholder:text-[#0A0A0A80]`;
+    textareaClasses += ` bg-transparent text-gray-900 dark:text-gray-300 focus:border-greenDark focus:ring-1 focus:ring-greenDark dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white/90 dark:focus:border-greenDark placeholder:text-[#0A0A0A80]`;
   }
 
   return (
