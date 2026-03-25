@@ -504,9 +504,6 @@
       "Payment": "Payment",
       "Transfer": "Transfer"
     }
-  }
-}
-
   },
   "Orders": {
     "Title": "Orders",
@@ -524,30 +521,30 @@
     "Actions": "Actions",
     "SearchPlaceholder": "Search for a specific order...",
     "OrderDetails": {
-    "Title": "Order Details",
-    "OrderNumber": "Order Number",
-    "Status": "Status",
-    "PurchaseDate": "Purchase Date",
-    "PurchaseTime": "Purchase Time",
-    "PaymentMethod": "Payment Method",
-    "Source": "Source",
-    "BuyerInfo": "Buyer Information",
-    "BuyerName": "Name",
-    "Phone": "Phone",
-    "RegistrationDate": "Registration Date",
-    "LastActivity": "Last Activity",
-    "Email": "Email",
-    "Country": "Country",
-    "PreviousOrders": "Previous Orders",
-    "TotalSpent": "Total Spent",
-    "ServiceInfo": "Service Details",
-    "ServiceName": "Service",
-    "Merchant": "Merchant",
-    "BasePrice": "Base Price",
-    "ExecutionPeriod": "Execution Period",
-    "AdditionalServices": "Additional Services",
-    "NoAdditionalServices": "None"
-  }
+      "Title": "Order Details",
+      "OrderNumber": "Order Number",
+      "Status": "Status",
+      "PurchaseDate": "Purchase Date",
+      "PurchaseTime": "Purchase Time",
+      "PaymentMethod": "Payment Method",
+      "Source": "Source",
+      "BuyerInfo": "Buyer Information",
+      "BuyerName": "Name",
+      "Phone": "Phone",
+      "RegistrationDate": "Registration Date",
+      "LastActivity": "Last Activity",
+      "Email": "Email",
+      "Country": "Country",
+      "PreviousOrders": "Previous Orders",
+      "TotalSpent": "Total Spent",
+      "ServiceInfo": "Service Details",
+      "ServiceName": "Service",
+      "Merchant": "Merchant",
+      "BasePrice": "Base Price",
+      "ExecutionPeriod": "Execution Period",
+      "AdditionalServices": "Additional Services",
+      "NoAdditionalServices": "None"
+    }
   },
   "Complaints": {
     "Title": "Complaints & Disputes",
