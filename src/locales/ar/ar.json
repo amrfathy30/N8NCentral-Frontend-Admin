@@ -505,5 +505,68 @@
       "Payment": "عملية صرف",
       "Transfer": "تحويل مالي"
     }
+  },
+  "Orders": {
+    "Title": "الطلبات",
+    "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة",
+    "TotalOrders": "إجمالي الطلبات",
+    "InExecution": "قيد التنفيذ",
+    "Completed": "مكتملة",
+    "Cancelled": "ملغاة",
+    "Service": "الخدمة",
+    "Merchant": "التاجر",
+    "Customer": "العميل",
+    "Paid": "المدفوع",
+    "DeliveryDate": "موعد التسليم",
+    "Status": "الحالة",
+    "Actions": "الإجراءات",
+    "SearchPlaceholder": "ابحث عن طلب معين...",
+    "OrderDetails": {
+      "Title": "تفاصيل الطلب",
+      "OrderNumber": "رقم الطلب",
+      "Status": "الحالة",
+      "PurchaseDate": "تاريخ الشراء",
+      "PurchaseTime": "توقيت الشراء",
+      "PaymentMethod": "طريقة الدفع",
+      "Source": "المصدر",
+      "BuyerInfo": "رابط المشتري",
+      "BuyerName": "الاسم",
+      "Phone": "الهاتف",
+      "RegistrationDate": "تاريخ التسجيل",
+      "LastActivity": "آخر نشاط",
+      "Email": "البريد الإلكتروني",
+      "Country": "الدولة",
+      "PreviousOrders": "الطلبات السابقة",
+      "TotalSpent": "إجمالي الإنفاق",
+      "ServiceInfo": "بيانات الخدمة",
+      "ServiceName": "الخدمة",
+      "Merchant": "التاجر",
+      "BasePrice": "السعر الأساسي",
+      "ExecutionPeriod": "مدة التنفيذ",
+      "AdditionalServices": "خدمات إضافية",
+      "NoAdditionalServices": "لا يوجد"
+    }
+  },
+  "Complaints": {
+    "Title": "الشكاوى والنزاعات",
+    "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة",
+    "SearchPlaceholder": "ابحث عن شكوى...",
+    "Status": {
+      "Open": "مفتوحة",
+      "Closed": "مغلقة"
+    },
+    "Table": {
+      "Service": "الخدمة",
+      "Id": "رقم الشكوى",
+      "Type": "النوع",
+      "Complainant": "الطرف المشتكي",
+      "Date": "التاريخ",
+      "Status": "الحالة",
+      "Actions": "الإجراءات"
+    },
+    "Filters": {
+      "Open": "مفتوحة",
+      "Closed": "مغلقة"
+    }
   }
 }
