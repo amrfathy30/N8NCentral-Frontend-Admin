@@ -5,5 +5,7 @@ import Dot from './dot.svg?react';
 import Cart2 from './cart2.svg?react';
 import CashBag from './cash-bag.svg?react';
 import HandCoins from './handCoins.svg?react';
+import Flash from './flash.svg?react';
+import DownloadIcon from './download.svg?react';
 
-export { Deliver, Star, Cart, Dot, Cart2, CashBag ,HandCoins};
+export { Deliver, Star, Cart, Dot, Cart2, CashBag, HandCoins, Flash, DownloadIcon };

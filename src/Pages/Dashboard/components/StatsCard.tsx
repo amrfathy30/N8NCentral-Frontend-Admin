@@ -1,7 +1,7 @@
 import { TrendingUp } from 'lucide-react';
 
 const StatsCard = ({ title, value, icon: Icon, color, trend }: any) => (
-    <div className="bg-white p-6 rounded-[24px] border border-gray-100 shadow-sm transition-all duration-300 hover:bg-greenDark group cursor-pointer h-full flex flex-col justify-between">
+    <div className="custom-card transition-all duration-300 hover:bg-greenDark group cursor-pointer h-full flex flex-col justify-between">
         <div>
             <div className="flex justify-between items-start mb-6">
                 <div className={`p-4 rounded-2xl ${color} text-white shadow-lg shadow-gray-200 transition-all duration-300 group-hover:bg-white/20 group-hover:shadow-none`}>

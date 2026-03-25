@@ -8,16 +8,16 @@ import {
   Megaphone,
   PauseCircle,
   Ban,
-  Star,
   CheckCircle,
   Clock
 } from "lucide-react";
 import Header from "../../Components/Ui/Header";
-import { Cart2, CashBag } from "../../icons";
+import { Cart2, CashBag, Star } from "../../icons";
 import { useState } from "react";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
 import CategoriesDrawer from "./CategoriesDrawer";
 import ServiceDetailsDrawer from "./ServiceDetailsDrawer";
+import { useNavigate } from "react-router-dom";
 
 interface ServiceData {
   id: number;
@@ -169,44 +169,70 @@ const ActionButtons = ({
   handleViewClick,
   handleStopClick,
   handleBanClick,
+  activeFilter,
+  navigate,
 }: {
   rowData: any;
   handleViewClick: (data: any) => void;
   handleStopClick: (data: any) => void;
   handleBanClick: (data: any) => void;
+  activeFilter: string;
+  navigate: (path: string) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
+  const isActive = rowData.status === "active";
+  const isPending = rowData.status === "PendingReview";
+  const showAll = activeFilter === "all" || isActive;
+
   return (
     <div className="flex justify-center items-center gap-3 text-gray-400">
       <button
-        onClick={() => handleViewClick(rowData)}
+        onClick={() => {
+          if (isPending) {
+            navigate(`/${lang}/admin/services-details/${rowData.id}`);
+          } else {
+            handleViewClick(rowData);
+          }
+        }}
         className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark transition-colors"
       >
         {t("Common.View") || "عرض"}
       </button>
-      <button
-        onClick={() => handleStopClick(rowData)}
-        className="bg-[#F68713] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#F68713] transition-colors"
-      >
-        {t("Common.Stop") || "إيقاف"}
-      </button>
-      <button
-        onClick={() => handleBanClick(rowData)}
-        className="bg-[#D00808] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#D00808] transition-colors"
-      >
-        {t("Common.Ban") || "حظر"}
-      </button>
+
+      {showAll && (
+        <>
+          <button
+            onClick={() => handleStopClick(rowData)}
+            disabled={!isActive}
+            className={`bg-[#F68713] text-white py-2 px-5 rounded-[10px] transition-all ${!isActive ? "opacity-30 cursor-not-allowed" : "hover:text-white hover:bg-[#F68713]"
+              }`}
+          >
+            {t("Common.Stop") || "إيقاف"}
+          </button>
+          <button
+            onClick={() => handleBanClick(rowData)}
+            disabled={!isActive}
+            className={`bg-[#D00808] text-white py-2 px-5 rounded-[10px] transition-all ${!isActive ? "opacity-30 cursor-not-allowed" : "hover:text-white hover:bg-[#D00808]"
+              }`}
+          >
+            {t("Common.Ban") || "حظر"}
+          </button>
+        </>
+      )}
     </div>
   );
 };
 
 export default function ServicesPage() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const dir = i18n.dir();
   const [isStopModalOpen, setIsStopModalOpen] = useState(false);
   const [isBanModalOpen, setIsBanModalOpen] = useState(false);
   const [isCategoriesDrawerOpen, setIsCategoriesDrawerOpen] = useState(false);
   const [isServiceDetailsDrawerOpen, setIsServiceDetailsDrawerOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
   const [selectedAffiliate, setSelectedAffiliate] = useState<any>(null);
   const [selectedService, setSelectedService] = useState<any>(null);
 
@@ -291,7 +317,7 @@ export default function ServicesPage() {
       header: t("Services.Table.Rating"),
       body: (rowData: ServiceData) => (
         <div className="flex items-center justify-center gap-1">
-          <Star size={16} fill="#FACC15" color="#FACC15" />
+          <Star className="text-[#FACC15] fill-[#FACC15]"/>
           <span className="text-gray-600 font-bold">{rowData.rating}</span>
         </div>
       ),
@@ -309,6 +335,8 @@ export default function ServicesPage() {
           handleViewClick={handleViewClick}
           handleStopClick={handleStopClick}
           handleBanClick={handleBanClick}
+          activeFilter={activeFilter}
+          navigate={navigate}
         />
       ),
       // width: "300px",
@@ -370,12 +398,14 @@ export default function ServicesPage() {
         ))}
       </div>
 
-      <DynamicTable
-        data={mockServices}
-        columns={columns}
-        filterOptions={filterOptions}
-        searchPlaceholder={t("Services.SearchPlaceholder")}
-      />
+          <DynamicTable
+            data={mockServices}
+            columns={columns}
+            filterOptions={filterOptions}
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            searchPlaceholder={t("Services.SearchPlaceholder")}
+          />
     </div>
   );
 }

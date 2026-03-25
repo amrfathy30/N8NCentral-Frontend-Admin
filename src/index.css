@@ -28,7 +28,10 @@ body {
 .custom-table {
     font-family: "Cairo", sans-serif !important;
 }
-
+.custom-card{
+    @apply bg-white p-6 rounded-[24px] border border-gray-100 shadow-sm;
+}
+    
 .custom-table .p-datatable-thead>tr>th:first-child {
     @apply rounded-ss-[11px] !important;
 }

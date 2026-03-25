@@ -7,9 +7,10 @@ interface CustomSelectProps {
     value?: { value: string; label: string } | null;
     onChange?: (option: any) => void;
     className?: string;
+    isSearchable?: boolean;
 }
 
-export default function CustomSelect({ options, placeholder, value, onChange, className }: CustomSelectProps) {
+export default function CustomSelect({ options, placeholder, value, onChange, className, isSearchable = false }: CustomSelectProps) {
     const { i18n } = useTranslation();
     const isAr = i18n.language === "ar";
 
@@ -72,7 +73,7 @@ export default function CustomSelect({ options, placeholder, value, onChange, cl
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                isSearchable={false}
+                isSearchable={isSearchable}
                 styles={customStyles}
                 menuPortalTarget={document.body}
             />

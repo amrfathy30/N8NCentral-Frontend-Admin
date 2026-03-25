@@ -22,6 +22,7 @@ import Setting from './Pages/Setting/Setting';
 import LogsPage from './Pages/Logs/LogsPage';
 
 import Merchants from './Pages/Merchants/Merchants';
+import ServicesDetails from './Pages/Services/ServicesDetails';
 // Switcher component to handle generic details route
 function UserDetailsSwitcher() {
     const { type } = useParams();
@@ -66,6 +67,7 @@ function LocaleWrapper() {
                 <Route path="complaints" element={<Complaints />} />
                 <Route path="settings" element={<Setting />} />
                 <Route path="logs" element={<LogsPage />} />
+                <Route path="services-details/:id" element={<ServicesDetails />} />
                 <Route path="users">
                     <Route path="buyers" element={<Buyers />} />
                     <Route path="sellers" element={<Sellers />} />

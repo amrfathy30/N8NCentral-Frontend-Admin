@@ -27,6 +27,7 @@ interface DynamicTableProps {
   onFilterChange?: (value: string) => void;
   onSearchChange?: (value: string) => void;
   showSearch?: boolean;
+  activeFilter?: string;
 }
 
 export default function DynamicTable({
@@ -36,11 +37,22 @@ export default function DynamicTable({
   filterOptions = [],
   filterField = "status",
   showSearch = true,
+  activeFilter: externalActiveFilter,
+  onFilterChange,
 }: DynamicTableProps) {
   const { t, i18n } = useTranslation();
   const [globalFilter, setGlobalFilter] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [internalActiveFilter, setInternalActiveFilter] = useState("all");
+  const activeFilter = externalActiveFilter || internalActiveFilter;
   const dir = i18n.dir();
+
+  const handleFilterChange = (value: string) => {
+    if (onFilterChange) {
+      onFilterChange(value);
+    } else {
+      setInternalActiveFilter(value);
+    }
+  };
 
   const getActiveColor = (filter: string) => {
     switch (filter) {
@@ -102,7 +114,7 @@ export default function DynamicTable({
             {filterOptions.map((option) => (
               <button
                 key={option.value}
-                onClick={() => setActiveFilter(option.value)}
+                onClick={() => handleFilterChange(option.value)}
                 className={`px-6 py-2 rounded-[10px] text-sm font-medium transition-all whitespace-nowrap ${activeFilter === option.value
                   ? `${getActiveColor(option.value)} text-white`
                   : " text-gray-500 hover:bg-gray-100"
