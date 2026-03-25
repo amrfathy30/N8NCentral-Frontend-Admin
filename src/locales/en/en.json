@@ -362,5 +362,68 @@
       "StopService": "Stop Service",
       "Gold": "Gold"
     }
+  },
+  "Orders": {
+    "Title": "Orders",
+    "Welcome": "Welcome back to N8NCentral Admin Panel",
+    "TotalOrders": "Total Orders",
+    "InExecution": "In Progress",
+    "Completed": "Completed",
+    "Cancelled": "Cancelled",
+    "Service": "Service",
+    "Merchant": "Merchant",
+    "Customer": "Customer",
+    "Paid": "Paid",
+    "DeliveryDate": "Delivery Date",
+    "Status": "Status",
+    "Actions": "Actions",
+    "SearchPlaceholder": "Search for a specific order...",
+    "OrderDetails": {
+    "Title": "Order Details",
+    "OrderNumber": "Order Number",
+    "Status": "Status",
+    "PurchaseDate": "Purchase Date",
+    "PurchaseTime": "Purchase Time",
+    "PaymentMethod": "Payment Method",
+    "Source": "Source",
+    "BuyerInfo": "Buyer Information",
+    "BuyerName": "Name",
+    "Phone": "Phone",
+    "RegistrationDate": "Registration Date",
+    "LastActivity": "Last Activity",
+    "Email": "Email",
+    "Country": "Country",
+    "PreviousOrders": "Previous Orders",
+    "TotalSpent": "Total Spent",
+    "ServiceInfo": "Service Details",
+    "ServiceName": "Service",
+    "Merchant": "Merchant",
+    "BasePrice": "Base Price",
+    "ExecutionPeriod": "Execution Period",
+    "AdditionalServices": "Additional Services",
+    "NoAdditionalServices": "None"
+  }
+  },
+  "Complaints": {
+    "Title": "Complaints & Disputes",
+    "Welcome": "Welcome back to N8NCentral Admin Panel",
+    "SearchPlaceholder": "Search for a complaint...",
+    "Status": {
+      "Open": "Open",
+      "Closed": "Closed"
+    },
+    "Table": {
+      "Service": "Service",
+      "Id": "Complaint ID",
+      "Type": "Type",
+      "Complainant": "Complainant",
+      "Date": "Date",
+      "Status": "Status",
+      "Actions": "Actions"
+    },
+    "Filters": {
+      "Open": "Open",
+      "Closed": "Closed"
+    }
   }
 }
