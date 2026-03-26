@@ -568,5 +568,39 @@
       "Open": "مفتوحة",
       "Closed": "مغلقة"
     }
+  },
+  "Logs": {
+    "Title": "السجلات",
+    "ExportCSV": "تصدير CSV",
+    "Filters": {
+      "Type": "النوع",
+      "Users": "المستخدمين",
+      "Search": "البحث",
+      "AllTypes": "كل الأنواع",
+      "AllUsers": "كل المستخدمين",
+      "SearchPlaceholder": "ابحث عن سجل معين..."
+    },
+    "Tabs": {
+      "Activity": "سجل النشاط",
+      "Financial": "السجلات المالية",
+      "Security": "سجلات الأمان"
+    },
+    "Table": {
+      "Date": "التاريخ",
+      "User": "المستخدم",
+      "Action": "الإجراء",
+      "Status": "الحالة",
+      "Details": "عرض تفاصيل",
+      "TxNumber": "رقم العملية",
+      "Type": "النوع",
+      "Amount": "المبلغ",
+      "IP": "IP",
+      "Statuses": {
+        "Completed": "تم التنفيذ",
+        "Success": "نجاح",
+        "Pending": "قيد المراجعة",
+        "Failed": "فشل"
+      }
+    }
   }
 }

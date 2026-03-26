@@ -52,6 +52,10 @@ export default function CustomSelect({ options, placeholder, value, onChange, cl
             color: "#101828",
             fontSize: "14px",
         }),
+        menuPortal: (base: any) => ({
+            ...base,
+            zIndex: 999999,
+        }),
         menu: (provided: any) => ({
             ...provided,
             zIndex: 10,

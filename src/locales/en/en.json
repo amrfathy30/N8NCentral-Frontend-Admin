@@ -567,5 +567,39 @@
       "Open": "Open",
       "Closed": "Closed"
     }
+  },
+  "Logs": {
+    "Title": "Logs",
+    "ExportCSV": "Export CSV",
+    "Filters": {
+      "Type": "Type",
+      "Users": "Users",
+      "Search": "Search",
+      "AllTypes": "All Types",
+      "AllUsers": "All Users",
+      "SearchPlaceholder": "Search for a specific log..."
+    },
+    "Tabs": {
+      "Activity": "Activity Log",
+      "Financial": "Financial Logs",
+      "Security": "Security Logs"
+    },
+    "Table": {
+      "Date": "Date",
+      "User": "User",
+      "Action": "Action",
+      "Status": "Status",
+      "Details": "View Details",
+      "TxNumber": "Transaction No.",
+      "Type": "Type",
+      "Amount": "Amount",
+      "IP": "IP",
+      "Statuses": {
+        "Completed": "Completed",
+        "Success": "Success",
+        "Pending": "Pending Review",
+        "Failed": "Failed"
+      }
+    }
   }
 }
