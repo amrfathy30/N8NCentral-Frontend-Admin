@@ -18,12 +18,12 @@ import OrdersPage from './Pages/Orders/OrdersPage';
 import FinancialPage from './Pages/Financial/FinancialPage';
 import AnalyticsPage from './Pages/Analytics/AnalyticsPage';
 import Complaints from './Pages/Complaints/Complaints';
-import LogsPage from './Pages/Logs/LogsPage';
 import Merchants from './Pages/Merchants/Merchants';
 import ServicesDetails from './Pages/Services/ServicesDetails';
 import PermissionsPage from './Pages/Setting/Permissions/PermissionsPage';
 import DropDownMenuSettings from './Pages/Setting/DropDownMenuSettings/DropDownMenuSettings';
 import GeneralSettings from './Pages/Setting/GeneralSettings/GeneralSettings';
+import LogsPage from './Pages/LogsPage/LogsPage';
 
 function UserDetailsSwitcher() {
     const { type } = useParams();

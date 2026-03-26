@@ -145,7 +145,7 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
       isOpen={isOpen}
       onClose={onClose}
       title="تفاصيل النزاع"
-      maxWidth="1300px"
+      maxWidth="1100px"
       side={dir === 'rtl' ? 'left' : 'right'}
     >
         <div className="flex items-center pb-4 gap-1 text-xs text-[#80878B]">
