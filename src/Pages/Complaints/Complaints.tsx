@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Header from "../../Components/Ui/Header";
 import DynamicTable from "../../Components/Ui/DynamicTable";
+import ComplaintDetailsDrawer from "./ComplaintDetailsDrawer";
 
 const ComplaintStatusBadge = ({ status }: { status: string }) => {
   const { t } = useTranslation();
@@ -35,6 +37,13 @@ export default function Complaints() {
   const { t, i18n } = useTranslation();
   const dir = i18n.dir();
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedComplaint, setSelectedComplaint] = useState<any>(null);
+
+  const handleViewDetails = (complaint: any) => {
+    setSelectedComplaint(complaint);
+    setIsDrawerOpen(true);
+  };
   const mockComplaints = [
     {
       id: 1,
@@ -88,7 +97,7 @@ export default function Complaints() {
       body: (rowData: any) => (
         <div className="flex justify-center">
           <button
-            onClick={() => console.log("View Complaint", rowData.id)}
+            onClick={() => handleViewDetails(rowData)}
             className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark transition-colors"
           >
             {t("Common.View")}
@@ -116,6 +125,11 @@ export default function Complaints() {
         columns={columns}
         filterOptions={filterOptions}
         searchPlaceholder={t("Complaints.SearchPlaceholder")}
+      />
+      <ComplaintDetailsDrawer 
+        isOpen={isDrawerOpen} 
+        onClose={() => setIsDrawerOpen(false)} 
+        data={selectedComplaint} 
       />
     </div>
   );
