@@ -136,9 +136,9 @@ export default function Merchants() {
                     headerClassName,
                     body: () => (
                         <div className="flex gap-4 items-center justify-center">
-                            <Eye className="text-greenDark cursor-pointer hover:opacity-70 transition-colors" size={24} />
-                            <Play className="text-[#F68713] cursor-pointer hover:opacity-70 transition-colors" size={24} fill="currentColor" />
-                            <Ban className="text-[#D00808] cursor-pointer hover:opacity-70 transition-colors" size={24} />
+                            <Eye className="text-greenDark cursor-pointer hover:text-gray-400 transition-colors" size={24} />
+                            <Play className="text-[#F68713] cursor-pointer hover:text-orange-600 transition-colors" size={24} fill="currentColor" />
+                            <Ban className="text-[#D00808] cursor-pointer hover:text-red-600 transition-colors" size={24} />
                         </div>
                     ),
                 },
