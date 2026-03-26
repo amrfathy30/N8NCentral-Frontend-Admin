@@ -1,4 +1,4 @@
-import { GripVertical, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useState } from 'react';
 import { Input } from '../../../../Components/Ui/Input';
 import { useTranslation } from 'react-i18next';

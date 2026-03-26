@@ -7,7 +7,7 @@ interface OrderDetailsDrawerProps {
     order: any;
 }
 
-export default function OrderDetailsDrawer({ isOpen, onClose, order }: OrderDetailsDrawerProps) {
+export default function OrderDetailsDrawer({ isOpen, onClose }: OrderDetailsDrawerProps) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
 

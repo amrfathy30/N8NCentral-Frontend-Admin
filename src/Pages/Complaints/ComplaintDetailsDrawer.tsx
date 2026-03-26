@@ -1,4 +1,3 @@
-import React from "react";
 import Drawer from "../../Components/Ui/Drawer";
 import { Paperclip } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -7,7 +6,7 @@ import CustomSelect from "../../Components/Ui/CustomSelect";
 interface ComplaintDetailsDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  data?: any; 
+  data?: any;
 }
 
 const SummaryCard = ({ title, value, subValue }: { title: string, value: string, subValue: string }) => (
@@ -27,33 +26,33 @@ const ChatSection = () => {
           <p className="text-md text-[#6B7280] mt-1">شات كامل + إشعارات النظام</p>
         </div>
         <button className="flex items-center px-4 py-2 text-blackq rounded-xl text-md font-medium hover:bg-gray-50 transition-colors border border-gray-150">
-          نسخ رقم النزاع 
+          نسخ رقم النزاع
         </button>
       </div>
 
       <div className="max-h-[600px] overflow-y-auto pr-2">
-        <img 
-          src="/Chat.png" 
-          alt="المحادثة" 
+        <img
+          src="/Chat.png"
+          alt="المحادثة"
           className="w-full h-auto object-contain rounded-xl"
         />
       </div>
 
       <div className="flex gap-4 pt-6 items-stretch" dir="rtl">
-        <SummaryCard 
-          title="مدة النزاع" 
-          value="3 أيام" 
-          subValue="آخر تحديث: اليوم" 
+        <SummaryCard
+          title="مدة النزاع"
+          value="3 أيام"
+          subValue="آخر تحديث: اليوم"
         />
-        <SummaryCard 
-          title="حالة التسليم" 
-          value="غير مُسلّم" 
-          subValue="موعد: 14-02-2026" 
+        <SummaryCard
+          title="حالة التسليم"
+          value="غير مُسلّم"
+          subValue="موعد: 14-02-2026"
         />
-        <SummaryCard 
-          title="التوصية" 
-          value="تعويض/استرداد محتمل بسبب التأخير" 
-          subValue="* توصية مبسطة (بدون AI)" 
+        <SummaryCard
+          title="التوصية"
+          value="تعويض/استرداد محتمل بسبب التأخير"
+          subValue="* توصية مبسطة (بدون AI)"
         />
       </div>
     </div>
@@ -66,14 +65,14 @@ const DecisionInput = ({ label, placeholder, minHeight = "100px", showRequired =
       {label}
     </label>
     <div className="relative group">
-      <textarea 
-        className="w-full bg-white border border-gray-150 rounded-lg p-5 text-sm min-h-[100px] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-1 focus:ring-greenDark focus:bg-white transition-all resize-none" 
+      <textarea
+        className="w-full bg-white border border-gray-150 rounded-lg p-5 text-sm min-h-[100px] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-1 focus:ring-greenDark focus:bg-white transition-all resize-none"
         style={{ minHeight: minHeight }}
-        placeholder={placeholder} 
+        placeholder={placeholder}
       />
-      
+
       <div className="absolute left-5 bottom-4 flex items-center gap-1.5 text-[#9CA3AF] cursor-pointer hover:bg-gray-100 transition-colors bg-white px-2 py-1 rounded-lg group-focus-within:bg-white border border-gray-150">
-         <Paperclip size={15} />
+        <Paperclip size={15} />
         <span className="text-[11px] font-medium">إرفاق ملفات</span>
       </div>
     </div>
@@ -96,7 +95,7 @@ const TimelineItem = ({ title, date, isActive = false }: { title: string, date: 
       <div className={`w-3.5 h-3.5 rounded-full z-10 ${isActive ? 'bg-greenDark' : 'bg-gray-300'}`} />
       <div className="w-[1.5px] h-12 bg-gray-100 -mt-1" />
     </div>
-    
+
     <div className="text-start pb-6">
       <h5 className="text-blackq font-bold text-[18px] mb-1">{title}</h5>
       <p className="text-[18px] text-[#6B7280] font-bold">{date}</p>
@@ -106,7 +105,7 @@ const TimelineItem = ({ title, date, isActive = false }: { title: string, date: 
 
 const FileAttachment = ({ fileName, fileType }: { fileName: string, fileType: string }) => (
   <div className="border border-gray-100 rounded-[16px] p-3 flex justify-between items-center mb-3">
-    
+
     <div className="text-right">
       <h5 className="text-blackq font-bold text-[15px] mb-1">{fileName}</h5>
       <span className="text-[#6B7280] text-[15px] font-bold">{fileType}</span>
@@ -130,17 +129,17 @@ const ClaimsBox = ({ title, claims }: { title: string, claims: string[] }) => (
   </div>
 );
 const options = [
-        { value: "refund", label: "استرداد كامل للمبلغ" },
-        { value: "partial", label: "تعويض جزئي" },
-        { value: "reject", label: "رفض الاعتراض" },
-        { value: "other", label: "قرار آخر..." },
-    ];
+  { value: "refund", label: "استرداد كامل للمبلغ" },
+  { value: "partial", label: "تعويض جزئي" },
+  { value: "reject", label: "رفض الاعتراض" },
+  { value: "other", label: "قرار آخر..." },
+];
 
 export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDetailsDrawerProps) {
-    const { t, i18n } = useTranslation();
-    const dir = i18n.dir();
-  
-    return (
+  const { i18n } = useTranslation();
+  const dir = i18n.dir();
+
+  return (
     <Drawer
       isOpen={isOpen}
       onClose={onClose}
@@ -148,14 +147,14 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
       maxWidth="1100px"
       side={dir === 'rtl' ? 'left' : 'right'}
     >
-        <div className="flex items-center pb-4 gap-1 text-xs text-[#80878B]">
+      <div className="flex items-center pb-4 gap-1 text-xs text-[#80878B]">
         <span>2026-02-15</span> • <span>شکوى مشتري</span> • <span>ORD-45892</span> • <span>DSP-1023</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-10 text-start">
         {/* Right Column */}
         <div className="lg:col-span-5 space-y-6">
-          
+
           <div className="bg-transparent border border-gray-150 rounded-[24px] p-6 text-start">
             <div className="flex justify-between items-start mb-4">
               <div className="text-right">
@@ -211,54 +210,54 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
                     Rating 4.7
                   </span>
                 </div>
-      
-                  <div className="flex gap-4 justify-center mt-3 mb-3">
-                    <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">Refund: 1</span>
-                    <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">نزاعات: 2</span>
-                    <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">طلبات: 28</span>
+
+                <div className="flex gap-4 justify-center mt-3 mb-3">
+                  <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">Refund: 1</span>
+                  <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">نزاعات: 2</span>
+                  <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">طلبات: 28</span>
+                </div>
+                <p className="text-[18px] text-[#6B7280] font-extrabold">Risk: 35/100</p>
+              </div>
+
+              <div className="border border-gray-100 rounded-[20px] p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="text-start">
+                    <p className="text-[18px] text-blackq font-extrabold mb-1">البائع</p>
+                    <h4 className="text-[18px] text-blackq font-extrabold">شركة التقنية الحديثة</h4>
+                    <span className="text-[18px] text-[#6B7280] font-extrabold">(MER-220)</span>
                   </div>
-                  <p className="text-[18px] text-[#6B7280] font-extrabold">Risk: 35/100</p>
+                  <span className="bg-[#DBEAFE] text-[#166534] text-[18px] font-bold px-3 py-1 rounded-full border border-[#BBF7D0]">
+                    Rating 4.7
+                  </span>
                 </div>
 
-                <div className="border border-gray-100 rounded-[20px] p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="text-start">
-                      <p className="text-[18px] text-blackq font-extrabold mb-1">البائع</p>
-                      <h4 className="text-[18px] text-blackq font-extrabold">شركة التقنية الحديثة</h4>
-                      <span className="text-[18px] text-[#6B7280] font-extrabold">(MER-220)</span>
-                    </div>
-                    <span className="bg-[#DBEAFE] text-[#166534] text-[18px] font-bold px-3 py-1 rounded-full border border-[#BBF7D0]">
-                        Rating 4.7
-                      </span>
-                  </div>
-      
-                  <div className="flex gap-2 justify-center mt-3 mb-3">
-                    <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">تحذيرات: 1</span>
-                    <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">نزاعات: 5</span>
-                    <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">خدمات: 12</span>
-                  </div>
-                  <p className="text-[18px] text-[#6B7280] font-extrabold">Risk: 70/100</p>
+                <div className="flex gap-2 justify-center mt-3 mb-3">
+                  <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">تحذيرات: 1</span>
+                  <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">نزاعات: 5</span>
+                  <span className="bg-gray-50 border border-gray-100 text-blackq text-[18px] px-6 py-2 rounded-xl font-medium">خدمات: 12</span>
                 </div>
+                <p className="text-[18px] text-[#6B7280] font-extrabold">Risk: 70/100</p>
+              </div>
 
-                <div className="bg-[#F8FAFC] border border-gray-50 rounded-[20px] p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="text-start">
-                      <p className="text-[18px] text-blackq font-extrabold mb-1">بيانات الأفلييت</p>
-                      <h4 className="text-[18px] text-blackq font-extrabold">أحمد سالم</h4>
-                      <span className="text-[18px] text-[#6B7280] font-extrabold">(AFF-1772)</span>
-                    </div>
-                    <span className="bg-[#DBEAFE] text-[#1D4ED8] text-[18px] font-bold px-3 py-1 rounded-full border border-[#BFDBFE]">
-                      عمولة مجمّدة
-                    </span>
+              <div className="bg-[#F8FAFC] border border-gray-50 rounded-[20px] p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="text-start">
+                    <p className="text-[18px] text-blackq font-extrabold mb-1">بيانات الأفلييت</p>
+                    <h4 className="text-[18px] text-blackq font-extrabold">أحمد سالم</h4>
+                    <span className="text-[18px] text-[#6B7280] font-extrabold">(AFF-1772)</span>
                   </div>
-                  <p className="text-[18px] text-[#6B7280] font-extrabold">نسبة العمولة: 18%</p>
+                  <span className="bg-[#DBEAFE] text-[#1D4ED8] text-[18px] font-bold px-3 py-1 rounded-full border border-[#BFDBFE]">
+                    عمولة مجمّدة
+                  </span>
                 </div>
+                <p className="text-[18px] text-[#6B7280] font-extrabold">نسبة العمولة: 18%</p>
               </div>
             </div>
+          </div>
 
           {/* Details & Timeline */}
           <div className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-100 dir-rtl text-right">
-            
+
             <div className="mb-6">
               <h3 className="text-[#050B2B] font-bold text-lg mb-4">تفاصيل الطلب</h3>
               <div className="space-y-3">
@@ -271,27 +270,27 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
 
             <div className="bg-[#F9FAFB] border border-gray-50 rounded-[20px] p-6 mt-4">
               <h4 className="text-blackq font-bold text-[18px] mb-6 text-start">Timeline</h4>
-              
+
               <div className="flex flex-col">
-                <TimelineItem 
-                  title="تم إنشاء الطلب" 
-                  date="2026-02-12 10:12" 
-                  isActive 
+                <TimelineItem
+                  title="تم إنشاء الطلب"
+                  date="2026-02-12 10:12"
+                  isActive
                 />
-                <TimelineItem 
-                  title="تم الدفع وتجميد المبلغ" 
-                  date="2026-02-12 10:13" 
-                  isActive 
+                <TimelineItem
+                  title="تم الدفع وتجميد المبلغ"
+                  date="2026-02-12 10:13"
+                  isActive
                 />
-                <TimelineItem 
-                  title="طلب العميل تحديث على حالة التنفيذ" 
-                  date="2026-02-13 16:20" 
-                  isActive 
+                <TimelineItem
+                  title="طلب العميل تحديث على حالة التنفيذ"
+                  date="2026-02-13 16:20"
+                  isActive
                 />
-                <TimelineItem 
-                  title="تم فتح نزاع بواسطة العميل" 
-                  date="2026-02-15 09:10" 
-                  isActive 
+                <TimelineItem
+                  title="تم فتح نزاع بواسطة العميل"
+                  date="2026-02-15 09:10"
+                  isActive
                 />
               </div>
             </div>
@@ -304,28 +303,28 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
               <FileAttachment fileName="requirements.pdf" fileType="ملف" />
             </div>
 
-            <ClaimsBox 
-              title="ادعاءات المشتري" 
+            <ClaimsBox
+              title="ادعاءات المشتري"
               claims={[
                 "تأخير عن موعد التسليم",
                 "لم يتم تسليم أي جزء قابل للاستخدام",
                 "لا توجد متابعة واضحة"
-              ]} 
+              ]}
             />
 
-            <ClaimsBox 
-              title="ادعاءات البائع" 
+            <ClaimsBox
+              title="ادعاءات البائع"
               claims={[
                 "البيانات ناقصة / Token غير صالح",
                 "تم طلب معلومات إضافية ولم تصل"
-              ]} 
+              ]}
             />
           </div>
         </div>
 
-         {/* Left Column */}
+        {/* Left Column */}
         <div className="lg:col-span-7 space-y-6">
-          
+
           <ChatSection />
 
           <div className="bg-transparent rounded-[24px] p-6 shadow-sm border border-gray-150 text-start">
@@ -340,23 +339,23 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
             </div>
 
             <div className="space-y-5">
-            <DecisionInput 
-              label="رسالة للمشتري (ستظهر له)" 
-              placeholder="اكتب رسالة واضحة للمشتري... مثال: تم مراجعة الأدلة وتم استرداد مبلغ ..." 
-              showRequired 
-            />
+              <DecisionInput
+                label="رسالة للمشتري (ستظهر له)"
+                placeholder="اكتب رسالة واضحة للمشتري... مثال: تم مراجعة الأدلة وتم استرداد مبلغ ..."
+                showRequired
+              />
 
-            <DecisionInput 
-              label="رسالة للبائع (ستظهر له)" 
-              placeholder="اكتب رسالة واضحة للبائع... مثال: تم اعتماد تعويض جزئي بسبب ..." 
-              showRequired 
-            />
+              <DecisionInput
+                label="رسالة للبائع (ستظهر له)"
+                placeholder="اكتب رسالة واضحة للبائع... مثال: تم اعتماد تعويض جزئي بسبب ..."
+                showRequired
+              />
 
-            <DecisionInput 
-              label="ملاحظة داخلية (للأدمن فقط)" 
-              placeholder="سبب القرار / نقاط الأدلة / أي ملاحظة داخلية..." 
-            />
-          </div>
+              <DecisionInput
+                label="ملاحظة داخلية (للأدمن فقط)"
+                placeholder="سبب القرار / نقاط الأدلة / أي ملاحظة داخلية..."
+              />
+            </div>
 
             <button className="w-[50%] mx-auto block bg-greenDark text-white py-4 rounded-[18px] font-bold text-[18px] hover:bg-[#286d49] transition-all shadow-md mt-4">
               اعتماد القرار
@@ -383,8 +382,8 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
                 { id: 'freeze', label: 'تجميد عمولة الأفلييت لهذا الطلب', checked: true },
               ].map((action) => (
                 <div key={action.id} className="flex items-center justify-start gap-3.5 mb-3">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     defaultChecked={action.checked}
                     id={action.id}
                     className="
@@ -406,16 +405,16 @@ export default function ComplaintDetailsDrawer({ isOpen, onClose }: ComplaintDet
                 </div>
               ))}
             </div>
-             </div>
+          </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-50 mt-6">
-              <h4 className="font-bold text-[16px] text-[#050B2B] mb-2 text-start">
-                سجل القرارات
-              </h4>
-              <p className="text-[14px] text-[#6B7280] text-start ">
-                لا توجد قرارات بعد لهذا النزاع.
-              </p>
-            </div>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-50 mt-6">
+            <h4 className="font-bold text-[16px] text-[#050B2B] mb-2 text-start">
+              سجل القرارات
+            </h4>
+            <p className="text-[14px] text-[#6B7280] text-start ">
+              لا توجد قرارات بعد لهذا النزاع.
+            </p>
+          </div>
         </div>
       </div>
     </Drawer>

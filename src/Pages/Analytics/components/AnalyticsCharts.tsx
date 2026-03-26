@@ -145,7 +145,7 @@ export const ConversionDonutChart = () => {
                             startAngle={isRtl ? 90 : 90}
                             endAngle={isRtl ? 450 : 450}
                         >
-                            {data.map((entry, index) => (
+                            {data.map((_entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>

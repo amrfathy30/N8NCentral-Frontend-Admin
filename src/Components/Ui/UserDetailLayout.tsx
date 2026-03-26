@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 import {
     ChevronLeft,
     ChevronRight,
-    Bell,
-    PauseCircle,
-    Ban,
     type LucideIcon
 } from "lucide-react";
 
