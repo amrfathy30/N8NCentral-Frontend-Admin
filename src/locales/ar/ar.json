@@ -375,7 +375,11 @@
       "StatusInactive": "غير نشطة",
       "ExpectedCommission": "العمولة المتوقعة",
       "Stop": "إيقاف",
-      "ViewDetails": "عرض"
+      "ViewDetails": "عرض",
+      "ConfirmStopTitle": "تأكيد الإيقاف المؤقت",
+      "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف حساب هذا المستخدم مؤقتاً؟ لن يتمكن من تنفيذ عمليات جديدة حتى إعادة التفعيل.",
+      "ConfirmBanTitle": "تأكيد الحظر النهائي",
+      "ConfirmBanMessage": "هل أنت متأكد من رغبتك في حظر هذا الحساب نهائياً؟ هذا الإجراء سيمنع المستخدم من الدخول للمنصة تماماً ولا يمكن التراجع عنه بسهولة."
     },
     "Withdrawal": {
       "WithdrawalRequest": "طلب سحب رقم",
@@ -485,7 +489,9 @@
       "AddCategory": "إضافة تصنيف",
       "ViewServices": "عرض الخدمات",
       "DeleteCategory": "حذف التصنيف",
-      "Service": "خدمة"
+      "Service": "خدمة",
+      "DeleteConfirmMessage": "هل أنت متأكد من حذف قسم ({{name}})؟",
+      "DeleteWarning": "سيتم حذف جميع الخدمات المرتبطة بهذا القسم نهائياً."
     },
     "ServiceDetails": {
       "Title": "تفاصيل الخدمة",
@@ -526,6 +532,12 @@
       "ViewFullPage": "عرض الصفحة كاملة",
       "StopService": "وقف الخدمة",
       "Gold": "ذهبي"
+    },
+    "Messages": {
+      "StopTitle": "إيقاف الخدمه",
+      "StopConfirm": "هل أنت متأكد من رغبتك في إيقاف هذه الخدمة مؤقتاً؟",
+      "RejectTitle": "تأكيد الرفض",
+      "RejectConfirm": "هل أنت متأكد من رفض هذه الخدمة؟ سيتم إخطار الخبير بالقرار."
     }
   },
   "Analytics": {
@@ -625,7 +637,11 @@
       "AffiliateCommission": "عمولة أفلييت",
       "Refund": "استرداد",
       "Withdrawal": "سحب",
-      "ViewDetails": "عرض التفاصيل"
+      "ViewDetails": "عرض التفاصيل",
+      "ApproveTitle": "اعتماد طلب السحب",
+      "ApproveMessage": "هل أنت متأكد من الموافقة على طلب السحب هذا؟",
+      "RejectTitle": "رفض طلب السحب",
+      "RejectMessage": "هل أنت متأكد من رفض طلب السحب هذا؟ لا يمكن التراجع عن هذا الإجراء."
     },
     "Table": {
       "ID": "الرقم",

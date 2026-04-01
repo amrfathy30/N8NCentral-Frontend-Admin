@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
@@ -6,6 +6,7 @@ import {
     ChevronRight,
     type LucideIcon
 } from "lucide-react";
+import ConfirmModal from '../../Components/Ui/ConfirmModal';
 
 interface Tab {
     id: string;
@@ -69,7 +70,8 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
-
+    const [isStopModalOpen, setIsStopModalOpen] = useState(false);
+    const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const handleBack = () => {
         navigate(-1);
     };
@@ -110,10 +112,10 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
                         <button className="w-full bg-[#2B7B4C] hover:bg-[#23663f] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
                             {t(`${tPrefix}.SendNotification`)}
                         </button>
-                        <button className="w-full bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                        <button onClick={() => setIsStopModalOpen(true)} className="w-full bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
                             {t(`${tPrefix}.StopAccount`)}
                         </button>
-                        <button className="w-full bg-[#D00808] hover:bg-[#b91c1c] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                        <button onClick={() => setIsStopModalOpen(true)} className="w-full bg-[#D00808] hover:bg-[#b91c1c] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
                             {t(`${tPrefix}.BanAccount`)}
                         </button>
                     </div>
@@ -136,6 +138,29 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
                     {children}
                 </div>
             </div>
+            <ConfirmModal
+                isOpen={isStopModalOpen}
+                onClose={() => setIsStopModalOpen(false)}
+                onConfirm={() => {
+                    console.log("إيقاف الحساب...");
+                    setIsStopModalOpen(false);
+                }}
+                title={t(`${tPrefix}.ConfirmStopTitle`)}
+                message={t(`${tPrefix}.ConfirmStopMessage`)}
+                isStop={true}
+            />
+
+            <ConfirmModal
+                isOpen={isBanModalOpen}
+                onClose={() => setIsBanModalOpen(false)}
+                onConfirm={() => {
+                    console.log("حظر الحساب...");
+                    setIsBanModalOpen(false);
+                }}
+                title={t(`${tPrefix}.ConfirmBanTitle`)}
+                message={t(`${tPrefix}.ConfirmBanMessage`)}
+                isDanger={true}
+            />
         </div>
     );
 };

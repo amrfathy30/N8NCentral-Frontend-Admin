@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Drawer from "../../Components/Ui/Drawer";
 import Button from "../../Components/Ui/Button";
 import { Star, Ban, Pause } from "lucide-react";
+import ConfirmModal from "../../Components/Ui/ConfirmModal";
 
 interface ServiceDetailsDrawerProps {
     isOpen: boolean;
@@ -12,6 +14,7 @@ interface ServiceDetailsDrawerProps {
 export default function ServiceDetailsDrawer({ isOpen, onClose, service }: ServiceDetailsDrawerProps) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
+    const [isStopModalOpen, setIsStopModalOpen] = useState(false);
 
     const DetailItem = ({ label, value, className = "" }: { label: string; value: string; className?: string }) => (
         <div className={`flex items-center flex-wrap gap-2 ${className}`}>
@@ -21,6 +24,7 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service }: Servi
     );
 
     return (
+        <>
         <Drawer
             isOpen={isOpen}
             onClose={onClose}
@@ -111,11 +115,23 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service }: Servi
                             {t("Services.ServiceDetails.EditService")}
                         </Button>
                     </div>
-                    <Button className="w-full !bg-[#E7000B] !py-3 !shadow-md">
+                    <Button onClick={() => setIsStopModalOpen(true)} className="w-full !bg-[#E7000B] !py-3 !shadow-md">
                         {t("Services.ServiceDetails.StopService")}
                     </Button>
                 </div>
             </div>
         </Drawer>
+        <ConfirmModal
+            isOpen={isStopModalOpen}
+            onClose={() => setIsStopModalOpen(false)}
+            onConfirm={() => {
+                console.log("Service Stopped");
+                setIsStopModalOpen(false);
+            }}
+            isDanger={true}
+            title={t("Services.Messages.StopTitle")}
+            message={t("Services.Messages.StopConfirm")}
+        />
+        </>
     );
 }
