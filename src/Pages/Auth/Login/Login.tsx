@@ -1,16 +1,22 @@
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useNavigate, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Mail, Lock } from "lucide-react";
 import { Input } from "../../../Components/Ui/Input";
 import Button from "../../../Components/Ui/Button";
-import { Mail, Lock } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { showToastSuccess } from "../../../Components/Ui/ToastHelper";
+import { useAddLoginMutation } from "../../../store/Api/Auth/useUserAuth";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../../store/Slices/authSlice";
+import { showToastError, showToastSuccess } from "../../../Components/Helper/toastHelper";
 
 export default function Login() {
   const { t, i18n } = useTranslation();
   const dir = i18n.dir();
-  const lang = localStorage.getItem("i18nextLng") || "en"
-  const navigate = useNavigate()
+  const lang = localStorage.getItem("i18nextLng") || "en";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [addLogin, { isLoading }] = useAddLoginMutation();
 
   const {
     register,
@@ -23,10 +29,27 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log("Login data:", data);
-    showToastSuccess(t("Auth.Login.LoginSuccess"))
-    navigate(`/${lang}/admin/dashboard`)
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await addLogin(data).unwrap();
+      if (response.success) {
+        dispatch(
+          setCredentials({
+            admin: response.data.admin,
+            token: response.data.token,
+          })
+        );
+        showToastSuccess(response.message || t("Auth.Login.LoginSuccess"));
+        navigate(`/${lang}/admin/dashboard`);
+      } else {
+        showToastError(response.message || t("Auth.Login.LoginError"));
+      }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      showToastError(
+        error?.data?.message || t("Auth.Login.LoginError")
+      );
+    }
   };
 
   return (
@@ -84,6 +107,7 @@ export default function Login() {
 
           <Button
             type="submit"
+            loading={isLoading}
             className="w-full py-4 rounded-2xl text-[18px] font-bold shadow-lg shadow-main/20 hover:shadow-main/40 transition-shadow"
           >
             {t("Auth.Login.SignIn")}

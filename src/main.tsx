@@ -12,7 +12,7 @@ import { Toaster } from "sonner";
 import { HelmetProvider } from "react-helmet-async";
 import { PrimeReactProvider } from "primereact/api";
 import { BrowserRouter } from "react-router-dom";
-import ErrorBoundary from "./ErrorBoundary.tsx";
+import ErrorBoundary from "./Components/Helper/ErrorBoundary.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>

@@ -2,17 +2,21 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from "react-router-dom";
 import { User, LogOut, ChevronDown } from "lucide-react";
-import Cookies from "js-cookie";
 import LanguageChange from "../../../Components/Ui/LanguageChange";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentToken, selectCurrentUser, logout } from '../../../store/Slices/authSlice';
 
 const Navbar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const lang = localStorage.getItem("i18nextLng") || "ar";
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const token = localStorage.getItem("N8NCentral_token") || Cookies.get("N8NCentral_token");
+  const token = useSelector(selectCurrentToken)
+  const userData = useSelector(selectCurrentUser)
+
   const isLoginPath = location.pathname.includes(`/${lang}/admin/login`);
 
   useEffect(() => {
@@ -26,8 +30,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("N8NCentral_token");
-    Cookies.remove("N8NCentral_token");
+    dispatch(logout());
     setIsDropdownOpen(false);
     navigate(`/${lang}/admin/login`);
   };
@@ -57,10 +60,10 @@ const Navbar = () => {
                 </div>
                 <div className="hidden sm:flex flex-col items-start">
                   <span className="text-sm font-bold text-gray-800 leading-none mb-0.5">
-                    {t("Navbar.Admin")}
+                    {userData?.name}
                   </span>
                   <span className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">
-                    Super Admin
+                    {userData?.email}
                   </span>
                 </div>
                 <ChevronDown
@@ -73,8 +76,8 @@ const Navbar = () => {
               {isDropdownOpen && (
                 <div className={`absolute top-full mt-2 ${lang === "ar" ? "left-0" : "right-0 sm:left-auto sm:right-0"}  w-56 bg-white rounded-lg shadow-xl border border-gray-100 animate-in fade-in slide-in-from-top-2 duration-200 overflow-hidden`}>
                   <div className="px-4 py-3 border-b border-gray-50 sm:hidden">
-                    <p className="text-sm font-bold text-gray-900">{t("Navbar.Admin")}</p>
-                    <p className="text-xs text-gray-500">admin@n8ncentral.com</p>
+                    <p className="text-sm font-bold text-gray-900">{userData?.name}</p>
+                    <p className="text-xs text-gray-500">{userData?.email}</p>
                   </div>
 
                   <button

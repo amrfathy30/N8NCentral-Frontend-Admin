@@ -34,7 +34,7 @@ export default function Modal({
                 </div>
 
                 {/* Body */}
-                <div className="p-6">{children}</div>
+                <div className="px-6 pb-6">{children}</div>
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface ConfirmModalProps {
@@ -10,6 +10,7 @@ interface ConfirmModalProps {
     description?: string;
     isDanger?: boolean;
     isStop?: boolean;
+    loading?: boolean;
 }
 
 export default function ConfirmModal({
@@ -20,7 +21,8 @@ export default function ConfirmModal({
     message,
     description,
     isDanger = false,
-    isStop = false
+    isStop = false,
+    loading = false,
 }: ConfirmModalProps) {
     const { t } = useTranslation()
     const lang = localStorage.getItem('i18nextLng') || 'ar';
@@ -63,8 +65,9 @@ export default function ConfirmModal({
                     <div className="flex items-center gap-4 w-full">
                         <button
                             onClick={onConfirm}
-                            className={`flex-1 py-2 rounded-[10px] border border-[#E5E7EB] text-white font-bold text-[18px] transition-all
-
+                            disabled={loading}
+                            className={`flex-1 py-2 rounded-[10px] border border-[#E5E7EB] text-white font-bold text-[18px] transition-all flex items-center justify-center gap-2
+                                ${loading ? 'opacity-70 cursor-not-allowed' : ''}
                                 ${isStop
                                     ? 'bg-[#F68713] hover:bg-[#F68713]/90 shadow-lg shadow-[#F68713]/20'
                                     : ''
@@ -74,7 +77,11 @@ export default function ConfirmModal({
                                     : 'bg-[#2B7B4C] hover:bg-[#23663f] shadow-lg shadow-[#2B7B4C]/20'
                                 }`}
                         >
-                            {t("Common.Yes")}
+                            {loading ? (
+                                <Loader2 size={20} className="animate-spin" />
+                            ) : (
+                                t("Common.Yes")
+                            )}
                         </button>
 
                         <button

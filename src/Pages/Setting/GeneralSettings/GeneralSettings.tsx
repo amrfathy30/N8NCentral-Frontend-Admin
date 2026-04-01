@@ -5,10 +5,13 @@ import Commissions from './components/Commissions';
 import MessageTemplates from './components/MessageTemplates';
 import SecuritySetting from './components/SecuritySetting';
 import TermsAndConditions from './components/TermsAndConditions';
+import { useGetPlansDataQuery } from '../../../store/Api/Setting/usePlansApi';
 
 export default function GeneralSettings() {
   const { t, i18n } = useTranslation();
   const dir = i18n.dir();
+
+  const { data: plansData, isLoading } = useGetPlansDataQuery()
 
   return (
     <div className="flex flex-col gap-6" dir={dir}>
@@ -24,7 +27,7 @@ export default function GeneralSettings() {
       <Commissions />
 
       {/* Plans Settings */}
-      <Plans />
+      <Plans plansData={plansData} loading={isLoading} />
 
       {/* Email & Message Templates Settings */}
       <MessageTemplates />

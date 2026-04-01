@@ -22,6 +22,7 @@
       "PasswordPlaceholder": "أدخل كلمة المرور",
       "ForgetPassword": "نسيت كلمة المرور؟",
       "SignIn": "تسجيل الدخول",
+      "LoginError": "حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.",
       "Loading": "جاري التحميل...",
       "EmailRequired": "البريد الإلكتروني مطلوب",
       "InvalidEmail": "بريد إلكتروني غير صالح",
@@ -204,13 +205,28 @@
   "DropDownMenuSettings": {
     "Title": "إعدادات القوائم المنسدلة",
     "SaveAllChanges": "حفظ جميع التغييرات",
-    "AddNew": "إضافة نوع جديد",
+    "AddNew": "إضافة جديد",
     "Add": "إضافة",
-    "ServiceType": "نوع الاوتومين",
+    "tools": "الأدوات",
+    "targetBusiness": "البزنس المستهدف",
+    "ServiceType": "نوع الأوتوميشن",
     "ProblemType": "نوع المشكلة",
     "DecisionType": "نوع القرار",
-    "TicketStatus": "حالة التذكرة",
-    "RejectionReason": "سبب الرفض"
+    "UsedTools": "الأدوات المستخدمة",
+    "AddNewItem": "إضافة عنصر جديد",
+    "NameEn": "الاسم (EN)",
+    "NameAr": "الاسم (AR)",
+    "FillAllFields": "يرجى ملء جميع الحقول",
+    "AddSuccess": "تمت الإضافة بنجاح",
+    "AddError": "حدث خطأ أثناء الإضافة",
+    "DeleteSuccess": "تم الحذف بنجاح",
+    "DeleteError": "حدث خطأ أثناء الحذف",
+    "EditItem": "تعديل العنصر",
+    "UpdateSuccess": "تم التحديث بنجاح",
+    "UpdateError": "حدث خطأ أثناء التحديث",
+    "DeleteConfirmTitle": "تأكيد الحذف",
+    "DeleteConfirmMessage": "هل أنت متأكد من رغبتك في حذف هذا العنصر؟",
+    "InvalidId": "معرف العنصر غير صالح"
   },
   "Sellers": {
     "Title": "التجار",
@@ -228,7 +244,10 @@
     "Status": "الحالة",
     "Actions": "الإجراءات",
     "Active": "نشط",
-    "SearchPlaceholder": "ابحث عن تاجر..."
+    "PendingKyc": "بانتظار التوثيق (KYC)",
+    "Banned": "محظور",
+    "SearchPlaceholder": "ابحث عن تاجر...",
+    "SearchButton": "بحث"
   },
   "Affiliates": {
     "Title": "الأفلييت",
@@ -384,6 +403,7 @@
   "Merchants": {
     "Title": "التجار",
     "Approve": "إعتماد",
+    "created_at": "تاريخ الإضافة",
     "Verification": "التوثيق",
     "SelfieWithID": "صورة سيلفي مع البطاقة",
     "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة",
@@ -416,6 +436,16 @@
     "VerifyAction": "توثيق",
     "Stop": "إيقاف",
     "Reject": "رفض",
+    "SearchButton": "بحث",
+    "Active": "نشط",
+    "PendingKyc": "بانتظار التوثيق (KYC)",
+    "Banned": "محظور",
+    "BanReason": "سبب الحظر",
+    "BanReasonPlaceholder": "اكتب سبب الحظر هنا...",
+    "ConfirmBan": "تأكيد الحظر",
+    "Cancel": "إلغاء",
+    "ConfirmStopTitle": "تأكيد الإيقاف المؤقت",
+    "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف هذا التاجر مؤقتاً؟",
     "Stats": {
       "Unit": "تاجر",
       "AccountUnit": "حساب"

@@ -7,10 +7,9 @@ interface CustomSelectProps {
     value?: { value: string; label: string } | null;
     onChange?: (option: any) => void;
     className?: string;
-    isSearchable?: boolean;
 }
 
-export default function CustomSelect({ options, placeholder, value, onChange, className, isSearchable = false }: CustomSelectProps) {
+export default function CustomSelect({ options, placeholder, value, onChange, className }: CustomSelectProps) {
     const { i18n } = useTranslation();
     const isAr = i18n.language === "ar";
 
@@ -19,10 +18,10 @@ export default function CustomSelect({ options, placeholder, value, onChange, cl
             ...base,
             borderColor: state.isFocused ? "#EAECF0" : "#EAECF0",
             borderRadius: "10px",
-            height: "44px",
-            backgroundColor: "#F9FAFB",
+            height: "50px",
+            backgroundColor: "#fff",
             boxShadow: "none",
-            border: "1px solid #EAECF0",
+            border: "1px solid #E5E7EB",
             paddingLeft: isAr ? "8px" : "8px",
             paddingRight: isAr ? "8px" : "8px",
             "&:hover": { borderColor: "#EAECF0" },
@@ -52,16 +51,16 @@ export default function CustomSelect({ options, placeholder, value, onChange, cl
             color: "#101828",
             fontSize: "14px",
         }),
-        menuPortal: (base: any) => ({
-            ...base,
-            zIndex: 999999,
-        }),
         menu: (provided: any) => ({
             ...provided,
             zIndex: 10,
             borderRadius: "10px",
             overflow: "hidden",
             boxShadow: "0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px -4px rgba(16, 24, 40, 0.08)",
+        }),
+        menuPortal: (base: any) => ({
+            ...base,
+            zIndex: 9999,
         }),
         dropdownIndicator: (base: any) => ({
             ...base,
@@ -77,9 +76,10 @@ export default function CustomSelect({ options, placeholder, value, onChange, cl
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                isSearchable={isSearchable}
+                isSearchable={false}
                 styles={customStyles}
                 menuPortalTarget={document.body}
+                menuPlacement="auto"
             />
         </div>
     );

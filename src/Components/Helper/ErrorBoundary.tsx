@@ -1,7 +1,7 @@
 import { Component } from "react";
 import type { ReactNode } from "react";
 import { AlertTriangle } from "lucide-react";
-import "./index.css";
+import "../../index.css";
 
 interface ErrorBoundaryProps {
   children: ReactNode;

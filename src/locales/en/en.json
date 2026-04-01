@@ -15,6 +15,7 @@
       "Title": "Login",
       "LoginSuccess": "Login Successfully",
       "WelcomeBack": "Welcome Back",
+      "LoginError": "An error occurred during login. Please try again.",
       "Description": "Please enter your details to access your account",
       "EmailLabel": "Email",
       "EmailPlaceholder": "Enter your email",
@@ -180,13 +181,29 @@
   "DropDownMenuSettings": {
     "Title": "Dropdown Menu Settings",
     "SaveAllChanges": "Save All Changes",
-    "AddNew": "Add new type",
+    "AddNew": "Add New",
+    "tools": "Tools",
+    "targetBusiness": "Target Business",
     "Add": "Add",
-    "ServiceType": "Service Type",
+    "ServiceType": "Automation Type",
     "ProblemType": "Problem Type",
     "DecisionType": "Decision Type",
-    "TicketStatus": "Ticket Status",
-    "RejectionReason": "Rejection Reason"
+    "TargetBusiness": "Target Business",
+    "UsedTools": "Used Tools",
+    "AddNewItem": "Add New Item",
+    "NameEn": "Name (EN)",
+    "NameAr": "Name (AR)",
+    "FillAllFields": "Please fill all fields",
+    "AddSuccess": "Added successfully",
+    "AddError": "Error while adding",
+    "DeleteSuccess": "Deleted successfully",
+    "DeleteError": "Error while deleting",
+    "EditItem": "Edit Item",
+    "UpdateSuccess": "Updated successfully",
+    "UpdateError": "Error while updating",
+    "DeleteConfirmTitle": "Confirm Delete",
+    "DeleteConfirmMessage": "Are you sure you want to delete this item?",
+    "InvalidId": "Invalid item ID"
   },
   "GeneralSettings": {
     "Title": "Platform Settings",
@@ -228,7 +245,10 @@
     "Status": "Status",
     "Actions": "Actions",
     "Active": "Active",
-    "SearchPlaceholder": "Search for a seller..."
+    "PendingKyc": "Pending KYC Verification",
+    "Banned": "Banned",
+    "SearchPlaceholder": "Search for a seller...",
+    "SearchButton": "Search"
   },
   "Affiliates": {
     "Title": "Affiliates",
@@ -379,6 +399,7 @@
   },
   "Merchants": {
     "Title": "Merchants",
+    "created_at": "Created At",
     "Welcome": "Welcome to the Automation Platform Dashboard",
     "TotalMerchants": "Total Merchants",
     "ActiveMerchants": "Active Merchants",
@@ -411,6 +432,16 @@
     "VerifyAction": "Verify",
     "Stop": "Stop",
     "Reject": "Reject",
+    "SearchButton": "Search",
+    "Active": "Active",
+    "PendingKyc": "Pending KYC Verification",
+    "Banned": "Banned",
+    "BanReason": "Ban Reason",
+    "BanReasonPlaceholder": "Enter ban reason here...",
+    "ConfirmBan": "Confirm Ban",
+    "Cancel": "Cancel",
+    "ConfirmStopTitle": "Confirm Temporary Stop",
+    "ConfirmStopMessage": "Are you sure you want to temporarily stop this merchant?",
     "Stats": {
       "Unit": "Merchant",
       "AccountUnit": "Account"
