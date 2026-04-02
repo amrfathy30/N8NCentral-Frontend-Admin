@@ -47,7 +47,6 @@ export default function TransactionHistory({ transactions }: { transactions: any
                     className="w-40"
                     placeholder={t("Financial.Sidebar.FilterType")}
                     value={options[0]}
-                    isSearchable={true}
                 />
                 <div className="flex-1 relative">
                     <Input

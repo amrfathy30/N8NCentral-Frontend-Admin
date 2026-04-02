@@ -7,17 +7,77 @@ import {
     Pause,
     Ban
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../Components/Ui/Header";
 import { DownloadIcon, Flash, Star } from "../../icons";
+import { useState } from "react";
+import { useGetServiceByIdQuery, useApproveServiceMutation, useRejectServiceMutation, useStopServiceMutation, useReactivateServiceMutation } from "../../store/Api/Services/useServicesApi";
+import ConfirmModal from "../../Components/Ui/ConfirmModal";
+import Modal from "../../Components/Ui/Modal";
+import { Input } from "../../Components/Ui/Input";
+import { showToastSuccess, showToastError } from "../../Components/Helper/toastHelper";
+import { handleApiError } from "../../Components/Helper/handleApiError";
 
 export default function ServicesDetails() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
     const dir = i18n.dir();
 
-    const handleBack = () => {
-        navigate(-1);
+    const { data: serviceData } = useGetServiceByIdQuery({ service: id! }, { skip: !id });
+    const service = serviceData?.data;
+    const status = service?.status || "";
+
+    const isActive = status === "active";
+    const isPending = status === "pending" || status === "pending_kyc" || status === "pending_review";
+    const isRejected = status === "rejected" || status === "Rejected";
+
+    const [isStopModalOpen, setIsStopModalOpen] = useState(false);
+    const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+    const [isReactivateModalOpen, setIsReactivateModalOpen] = useState(false);
+    const [rejectReason, setRejectReason] = useState({ ar: "", en: "" });
+
+    const [approveService, { isLoading: isApproving }] = useApproveServiceMutation();
+    const [rejectService, { isLoading: isRejecting }] = useRejectServiceMutation();
+    const [stopService, { isLoading: isStopping }] = useStopServiceMutation();
+    const [reactivateService, { isLoading: isReactivating }] = useReactivateServiceMutation();
+
+    const handleConfirmStop = async () => {
+        try {
+            const res = await stopService({ service: id! }).unwrap();
+            showToastSuccess(res.message || t("Services.StopSuccess"));
+            setIsStopModalOpen(false);
+        } catch (error) { handleApiError(error); }
+    };
+
+    const handleConfirmApprove = async () => {
+        try {
+            const res = await approveService({ service: id! }).unwrap();
+            showToastSuccess(res.message || t("Services.ApproveSuccess"));
+            setIsApproveModalOpen(false);
+        } catch (error) { handleApiError(error); }
+    };
+
+    const handleConfirmReject = async () => {
+        if (!rejectReason.ar.trim() || !rejectReason.en.trim()) {
+            showToastError(t("Services.ReasonRequired"));
+            return;
+        }
+        try {
+            const res = await rejectService({ service: id!, reason: rejectReason }).unwrap();
+            showToastSuccess(res.message || t("Services.RejectSuccess"));
+            setIsRejectModalOpen(false);
+            setRejectReason({ ar: "", en: "" });
+        } catch (error) { handleApiError(error); }
+    };
+
+    const handleConfirmReactivate = async () => {
+        try {
+            const res = await reactivateService({ service: id! }).unwrap();
+            showToastSuccess(res.message || t("Services.UnBanSuccess"));
+            setIsReactivateModalOpen(false);
+        } catch (error) { handleApiError(error); }
     };
 
     const additionalServices = [
@@ -35,11 +95,77 @@ export default function ServicesDetails() {
 
     return (
         <div className="space-y-8 pb-10 p-" dir={dir}>
+            {/* Modals */}
+            <ConfirmModal
+                isOpen={isStopModalOpen}
+                onClose={() => setIsStopModalOpen(false)}
+                onConfirm={handleConfirmStop}
+                title={t("Common.ConfirmStopTitle")}
+                message={t("Services.ConfirmStopMessage")}
+                isStop={true}
+                loading={isStopping}
+            />
+            <ConfirmModal
+                isOpen={isApproveModalOpen}
+                onClose={() => setIsApproveModalOpen(false)}
+                onConfirm={handleConfirmApprove}
+                title={t("Services.ConfirmApproveTitle")}
+                message={t("Services.ConfirmApproveMessage")}
+                loading={isApproving}
+            />
+            <ConfirmModal
+                isOpen={isReactivateModalOpen}
+                onClose={() => setIsReactivateModalOpen(false)}
+                onConfirm={handleConfirmReactivate}
+                title={t("Services.ConfirmReactivateTitle")}
+                message={t("Services.ConfirmReactivateMessage")}
+                loading={isReactivating}
+            />
+            <Modal
+                isOpen={isRejectModalOpen}
+                onClose={() => setIsRejectModalOpen(false)}
+                title={t("Services.RejectService")}
+            >
+                <div className="flex flex-col gap-4 mt-4">
+                    <div className="flex flex-col gap-3">
+                        <Input
+                            value={rejectReason.ar}
+                            onChange={(e) => setRejectReason({ ...rejectReason, ar: e.target.value })}
+                            icon={Ban}
+                            label={`${t("Services.RejectReason")} (عربي)`}
+                            placeholder={t("Services.RejectReasonPlaceholder")}
+                        />
+                        <Input
+                            value={rejectReason.en}
+                            onChange={(e) => setRejectReason({ ...rejectReason, en: e.target.value })}
+                            icon={Ban}
+                            label={`${t("Services.RejectReason")} (English)`}
+                            placeholder={t("Services.RejectReasonPlaceholder")}
+                        />
+                    </div>
+                    <div className="flex items-center gap-4 w-full mt-2">
+                        <button
+                            onClick={handleConfirmReject}
+                            disabled={!rejectReason.ar.trim() || !rejectReason.en.trim() || isRejecting}
+                            className="flex-1 py-2 rounded-[10px] bg-[#FB2C36] hover:bg-[#d9222b] shadow-lg shadow-[#FB2C36]/20 text-white font-bold text-[18px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isRejecting ? t("Common.loading") : t("Services.ConfirmReject")}
+                        </button>
+                        <button
+                            onClick={() => { setIsRejectModalOpen(false); setRejectReason({ ar: "", en: "" }); }}
+                            className="flex-1 py-2 rounded-[10px] bg-[#D2D2D233] text-[#4A5565] font-bold text-[18px] border border-[#E5E7EB] hover:bg-gray-200 transition-all"
+                        >
+                            {t("Merchants.Cancel")}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
             {/* Header */}
             <div className="flex items-center justify-between">
                 <Header title={t("Services.ServiceDetails.HeaderTitle")} titleClassName="text-[24px] text-greenDark" />
                 <button
-                    onClick={handleBack}
+                    onClick={() => navigate(-1)}
                     className="flex items-center gap-2 text-[#505E56] hover:text-greenDark transition-colors font-bold"
                 >
                     {t("Common.Back")}
@@ -57,11 +183,11 @@ export default function ServicesDetails() {
                     </div>
 
                     <h2 className="text-[24px] md:text-[40px] font-medium text-[#0A2F64] leading-tight line-clamp-2">
-                        {t("Services.ServiceDetails.FeaturedTitle")}
+                        {service?.display_title || service?.title?.ar || service?.title?.en || t("Services.ServiceDetails.FeaturedTitle")}
                     </h2>
 
                     <p className="text-[#5C5C5C] text-[16px] md:text-[21px] leading-relaxed line-clamp-2">
-                        {t("Services.ServiceDetails.FeaturedDescription")}
+                        {service?.description?.ar || service?.description?.en || t("Services.ServiceDetails.FeaturedDescription")}
                     </p>
 
                     <div className="flex items-center flex-wrap gap-4 md:gap-16 pt-4">
@@ -70,7 +196,7 @@ export default function ServicesDetails() {
                                 <Star className="text-greenDark" />
                             </div>
                             <div>
-                                <div className="font-semibold text-greenDark">4.8</div>
+                                <div className="font-semibold text-greenDark">{service?.rating ?? "4.8"}</div>
                                 <div className="text-[14px] text-black">{t("Services.ServiceDetails.Rating")}</div>
                             </div>
                         </div>
@@ -80,7 +206,7 @@ export default function ServicesDetails() {
                                 <Users size={20} />
                             </div>
                             <div>
-                                <div className="font-semibold text-greenDark">123</div>
+                                <div className="font-semibold text-greenDark">{service?.sales_count ?? "0"}</div>
                                 <div className="text-[14px] text-black">{t("Services.ServiceDetails.Buyer")}</div>
                             </div>
                         </div>
@@ -101,8 +227,8 @@ export default function ServicesDetails() {
                 <div className="w-full lg:w-[400px] h-full md:h-[400px]">
                     <div className="lg:aspect-square rounded-[20px] overflow-hidden flex items-center justify-center shadow-lg">
                         <img
-                            src="/images/services/services-2.jpg"
-                            alt="WhatsApp"
+                            src={service?.image || "/images/services/services-2.jpg"}
+                            alt="service"
                             className="w-full h-full drop-shadow-2xl"
                         />
                     </div>
@@ -114,11 +240,11 @@ export default function ServicesDetails() {
                 <div className="space-y-4">
                     <h3 className="text-lg font-bold text-greenDark">{t("Services.ServiceDetails.AdditionalServices")}</h3>
                     <div className="bg-white md:h-full p-4 rounded-[12px] flex flex-col gap-3">
-                        {additionalServices.map((service, idx) => (
+                        {additionalServices.map((svc, idx) => (
                             <div key={idx} className="flex items-center justify-between flex-wrap gap-4">
-                                <span className="text-greenDark font-bold text-[17px]">{service.name}</span>
-                                <span className="text-greenDark font-semibold text-[17px]">{service.price}</span>
-                                <span className="text-greenDark font-semibold text-[17px]">{service.status}</span>
+                                <span className="text-greenDark font-bold text-[17px]">{svc.name}</span>
+                                <span className="text-greenDark font-semibold text-[17px]">{svc.price}</span>
+                                <span className="text-greenDark font-semibold text-[17px]">{svc.status}</span>
                                 <div className="flex items-center gap-2 md:gap-0">
                                     <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                         <Pause size={16} className="fill-[#F68713] text-[#F68713] " />
@@ -136,7 +262,6 @@ export default function ServicesDetails() {
                 <div className="space-y-4">
                     <h3 className="text-lg font-bold text-greenDark">{t("Services.ServiceDetails.ToolsAndIntegrations")}</h3>
                     <div className="bg-white md:h-full p-4 rounded-[12px] flex flex-wrap gap-3 justify-center items-center">
-
                         <span className="bg-[#FFE2E2] text-[#C10007] px-3 py-1 rounded-full text-[16px] font-medium">n8n</span>
                         <span className="bg-[#DBEAFE] text-[#1447E6] px-3 py-1 rounded-full text-[16px] font-medium">Google Sheets</span>
                         <span className="bg-[#F3E8FF] text-[#8200DB] px-3 py-1 rounded-full text-[16px] font-medium">Webhooks</span>
@@ -149,15 +274,13 @@ export default function ServicesDetails() {
             <div className="space-y-4">
                 <h3 className="text-lg font-bold text-greenDark">{t("Services.ServiceDetails.ServiceDescription")}</h3>
                 <p className="text-[#364153] leading-loose text-[16px] bg-white rounded-[24px] p-4">
-                    {t("Services.ServiceDetails.DetailedDescription")}
+                    {service?.description?.ar || service?.description?.en || t("Services.ServiceDetails.DetailedDescription")}
                 </p>
             </div>
 
             {/* Steps Grid */}
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-8">
-
                 <div className="lg:col-span-3">
-
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                         {steps.map((step) => (
                             <div key={step.id} className="bg-[#ECFDF5] p-5 rounded-[10px] flex items-start gap-4">
@@ -172,21 +295,59 @@ export default function ServicesDetails() {
                         ))}
                     </div>
 
-                    {/* Footer Buttons */}
+                    {/* Dynamic Footer Buttons */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">
-                        <button className="flex-1 w-full py-2 rounded-full bg-greenDark text-white text-lg font-semibold hover:bg-greenDark/90 transition-all flex items-center justify-center gap-2">
-                            {t("Services.ServiceDetails.AcceptService")}
-                        </button>
-                        <button className="flex-1 w-full py-2 rounded-full bg-red-600 text-white text-lg font-semibold hover:bg-red-700 transition-all flex items-center justify-center gap-2">
-                            {t("Services.ServiceDetails.RejectService")}
-                        </button>
+                        {/* Active: Stop + Reject */}
+                        {isActive && (
+                            <>
+                                <button
+                                    onClick={() => setIsStopModalOpen(true)}
+                                    className="flex-1 w-full py-3 rounded-full bg-[#F68713] text-white text-lg font-semibold hover:bg-[#d97706] transition-all"
+                                >
+                                    {t("Services.ServiceDetails.StopService")}
+                                </button>
+                                <button
+                                    onClick={() => setIsRejectModalOpen(true)}
+                                    className="flex-1 w-full py-3 rounded-full bg-[#FB2C36] text-white text-lg font-semibold hover:bg-[#d9222b] transition-all"
+                                >
+                                    {t("Services.Reject")}
+                                </button>
+                            </>
+                        )}
+
+                        {/* Pending: Approve + Reject */}
+                        {isPending && (
+                            <>
+                                <button
+                                    onClick={() => setIsApproveModalOpen(true)}
+                                    className="flex-1 w-full py-3 rounded-full bg-greenDark text-white text-lg font-semibold hover:bg-greenDark/90 transition-all"
+                                >
+                                    {t("Services.Approve")}
+                                </button>
+                                <button
+                                    onClick={() => setIsRejectModalOpen(true)}
+                                    className="flex-1 w-full py-3 rounded-full bg-[#FB2C36] text-white text-lg font-semibold hover:bg-[#d9222b] transition-all"
+                                >
+                                    {t("Services.Reject")}
+                                </button>
+                            </>
+                        )}
+
+                        {/* Rejected: Reactivate */}
+                        {isRejected && (
+                            <button
+                                onClick={() => setIsReactivateModalOpen(true)}
+                                className="flex-1 w-full py-3 rounded-full bg-[#F68713] text-white text-lg font-semibold hover:bg-[#d97706] transition-all"
+                            >
+                                {t("Services.Reactivate")}
+                            </button>
+                        )}
                     </div>
                 </div>
 
                 {/* download  */}
                 <div className="lg:col-span-1 flex items-center justify-center">
                     <a
-                        // href="/files/service-documentation.pdf"
                         download
                         className="w-[180px] h-[180px] md:w-[220px] md:h-[220px] rounded-full bg-greenDark flex flex-col justify-center items-center text-white gap-3 shadow-lg hover:bg-greenDark/90 transition-all duration-300 cursor-pointer"
                     >

@@ -12,23 +12,31 @@ import {
 import DynamicTable from "../../Components/Ui/DynamicTable";
 import VerificationDetails from "./VerificationDetails/VerificationShow";
 import Header from "../../Components/Ui/Header";
-import { useGetSellerStatsDataQuery, useGetAllSellerDataQuery } from "../../store/Api/users/Sellers/useSellersApi";
+import { useGetSellerStatsDataQuery, useGetAllSellerDataQuery, useBanSellerMutation, useUnBanSellerMutation, useApproveSellerMutation, useRejectSellerMutation, useStopSellerMutation } from "../../store/Api/users/Sellers/useSellersApi";
 import StatsCardSkeleton from "../../Components/Skeleton/StatsCard/StatsCardSkeleton";
 import TableSkeleton from "../../Components/Skeleton/Table/TableSkeleton";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
 import Modal from "../../Components/Ui/Modal";
 import { Input } from "../../Components/Ui/Input";
 import SellerStats from "./components/SellerStats";
+import { useNavigate } from "react-router-dom";
+import { showToastSuccess } from "../../Components/Helper/toastHelper";
+import { handleApiError } from "../../Components/Helper/handleApiError";
 
 export default function Sellers() {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
+    const lang = i18n.language
+    const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeFilter, setActiveFilter] = useState("active");
     const [search, setSearch] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [isStopModalOpen, setIsStopModalOpen] = useState(false);
+    const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+    const [isUnBanModalOpen, setIsUnBanModalOpen] = useState(false);
     const [selectedSellerId, setSelectedSellerId] = useState<string | number | null>(null);
     const [banReason, setBanReason] = useState("");
 
@@ -40,17 +48,52 @@ export default function Sellers() {
         per_page: 15
     });
 
+    const [banSeller, { isLoading: isBanning }] = useBanSellerMutation();
+    const [unBanSeller, { isLoading: isUnBanning }] = useUnBanSellerMutation();
+    const [approveSeller, { isLoading: isApproving }] = useApproveSellerMutation();
+    const [rejectSeller, { isLoading: isRejecting }] = useRejectSellerMutation();
+    const [stopSeller, { isLoading: isStopping }] = useStopSellerMutation();
+
     const handleConfirmStop = async () => {
         if (!selectedSellerId) return;
 
         try {
-            console.log("Stopping seller:", selectedSellerId);
-
+            const res = await stopSeller({ id: selectedSellerId }).unwrap();
             setIsStopModalOpen(false);
             setSelectedSellerId(null);
+            showToastSuccess(res.message || t("Merchants.StopSuccess"));
 
         } catch (error) {
             console.error(error);
+            handleApiError(error)
+        }
+    };
+
+    const handleConfirmReject = async () => {
+        if (!selectedSellerId) return;
+
+        try {
+            const res = await rejectSeller({ id: selectedSellerId }).unwrap();
+            setIsRejectModalOpen(false);
+            setSelectedSellerId(null);
+            showToastSuccess(res.message || t("Merchants.RejectSuccess"));
+        } catch (error) {
+            console.error(error);
+            handleApiError(error)
+        }
+    };
+
+    const handleConfirmApprove = async () => {
+        if (!selectedSellerId) return;
+
+        try {
+            const res = await approveSeller({ id: selectedSellerId }).unwrap();
+            setIsApproveModalOpen(false);
+            setSelectedSellerId(null);
+            showToastSuccess(res.message || t("Merchants.ApproveSuccess"));
+        } catch (error) {
+            console.error(error);
+            handleApiError(error)
         }
     };
 
@@ -58,14 +101,28 @@ export default function Sellers() {
         if (!selectedSellerId || !banReason.trim()) return;
 
         try {
-            console.log("Banning seller:", selectedSellerId, banReason);
-
+            const res = await banSeller({ id: selectedSellerId, reason: banReason.trim() }).unwrap();
             setIsBanModalOpen(false);
             setSelectedSellerId(null);
             setBanReason("");
-
+            showToastSuccess(res.message || t("Merchants.BanSuccess"));
         } catch (error) {
             console.error(error);
+            handleApiError(error)
+        }
+    };
+
+    const handleConfirmUnBan = async () => {
+        if (!selectedSellerId) return;
+
+        try {
+            const res = await unBanSeller({ sellerId: selectedSellerId }).unwrap();
+            setIsUnBanModalOpen(false);
+            setSelectedSellerId(null);
+            showToastSuccess(res.message || t("Merchants.UnBanSuccess"));
+        } catch (error) {
+            console.error(error);
+            handleApiError(error)
         }
     };
 
@@ -90,7 +147,7 @@ export default function Sellers() {
                                 alt={row.name}
                                 className="w-8 h-8 rounded-full object-cover border" />
                         }
-                        <span className="max-w-60 block truncate" title={row.name}>{row.name || "__"}</span>
+                        <span className="line-clamp-2" title={row.name}>{row.name || "__"}</span>
                     </div>
                 )
             }
@@ -133,9 +190,11 @@ export default function Sellers() {
                     header: t("Merchants.Actions"),
                     body: (row: any) => (
                         <div className="flex gap-2 items-center justify-center">
-                            <button onClick={() => { setIsModalOpen(true); }} className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark/90 transition-colors"
+                            <button onClick={() => {
+                                navigate(`/${lang}/admin/users/details/seller/${row.id}`)
+                            }} className="bg-greenDark text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-greenDark/90 transition-colors"
                             >{t("Merchants.View")}</button>
-                            <button
+                            {/* <button
                                 onClick={() => {
                                     setSelectedSellerId(row.id);
                                     setIsStopModalOpen(true);
@@ -143,7 +202,7 @@ export default function Sellers() {
                                 className="bg-[#F68713] text-white py-2 px-5 rounded-[10px] hover:text-white hover:bg-[#F68713]/90 transition-colors"
                             >
                                 {t("Merchants.Stop")}
-                            </button>
+                            </button> */}
                             <button
                                 onClick={() => {
                                     setSelectedSellerId(row.id);
@@ -176,11 +235,24 @@ export default function Sellers() {
                 },
                 {
                     header: t("Merchants.Actions"),
-                    body: () => (
+                    body: (row: any) => (
                         <div className="flex gap-2 justify-center">
-                            <button onClick={() => { setIsModalOpen(true); }} className="bg-greenDark text-white px-6 py-3 rounded-lg text-xs font-bold hover:opacity-90">{t("Merchants.ViewDetails")}</button>
-                            <button className="bg-[#F68713] text-white px-6 py-3 rounded-lg text-xs font-bold hover:opacity-90">{t("Merchants.VerifyAction")}</button>
-                            <button className="bg-[#E7000B] text-white px-6 py-3 rounded-lg text-xs font-bold hover:opacity-90">{t("Merchants.Reject")}</button>
+                            <button onClick={() => {
+                                setSelectedSellerId(row.id);
+                                setIsModalOpen(true);
+                            }} className="bg-greenDark text-white px-6 py-3 rounded-lg text-xs font-bold hover:opacity-90">{t("Merchants.ViewDetails")}</button>
+                            <button
+                                onClick={() => {
+                                    setSelectedSellerId(row.id);
+                                    setIsApproveModalOpen(true);
+                                }}
+                                className="bg-[#F68713] text-white px-6 py-3 rounded-lg text-xs font-bold hover:opacity-90">{t("Merchants.VerifyAction")}</button>
+                            <button
+                                onClick={() => {
+                                    setSelectedSellerId(row.id);
+                                    setIsRejectModalOpen(true);
+                                }}
+                                className="bg-[#E7000B] text-white px-6 py-3 rounded-lg text-xs font-bold hover:opacity-90">{t("Merchants.Reject")}</button>
                         </div>
                     ),
                 },
@@ -226,11 +298,23 @@ export default function Sellers() {
                 },
                 {
                     header: t("Merchants.Actions"),
-                    body: () => (
+                    body: (row: any) => (
                         <div className="flex gap-4 items-center justify-center">
-                            <Eye className="text-greenDark cursor-pointer hover:text-gray-400 transition-colors" size={24} />
-                            <Play className="text-[#F68713] cursor-pointer hover:text-orange-600 transition-colors" size={24} fill="currentColor" />
-                            <Ban className="text-[#D00808] cursor-pointer hover:text-red-600 transition-colors" size={24} />
+                            <button
+                                onClick={() => navigate(`/${lang}/admin/users/details/seller/${row.id}`)}>
+                                <Eye className="text-greenDark cursor-pointer hover:text-gray-400 transition-colors" size={24} />
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setSelectedSellerId(row.id);
+                                    setIsUnBanModalOpen(true);
+                                }}
+                                className="text-[#F68713] cursor-pointer hover:text-orange-600 transition-colors"
+                                title={t("Merchants.Unban")}
+                            >
+                                <Play size={24} fill="currentColor" />
+                            </button>
+
                         </div>
                     ),
                 },
@@ -270,7 +354,11 @@ export default function Sellers() {
                             <input
                                 type="text"
                                 value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    setSearch(val);
+                                    if (!val.trim()) setSearchQuery("");
+                                }}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 placeholder={t("Merchants.SearchPlaceholder")}
                                 className="w-full border border-gray-200 bg-[#F9FAFB] rounded-lg pr-10 pl-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-greenDark/20 transition-all"
@@ -334,7 +422,12 @@ export default function Sellers() {
                         </div>
                     ) : (
                         <DynamicTable
-                            data={sellersData?.data?.sellers || []}
+                            data={sellersData?.data?.sellers?.filter((seller: any) => {
+                                if (activeFilter === "active") return seller.status === "active";
+                                if (activeFilter === "pending_kyc") return seller.status === "pending" || seller.status === "pending_kyc";
+                                if (activeFilter === "banned") return seller.status === "banned" || seller.status === "blocked";
+                                return true;
+                            }) || []}
                             columns={getColumns()}
                             showSearch={false}
                         />
@@ -343,6 +436,19 @@ export default function Sellers() {
             </div>
 
             <VerificationDetails isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+            {/* Approve Modal */}
+            <ConfirmModal
+                isOpen={isApproveModalOpen}
+                onClose={() => {
+                    setIsApproveModalOpen(false);
+                    setSelectedSellerId(null);
+                }}
+                onConfirm={handleConfirmApprove}
+                title={t("Merchants.ConfirmApproveTitle")}
+                message={t("Merchants.ConfirmApproveMessage")}
+                loading={isApproving}
+            />
 
             {/* Stop Modal */}
             <ConfirmModal
@@ -355,6 +461,35 @@ export default function Sellers() {
                 title={t("Merchants.ConfirmStopTitle")}
                 message={t("Merchants.ConfirmStopMessage")}
                 isStop={true}
+                loading={isStopping}
+            />
+
+            {/* reject Modal */}
+            <ConfirmModal
+                isOpen={isRejectModalOpen}
+                onClose={() => {
+                    setIsRejectModalOpen(false);
+                    setSelectedSellerId(null);
+                }}
+                onConfirm={handleConfirmReject}
+                title={t("Merchants.ConfirmRejectTitle")}
+                message={t("Merchants.ConfirmRejectMessage")}
+                isDanger={true}
+                loading={isRejecting}
+            />
+
+            {/* UnBan Modal */}
+            <ConfirmModal
+                isOpen={isUnBanModalOpen}
+                onClose={() => {
+                    setIsUnBanModalOpen(false);
+                    setSelectedSellerId(null);
+                }}
+                onConfirm={handleConfirmUnBan}
+                title={t("Merchants.ConfirmUnBanTitle")}
+                message={t("Merchants.ConfirmUnBanMessage")}
+                isDanger={true}
+                loading={isUnBanning}
             />
 
             {/* Ban Modal */}
@@ -378,10 +513,10 @@ export default function Sellers() {
                     <div className="flex items-center gap-4 w-full">
                         <button
                             onClick={handleConfirmBan}
-                            disabled={!banReason.trim()}
+                            disabled={!banReason.trim() || isBanning}
                             className="flex-1 py-2 rounded-[10px] bg-[#FB2C36] hover:bg-[#d9222b] shadow-lg shadow-[#FB2C36]/20 text-white font-bold text-[18px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {t("Merchants.ConfirmBan")}
+                            {isBanning ? t("Common.loading") || "..." : t("Merchants.ConfirmBan")}
                         </button>
                         <button
                             onClick={() => {

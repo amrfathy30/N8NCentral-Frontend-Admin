@@ -2,16 +2,24 @@ import { useTranslation } from "react-i18next";
 import Drawer from "../../Components/Ui/Drawer";
 import Button from "../../Components/Ui/Button";
 import { Star, Ban, Pause } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface ServiceDetailsDrawerProps {
     isOpen: boolean;
     onClose: () => void;
     service: any;
+    activeFilter?: string;
+    onStop?: (service: any) => void;
+    onApprove?: (service: any) => void;
+    onReject?: (service: any) => void;
+    onReactivate?: (service: any) => void;
 }
 
-export default function ServiceDetailsDrawer({ isOpen, onClose, service }: ServiceDetailsDrawerProps) {
+export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeFilter, onStop, onApprove, onReject, onReactivate }: ServiceDetailsDrawerProps) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
+    const lang = i18n.language
+    const navigate = useNavigate()
 
     const DetailItem = ({ label, value, className = "" }: { label: string; value: string; className?: string }) => (
         <div className={`flex items-center flex-wrap gap-2 ${className}`}>
@@ -37,12 +45,12 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service }: Servi
                 {/* Service Details Grid */}
                 <section className="space-y-4">
                     <div className="grid grid-cols-2 gap-y-6 gap-x-4 bg-white rounded-[12px] p-4">
-                        <DetailItem label={t("Services.ServiceDetails.Name")} value={service?.service || "خدمة أتمتة الرسائل"} />
-                        <DetailItem label={t("Services.ServiceDetails.Merchant")} value={service?.merchant || "شركة التقنية"} />
-                        <DetailItem label={t("Services.ServiceDetails.Price")} value={service?.price || "125"} />
+                        <DetailItem label={t("Services.ServiceDetails.Name")} value={service?.display_title || service?.title?.ar || service?.title?.en || "خدمة أتمتة الرسائل"} />
+                        <DetailItem label={t("Services.ServiceDetails.Merchant")} value={service?.seller?.name || service?.merchant?.name || service?.merchant || "شركة التقنية"} />
+                        <DetailItem label={t("Services.ServiceDetails.Price")} value={service?.price ? `$${service.price}` : "$125"} />
                         <DetailItem label={t("Services.ServiceDetails.LastSale")} value="منذ 8 ساعات" />
-                        <DetailItem label={t("Services.ServiceDetails.Email")} value="abc@123.com" />
-                        <DetailItem label={t("Services.ServiceDetails.Category")} value={service?.category || "التسويق"} />
+                        <DetailItem label={t("Services.ServiceDetails.Email")} value={service?.seller?.email || service?.merchant?.email || "abc@123.com"} />
+                        <DetailItem label={t("Services.ServiceDetails.Category")} value={service?.category?.name?.ar || service?.category?.name?.en || "التسويق"} />
                     </div>
                 </section>
 
@@ -103,19 +111,61 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service }: Servi
 
                 {/* footer  */}
                 <div className="flex flex-col gap-3 w-full pt-4 pb-6">
-                    <div className="flex gap-3">
-                        <Button className="flex-[1.5] !bg-greenDark !py-3 !shadow-md">
-                            {t("Services.ServiceDetails.ViewFullPage")}
-                        </Button>
-                        <Button className="flex-1 !bg-[#F68713] !py-3 !shadow-md">
-                            {t("Services.ServiceDetails.EditService")}
-                        </Button>
-                    </div>
-                    <Button className="w-full !bg-[#E7000B] !py-3 !shadow-md">
-                        {t("Services.ServiceDetails.StopService")}
+                    {/* View Full Page - always visible */}
+                    <Button
+                        onClick={() => navigate(`/${lang}/admin/services-details/${service?.id}`)}
+                        className="w-full !bg-greenDark !py-3 !shadow-md"
+                    >
+                        {t("Services.ServiceDetails.ViewFullPage")}
                     </Button>
+
+                    {/* Active: Stop + Reject */}
+                    {activeFilter === "active" && (
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => { onStop?.(service); onClose(); }}
+                                className="flex-1 py-3 rounded-[10px] bg-[#F68713] hover:bg-[#d97706] text-white font-bold text-[16px] shadow-md transition-all"
+                            >
+                                {t("Services.ServiceDetails.StopService")}
+                            </button>
+                            <button
+                                onClick={() => { onReject?.(service); onClose(); }}
+                                className="flex-1 py-3 rounded-[10px] bg-[#FB2C36] hover:bg-[#d9222b] text-white font-bold text-[16px] shadow-md transition-all"
+                            >
+                                {t("Services.Reject")}
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Pending: Approve + Reject */}
+                    {activeFilter === "PendingReview" && (
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => { onApprove?.(service); onClose(); }}
+                                className="flex-1 py-3 rounded-[10px] bg-[#2B7B4C] hover:bg-[#23663f] text-white font-bold text-[16px] shadow-md transition-all"
+                            >
+                                {t("Services.Approve")}
+                            </button>
+                            <button
+                                onClick={() => { onReject?.(service); onClose(); }}
+                                className="flex-1 py-3 rounded-[10px] bg-[#FB2C36] hover:bg-[#d9222b] text-white font-bold text-[16px] shadow-md transition-all"
+                            >
+                                {t("Services.Reject")}
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Rejected: Reactivate */}
+                    {activeFilter === "Rejected" && (
+                        <button
+                            onClick={() => { onReactivate?.(service); onClose(); }}
+                            className="w-full py-3 rounded-[10px] bg-[#F68713] hover:bg-[#d97706] text-white font-bold text-[16px] shadow-md transition-all"
+                        >
+                            {t("Services.Reactivate")}
+                        </button>
+                    )}
                 </div>
             </div>
-        </Drawer>
+        </Drawer >
     );
 }
