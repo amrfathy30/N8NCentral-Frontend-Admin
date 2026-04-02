@@ -1,5 +1,6 @@
 import { Search, TrendingUp as TrendingIcon } from "lucide-react";
 import { useState } from "react";
+import ConfirmModal from "../../../../../Components/Ui/ConfirmModal";
 
 interface AddedService {
     id: number;
@@ -21,6 +22,17 @@ export default function AddedServices({ addedServicesData, t }: AddedServicesPro
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState<AddedService | null>(null);
+    const handleStopClick = (service: AddedService) => {
+        setSelectedService(service);
+        setIsModalOpen(true);
+    };
+    const handleConfirmStop = () => {
+        if (!selectedService) return;
+        console.log("Stopping service:", selectedService.id);
+        setIsModalOpen(false);
+    };
     return (
         <div className="space-y-6">
             {/* Header: Search and Filters */}
@@ -105,12 +117,20 @@ export default function AddedServices({ addedServicesData, t }: AddedServicesPro
                             <button className="flex-1 bg-greenDark hover:bg-[#23663f] text-white py-3 rounded-[8px] font-semibold text-[16px] transition-all shadow-sm active:scale-[0.98]">
                                 {t("AccountDetails.AddedServices.ViewDetails")}
                             </button>
-                            <button className="flex-1 bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[16px] transition-all shadow-sm active:scale-[0.98]">
+                            <button onClick={() => handleStopClick(service)} className="flex-1 bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[16px] transition-all shadow-sm active:scale-[0.98]">
                                 {t("AccountDetails.AddedServices.Stop")}
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
+            <ConfirmModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={handleConfirmStop}
+                isStop={true} 
+                title={t("AccountDetails.AddedServices.ConfirmStopTitle")}
+                message={t("AccountDetails.AddedServices.ConfirmStopMessage")}
+            />
         </div>)
 }

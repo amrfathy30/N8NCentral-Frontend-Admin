@@ -1,5 +1,30 @@
+import { useState } from "react";
+import ConfirmModal from "../../../../../Components/Ui/ConfirmModal";
 
 export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawalRequests: any[]; t: any; lang: string }) {
+    const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState<any>(null);
+
+    const handleApproveClick = (request: any) => {
+        setSelectedRequest(request);
+        setIsApproveModalOpen(true);
+    };
+
+    const handleConfirmApprove = () => {
+        console.log("Approved ID:", selectedRequest?.id);
+        setIsApproveModalOpen(false);
+    };
+
+    const handleRejectClick = (request: any) => {
+        setSelectedRequest(request);
+        setIsRejectModalOpen(true);
+    };
+
+    const handleConfirmReject = () => {
+        console.log("Rejected ID:", selectedRequest?.id);
+        setIsRejectModalOpen(false);
+    };
     return (
         <div className="space-y-6">
             <h2 className="text-[20px] font-extrabold text-greenDark mb-4">
@@ -44,10 +69,10 @@ export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawal
 
                             {/* Actions */}
                             <div className="flex justify-start gap-3">
-                                <button className="bg-greenDark hover:bg-[#23663f] text-white px-8 py-2.5 rounded-[8px] font-semibold text-[16px] transition-all active:scale-[0.98]">
+                                <button onClick={() => handleApproveClick(request)} className="bg-greenDark hover:bg-[#23663f] text-white px-8 py-2.5 rounded-[8px] font-semibold text-[16px] transition-all active:scale-[0.98]">
                                     {t("AccountDetails.Withdrawal.ApproveRequest")}
                                 </button>
-                                <button className="bg-[#E7000B] hover:bg-[#b00707] text-white px-8 py-2.5 rounded-[8px] font-semibold text-[16px] transition-all active:scale-[0.98]">
+                                <button onClick={() => handleRejectClick(request)} className="bg-[#E7000B] hover:bg-[#b00707] text-white px-8 py-2.5 rounded-[8px] font-semibold text-[16px] transition-all active:scale-[0.98]">
                                     {t("AccountDetails.Withdrawal.RejectRequest")}
                                 </button>
                             </div>
@@ -55,5 +80,22 @@ export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawal
                     </div>
                 ))}
             </div>
+            {/* approve modal */}
+            <ConfirmModal
+                isOpen={isApproveModalOpen}
+                onClose={() => setIsApproveModalOpen(false)}
+                onConfirm={handleConfirmApprove}
+                title={t("AccountDetails.Withdrawal.ApproveTitle")}
+                message={t("AccountDetails.Withdrawal.ApproveMessage")}
+            />
+            {/* Reject modal */}
+            <ConfirmModal
+                isOpen={isRejectModalOpen}
+                onClose={() => setIsRejectModalOpen(false)}
+                onConfirm={handleConfirmReject}
+                isDanger={true}
+                title={t("AccountDetails.Withdrawal.RejectTitle")}
+                message={t("AccountDetails.Withdrawal.RejectMessage")}
+            />
         </div>)
 }

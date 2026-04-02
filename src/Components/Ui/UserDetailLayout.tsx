@@ -115,7 +115,7 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
                         <button onClick={() => setIsStopModalOpen(true)} className="w-full bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
                             {t(`${tPrefix}.StopAccount`)}
                         </button>
-                        <button onClick={() => setIsStopModalOpen(true)} className="w-full bg-[#D00808] hover:bg-[#b91c1c] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                        <button onClick={() => setIsBanModalOpen(true)} className="w-full bg-[#D00808] hover:bg-[#b91c1c] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
                             {t(`${tPrefix}.BanAccount`)}
                         </button>
                     </div>
