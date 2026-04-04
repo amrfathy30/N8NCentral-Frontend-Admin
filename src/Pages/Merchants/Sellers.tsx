@@ -4,7 +4,6 @@ import {
     Clock,
     Eye,
     Play,
-    Ban,
     CheckCircle,
     Search,
     X
@@ -16,8 +15,7 @@ import { useGetSellerStatsDataQuery, useGetAllSellerDataQuery, useBanSellerMutat
 import StatsCardSkeleton from "../../Components/Skeleton/StatsCard/StatsCardSkeleton";
 import TableSkeleton from "../../Components/Skeleton/Table/TableSkeleton";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
-import Modal from "../../Components/Ui/Modal";
-import { Input } from "../../Components/Ui/Input";
+import BanModal from "../../Components/Ui/BanModal";
 import SellerStats from "./components/SellerStats";
 import { useNavigate } from "react-router-dom";
 import { showToastSuccess } from "../../Components/Helper/toastHelper";
@@ -456,9 +454,9 @@ export default function Sellers() {
                     ) : (
                         <DynamicTable
                             data={sellersData?.data?.sellers?.filter((seller: any) => {
-                                if (activeFilter === "active") return seller.user_account_status !== "banned";
+                                if (activeFilter === "active") return seller.account_status !== "banned";
                                 if (activeFilter === "pending_kyc") return seller.status === "pending" || seller.status === "pending_kyc";
-                                if (activeFilter === "banned") return seller.user_account_status === "banned";
+                                if (activeFilter === "banned") return seller.account_status === "banned";
                                 return true;
                             }) || []}
                             columns={getColumns()}
@@ -525,45 +523,14 @@ export default function Sellers() {
                 loading={isUnBanning}
             />
 
-            {/* Ban Modal */}
-            <Modal
-                isOpen={isBanModalOpen}
-                onClose={() => {
-                    setIsBanModalOpen(false);
-                    setSelectedSellerId(null);
-                    setBanReason("");
-                }}
-                title={t("Merchants.ConfirmBan")}
-            >
-                <div className="flex flex-col gap-6 pt-4">
-                    <Input
-                        value={banReason}
-                        onChange={(e) => setBanReason(e.target.value)}
-                        placeholder={t("Merchants.BanReasonPlaceholder")}
-                        label={t("Merchants.BanReason")}
-                        icon={Ban}
-                    />
-                    <div className="flex items-center gap-4 w-full">
-                        <button
-                            onClick={handleConfirmBan}
-                            disabled={!banReason.trim() || isBanning}
-                            className="flex-1 py-2 rounded-[10px] bg-[#FB2C36] hover:bg-[#d9222b] shadow-lg shadow-[#FB2C36]/20 text-white font-bold text-[18px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isBanning ? t("Common.loading") || "..." : t("Merchants.ConfirmBan")}
-                        </button>
-                        <button
-                            onClick={() => {
-                                setIsBanModalOpen(false);
-                                setSelectedSellerId(null);
-                                setBanReason("");
-                            }}
-                            className="flex-1 py-2 rounded-[10px] bg-[#D2D2D233] text-[#4A5565] font-bold text-[18px] border border-[#E5E7EB] hover:bg-gray-200 transition-all"
-                        >
-                            {t("Merchants.Cancel")}
-                        </button>
-                    </div>
-                </div>
-            </Modal>
+            <BanModal
+                isBanModalOpen={isBanModalOpen}
+                setIsBanModalOpen={setIsBanModalOpen}
+                banReason={banReason}
+                setBanReason={setBanReason}
+                handleConfirmBan={handleConfirmBan}
+                isBanning={isBanning}
+            />
         </div>
     );
 }

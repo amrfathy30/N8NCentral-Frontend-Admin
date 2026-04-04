@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import {
     ChevronLeft,
     ChevronRight,
-    type LucideIcon
+    type LucideIcon,
+    Send
 } from "lucide-react";
 import ConfirmModal from '../../Components/Ui/ConfirmModal';
+import Modal from '../../Components/Ui/Modal';
+import TextEditor from '../../Components/Ui/TextEditor';
+import { toast } from 'sonner';
+import BanModal from "./BanModal";
 
 interface Tab {
     id: string;
@@ -20,12 +25,23 @@ interface UserDetailLayoutProps {
     tabs: Tab[];
     children: React.ReactNode;
     tPrefix: string;
+    userStatus?: string;
+    onStatusChange?: (newStatus: string) => void;
+}
+
+interface VerificationItemProps {
+    label: string;
+    date?: string;
+    isVerified: boolean;
+    icon: LucideIcon;
+    colorClass: string;
+    verifiedOnText: string
 }
 
 export const InfoItem = ({ label, value }: { label: string; value: string }) => (
     <div className="flex items-center flex-wrap gap-1">
         <span className="text-greenDark text-[16px] font-bold flex items-center gap-2">
-            {label} : 
+            {label} :
         </span>
         <span className="text-greenDark text-wrap text-[16px] font-semibold flex items-center gap-2">
             {value}
@@ -40,7 +56,15 @@ export const StatCard = ({ label, value }: { label: string; value: string }) => 
     </div>
 );
 
-export const VerificationItem = ({ label, date, isVerified, icon: Icon, colorClass, verifiedOnText }: { label: string; date?: string; isVerified: boolean; icon: LucideIcon; colorClass: string; verifiedOnText: string }) => (
+export const VerificationItem = ({
+    label,
+    date,
+    isVerified,
+    icon: Icon,
+    colorClass,
+    verifiedOnText
+}: VerificationItemProps) => (
+
     <div className={`p-4 rounded-[12px] border ${isVerified ? "bg-[#ECFDF5] border-[#A4F4CF]" : "bg-[#EFF8FF] border-[#D1E9FF]"} flex items-center gap-2`}>
         <div className={`w-10 h-10 rounded-full ${colorClass} flex items-center justify-center text-white`}>
             <Icon size={20} />
@@ -65,15 +89,64 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
     setActiveTab,
     tabs,
     children,
-    tPrefix
+    tPrefix,
+    userStatus = "active",
+    onStatusChange
 }) => {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
     const [isStopModalOpen, setIsStopModalOpen] = useState(false);
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
+    const [isReactivateModalOpen, setIsReactivateModalOpen] = useState(false);
+    const [isUnbanModalOpen, setIsUnbanModalOpen] = useState(false);
+    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+    const [notificationContent, setNotificationContent] = useState("");
+    const [reason, setReason] = useState("");
+
     const handleBack = () => {
         navigate(-1);
+    };
+
+    const handleSendNotification = () => {
+        if (!notificationContent.trim()) {
+            toast.error(t("Common.EmptyContentError") || "Content cannot be empty");
+            return;
+        }
+        // Simulated send
+        console.log("Sending Notification to:", userName, "Content:", notificationContent);
+        toast.success(t("Common.NotificationSentSuccess") || "Notification sent successfully");
+        setIsNotificationModalOpen(false);
+        setNotificationContent("");
+    };
+
+    const handleBan = () => {
+        if (!reason.trim()) {
+            toast.error(t("Common.EmptyContentError") || "Reason cannot be empty");
+            return;
+        }
+        // Simulated ban
+        console.log("Banning user:", userName, "Reason:", reason);
+        toast.success(t("Merchants.BanSuccess") || "User banned successfully");
+        setIsBanModalOpen(false);
+        setReason("");
+        onStatusChange?.("banned");
+    };
+
+    const handleReactivate = () => {
+        // Simulated reactivate
+        console.log("Reactivating user:", userName);
+        toast.success(t("Common.ConfirmReactivateTitle") || "Accound reactivated");
+        setIsReactivateModalOpen(false);
+        onStatusChange?.("active");
+    };
+
+    const handleUnban = () => {
+        // Simulated unban
+        console.log("Unbanning user:", userName);
+        toast.success(t("Merchants.UnBanSuccess") || "User unbanned successfully");
+        setIsUnbanModalOpen(false);
+        onStatusChange?.("active");
     };
 
     return (
@@ -109,15 +182,36 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
 
                     {/* Action Buttons */}
                     <div className="grid grid-cols-1 gap-3">
-                        <button className="w-full bg-[#2B7B4C] hover:bg-[#23663f] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                        <button
+                            onClick={() => setIsNotificationModalOpen(true)}
+                            className="w-full bg-[#2B7B4C] hover:bg-[#23663f] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]"
+                        >
                             {t(`${tPrefix}.SendNotification`)}
                         </button>
-                        <button onClick={() => setIsStopModalOpen(true)} className="w-full bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
-                            {t(`${tPrefix}.StopAccount`)}
-                        </button>
-                        <button onClick={() => setIsBanModalOpen(true)} className="w-full bg-[#D00808] hover:bg-[#b91c1c] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
-                            {t(`${tPrefix}.BanAccount`)}
-                        </button>
+
+                        {userStatus !== 'banned' && (
+                            <>
+                                {userStatus === 'active' ? (
+                                    <button onClick={() => setIsStopModalOpen(true)} className="w-full bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                                        {t(`${tPrefix}.StopAccount`)}
+                                    </button>
+                                ) : (
+                                    <button onClick={() => setIsReactivateModalOpen(true)} className="w-full bg-[#2B7B4C] hover:bg-[#23663f] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                                        {t(`Common.ConfirmReactivateTitle`) || "Reactivate"}
+                                    </button>
+                                )}
+
+                                <button onClick={() => setIsBanModalOpen(true)} className="w-full bg-[#D00808] hover:bg-[#b91c1c] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                                    {t(`${tPrefix}.BanAccount`)}
+                                </button>
+                            </>
+                        )}
+
+                        {userStatus === 'banned' && (
+                            <button onClick={() => setIsUnbanModalOpen(true)} className="w-full bg-[#F68713] hover:bg-[#d97706] text-white py-3 rounded-[8px] font-semibold text-[18px] flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]">
+                                {t(`Merchants.Unban`)}
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -138,12 +232,57 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
                     {children}
                 </div>
             </div>
+
+            {/* Notification Modal */}
+            <Modal
+                isOpen={isNotificationModalOpen}
+                onClose={() => setIsNotificationModalOpen(false)}
+                title={t(`${tPrefix}.SendNotification`)}
+                maxWidth="max-w-2xl"
+            >
+                <div className="space-y-6">
+                    <div className="min-h-[300px]">
+                        <TextEditor
+                            value={notificationContent}
+                            onChange={setNotificationContent}
+                            placeholder={t(`${tPrefix}.NotificationPlaceholder`) || "Write your message here..."}
+                        />
+                    </div>
+                    <div className="flex justify-end gap-3">
+                        <button
+                            onClick={handleSendNotification}
+                            className="bg-greenDark hover:bg-[#23663f] text-white py-2.5 px-8 rounded-[10px] font-bold text-[16px] flex items-center gap-2 transition-all active:scale-[0.98]"
+                        >
+                            <Send size={18} />
+                            {t("Common.Send") || "Send"}
+                        </button>
+                        <button
+                            onClick={() => setIsNotificationModalOpen(false)}
+                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 px-8 rounded-[10px] font-bold text-[16px] transition-all"
+                        >
+                            {t("Common.Cancel") || "Cancel"}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
+            {/* Banned modal  */}
+            <BanModal
+                isBanModalOpen={isBanModalOpen}
+                setIsBanModalOpen={setIsBanModalOpen}
+                banReason={reason}
+                setBanReason={setReason}
+                handleConfirmBan={handleBan}
+            // isBanning={isBanning}
+            />
+
             <ConfirmModal
                 isOpen={isStopModalOpen}
                 onClose={() => setIsStopModalOpen(false)}
                 onConfirm={() => {
                     console.log("إيقاف الحساب...");
                     setIsStopModalOpen(false);
+                    onStatusChange?.("stopped");
                 }}
                 title={t(`${tPrefix}.ConfirmStopTitle`)}
                 message={t(`${tPrefix}.ConfirmStopMessage`)}
@@ -151,15 +290,20 @@ const UserDetailLayout: React.FC<UserDetailLayoutProps> = ({
             />
 
             <ConfirmModal
-                isOpen={isBanModalOpen}
-                onClose={() => setIsBanModalOpen(false)}
-                onConfirm={() => {
-                    console.log("حظر الحساب...");
-                    setIsBanModalOpen(false);
-                }}
-                title={t(`${tPrefix}.ConfirmBanTitle`)}
-                message={t(`${tPrefix}.ConfirmBanMessage`)}
-                isDanger={true}
+                isOpen={isReactivateModalOpen}
+                onClose={() => setIsReactivateModalOpen(false)}
+                onConfirm={handleReactivate}
+                title={t(`Common.ConfirmReactivateTitle`)}
+                message={t(`Common.ConfirmReactivateMessage`)}
+            />
+
+            <ConfirmModal
+                isOpen={isUnbanModalOpen}
+                onClose={() => setIsUnbanModalOpen(false)}
+                onConfirm={handleUnban}
+                title={t(`Merchants.ConfirmUnBanTitle`)}
+                message={t(`Merchants.ConfirmUnBanMessage`)}
+                isStop={true} // Unban use orange color for consistency with "reactivate" feel but usually it's green. Sellers.tsx uses Play icon for Unban.
             />
         </div>
     );

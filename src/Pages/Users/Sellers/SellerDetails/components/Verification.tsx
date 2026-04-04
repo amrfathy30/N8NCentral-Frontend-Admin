@@ -6,6 +6,7 @@ import { useState } from 'react';
 import ConfirmModal from '../../../../../Components/Ui/ConfirmModal';
 import Modal from '../../../../../Components/Ui/Modal';
 import { Input } from '../../../../../Components/Ui/Input';
+import { t } from 'i18next';
 
 interface VerificationProps {
     verificationDocuments: any[];
@@ -22,17 +23,17 @@ const collectionLabels: Record<string, { en: string; ar: string }> = {
 const StatusBadge = ({ status }: { status: string }) => {
     if (status === 'approved') return (
         <span className="flex items-center gap-1 text-greenDark text-[12px] font-semibold">
-            <CheckCircle size={14} /> Approved
+            <CheckCircle size={14} /> {t("Common.Verified")}
         </span>
     );
     if (status === 'rejected') return (
         <span className="flex items-center gap-1 text-red-600 text-[12px] font-semibold">
-            <XCircle size={14} /> Rejected
+            <XCircle size={14} /> {t("Common.Rejected")}
         </span>
     );
     return (
         <span className="flex items-center gap-1 text-[#F68713] text-[12px] font-semibold">
-            <Clock size={14} /> Pending
+            <Clock size={14} /> {t("Common.Pending")}
         </span>
     );
 };
@@ -40,7 +41,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 export default function Verification({ verificationDocuments, t, sellerId }: VerificationProps) {
     const [approveDocument, { isLoading: isApproving }] = useApproveSellerDocumentMutation();
     const [rejectDocument, { isLoading: isRejecting }] = useRejectSellerDocumentMutation();
-
+    const lang = localStorage.getItem("i18nextLng") || "ar";
     const [selectedDocId, setSelectedDocId] = useState<string | number | null>(null);
     const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
@@ -129,8 +130,11 @@ export default function Verification({ verificationDocuments, t, sellerId }: Ver
                     return (
                         <div key={doc.id} className="bg-white rounded-[18px] p-5 shadow-sm border border-gray-100 flex flex-col gap-4">
                             <div className="flex items-center justify-between">
-                                <h4 className="text-[#373B42] text-[15px] font-semibold">
-                                    {collectionLabels[doc.collection_name]?.en || doc.collection_name}
+                                <h4 className="text-[#373B42] text-[13px] font-semibold">
+                                    {lang === "en" ?
+                                        collectionLabels[doc.collection_name]?.en
+                                        : collectionLabels[doc.collection_name]?.ar
+                                    }
                                 </h4>
                                 <StatusBadge status={doc.status} />
                             </div>

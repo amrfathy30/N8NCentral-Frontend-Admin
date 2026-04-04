@@ -123,18 +123,6 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                             {t("Services.ServiceDetails.ViewFullPage")}
                         </Button>
 
-                        <div className="flex gap-3">
-                            <Button className="flex-[1.5] !bg-greenDark !py-3 !shadow-md">
-                                {t("Services.ServiceDetails.ViewFullPage")}
-                            </Button>
-                            <Button className="flex-1 !bg-[#F68713] !py-3 !shadow-md">
-                                {t("Services.ServiceDetails.EditService")}
-                            </Button>
-                        </div>
-                        <Button onClick={() => setIsStopModalOpen(true)} className="w-full !bg-[#E7000B] !py-3 !shadow-md">
-                            {t("Services.ServiceDetails.StopService")}
-                        </Button>
-
                         {/* Active: Stop + Reject */}
                         {activeFilter === "active" && (
                             <div className="flex gap-3">

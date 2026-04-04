@@ -29,7 +29,7 @@ export default function Overview({ t, sellerData }: OverviewProps) {
                     />
                     <InfoItem label={t("AccountDetails.Country")} value={overview.country || "—"} />
                     <InfoItem label={t("AccountDetails.StoreType")} value={overview.store?.activity_type || "—"} />
-                    <InfoItem label={t("AccountDetails.StoreStatus")} value={overview.store?.status || "—"} />
+                    <InfoItem label={t("AccountDetails.StoreStatus")} value={t(`Merchants.${overview.store?.status}`) || "—"} />
                 </div>
 
                 {/* Store Description */}
@@ -49,6 +49,19 @@ export default function Overview({ t, sellerData }: OverviewProps) {
                     ) : (
                         <span className="flex items-center gap-1.5 bg-red-50 text-red-600 text-[13px] font-semibold px-3 py-1.5 rounded-full border border-red-200">
                             <XCircle size={14} /> {t("AccountDetails.AccountNotVerified")}
+                        </span>
+                    )}
+                </div>
+
+                {/* Account Status */}
+                <div className="mt-5 flex items-center gap-2">
+                    {overview.status === "active" ? (
+                        <span className="flex items-center gap-1.5 bg-green-50 text-greenDark text-[13px] font-semibold px-3 py-1.5 rounded-full border border-green-200">
+                            <CheckCircle size={14} /> {t("AccountDetails.AccountActive")}
+                        </span>
+                    ) : (
+                        <span className="flex items-center gap-1.5 bg-red-50 text-red-600 text-[13px] font-semibold px-3 py-1.5 rounded-full border border-red-200">
+                            <XCircle size={14} /> {t("AccountDetails.AccountInactive")}
                         </span>
                     )}
                 </div>

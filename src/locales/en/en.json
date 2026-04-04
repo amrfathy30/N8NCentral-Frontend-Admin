@@ -91,11 +91,14 @@
   "Common": {
     "All": "All",
     "Converted": "Converted",
+    "EmptyContentError": "Empty Notification Content Error",
     "Adoption": "Adoption",
     "Draft": "Draft",
+    "Send": "Send",
     "ViewDetails": "Details",
     "loading": "Loading...",
     "week": "Week",
+    "Pending": "Pending",
     "AreYouSure": "Are you sure?",
     "Verified": "Verified",
     "Active": "Active",
@@ -310,7 +313,10 @@
   },
   "AccountDetails": {
     "Title": "Account Details",
+    "AccountActive": "Account Active",
+    "AccountInactive": "Account Inactive",
     "AccountData": "Account Details",
+    "NotificationPlaceholder": "Type your notification here...",
     "SellerData": "Seller Details",
     "AffiliateData": "Affiliate Details",
     "StoreName": "Store Name",
@@ -427,7 +433,6 @@
       "PendingMessage": "Documents are pending review",
       "Verified": "Verified",
       "Rejected": "Rejected",
-
       "Pending": "Pending",
       "IDFront": "ID Card (Front)",
       "IDBack": "ID Card (Back)",
