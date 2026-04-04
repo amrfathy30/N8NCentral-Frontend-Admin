@@ -572,6 +572,15 @@
       "ViewServices": "عرض الخدمات",
       "DeleteCategory": "حذف التصنيف",
       "Service": "خدمة",
+      "CategoryTitle": "عنوان التصنيف",
+      "CategoryTitlePlaceholder": "أدخل عنوان التصنيف...",
+      "CategoryDescription": "الوصف",
+      "CategoryDescriptionPlaceholder": "اكتب وصفاً مختصراً للتصنيف...",
+      "CategoryImage": "صورة التصنيف",
+      "UploadImage": "اضغط لرفع صورة",
+      "Save": "حفظ",
+      "Cancel": "إلغاء"
+      "Service": "خدمة",
       "DeleteConfirmMessage": "هل أنت متأكد من حذف قسم ({{name}})؟",
       "DeleteWarning": "سيتم حذف جميع الخدمات المرتبطة بهذا القسم نهائياً."
     },

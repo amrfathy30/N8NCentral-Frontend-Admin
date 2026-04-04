@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Drawer from "../../Components/Ui/Drawer";
 import Button from "../../Components/Ui/Button";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
+import AddCategoryModal from "./AddCategoryModal";
 
 interface Category {
     id: number;
@@ -38,7 +40,14 @@ export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerPr
         console.log("Deleting:", selectedCategory?.name);
         setIsConfirmOpen(false);
     };
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    const handleSaveCategory = (data: any) => {
+    console.log("Saving data...", data);
+    setIsAddModalOpen(false);
+};
     return (
+        <>
         <>
         <Drawer
             isOpen={isOpen}
@@ -80,7 +89,7 @@ export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerPr
                 <div className="pt-4 pb-6">
                     <Button
                         className="w-full !py-2"
-                        onClick={() => console.log("Add Category clicked")}
+                        onClick={() => setIsAddModalOpen(true)}
                     >
                         {t("Services.Categories.AddCategory")}
                     </Button>
@@ -97,5 +106,11 @@ export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerPr
                 description={t("Services.Categories.DeleteWarning")}
             />
         </>
+        <AddCategoryModal 
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
+            onSave={handleSaveCategory} 
+        />
+            </>
     );
 }
