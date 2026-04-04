@@ -15,6 +15,17 @@ export const useServicesApi = createApi({
             }),
             providesTags: ['useServicesApi'],
         }),
+
+        // get All services Categories
+        getAllServicesCategories: builder.query<any, any>({
+            query: params => ({
+                url: `/service-categories`,
+                method: 'GET',
+                params,
+            }),
+            providesTags: ['useServicesApi'],
+        }),
+        
         // get services Stats
         getServicesStatsData: builder.query<any, void>({
             query: () => ({

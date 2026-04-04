@@ -18,7 +18,9 @@ import ConfirmModal from "../../Components/Ui/ConfirmModal";
 import CategoriesDrawer from "./CategoriesDrawer";
 import ServiceDetailsDrawer from "./ServiceDetailsDrawer";
 import { useGetAllServicesDataQuery, useGetServicesStatsDataQuery, useApproveServiceMutation, useRejectServiceMutation, useReactivateServiceMutation, useStopServiceMutation } from "../../store/Api/Services/useServicesApi";
+import { useGetAllServicesCategoriesQuery } from "../../store/Api/Services/useServiceCategoriesApi";
 import { Search, X } from "lucide-react";
+import CustomSelect from "../../Components/Ui/CustomSelect";
 import StatsCardSkeleton from "../../Components/Skeleton/StatsCard/StatsCardSkeleton";
 import TableSkeleton from "../../Components/Skeleton/Table/TableSkeleton";
 import Modal from "../../Components/Ui/Modal";
@@ -190,7 +192,7 @@ export default function ServicesPage() {
   const [activeFilter, setActiveFilter] = useState("active");
   const [search, setSearch] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedAffiliate, setSelectedAffiliate] = useState<any>(null);
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [approveService, { isLoading: isApproving }] = useApproveServiceMutation();
   const [rejectService, { isLoading: isRejecting }] = useRejectServiceMutation();
@@ -204,12 +206,23 @@ export default function ServicesPage() {
   };
 
   const { data: statsData, isLoading: isStatsLoading } = useGetServicesStatsDataQuery();
+  const { data: categoriesData } = useGetAllServicesCategoriesQuery({ per_page: 100 });
+
   const { data: servicesData, isLoading: isServicesLoading, isFetching: isServicesFetching } = useGetAllServicesDataQuery({
     status: filterStatusMapping[activeFilter] || "",
+    categoryId: selectedCategory?.value || "",
     search: searchQuery,
     page: 1,
     per_page: 20
   } as any);
+
+  const categoryOptions = [
+    { label: t("Services.AllCategories") || "All Categories", value: "" },
+    ...(categoriesData?.data?.categories || []).map((cat: any) => ({
+      label: cat.name_display || (typeof cat.name === 'string' ? cat.name : (cat.name?.[i18n.language] || cat.name?.ar || cat.name?.en)),
+      value: cat.id
+    }))
+  ];
 
   const handleSearch = () => {
     if (!search.trim()) {
@@ -251,18 +264,18 @@ export default function ServicesPage() {
     },
   ];
 
-  const handleStopClick = (affiliate: any) => {
-    setSelectedAffiliate(affiliate);
+  const handleStopClick = (service: any) => {
+    setSelectedService(service);
     setIsStopModalOpen(true);
   };
 
   const handleConfirmStop = async () => {
-    if (!selectedAffiliate) return;
+    if (!selectedService) return;
     try {
-      const res = await stopService({ service: selectedAffiliate.id }).unwrap();
+      const res = await stopService({ service: selectedService.id }).unwrap();
       showToastSuccess(res.message || t("Services.StopSuccess") || "تم إيقاف الخدمة بنجاح");
       setIsStopModalOpen(false);
-      setSelectedAffiliate(null);
+      setSelectedService(null);
     } catch (error) {
       handleApiError(error)
     }
@@ -335,7 +348,10 @@ export default function ServicesPage() {
       field: "title",
       header: t("Services.Table.Service"),
       width: "160px",
-      body: (rowData: any) => <span>{rowData.display_title || rowData.title?.ar || rowData.title?.en}</span>
+      body: (rowData: any) => {
+        const title = rowData.display_title || (typeof rowData.title === 'string' ? rowData.title : (rowData.title?.[i18n.language] || rowData.title?.ar || rowData.title?.en));
+        return <span>{title || "----"}</span>
+      }
     },
     {
       field: "price",
@@ -349,7 +365,10 @@ export default function ServicesPage() {
     {
       field: "category",
       header: t("Services.Table.Category"),
-      body: (rowData: any) => <span>{rowData.category?.name?.ar || rowData.category?.name?.en || ""}</span>
+      body: (rowData: any) => {
+        const catName = rowData.category?.display_name || (typeof rowData.category?.name === 'string' ? rowData.category?.name : (rowData.category?.name?.[i18n.language] || rowData.category?.name?.ar || rowData.category?.name?.en));
+        return <span>{catName || "----"}</span>
+      }
     },
     {
       field: "rating",
@@ -467,6 +486,12 @@ export default function ServicesPage() {
       <CategoriesDrawer
         isOpen={isCategoriesDrawerOpen}
         onClose={() => setIsCategoriesDrawerOpen(false)}
+        onSelectCategory={(category) => {
+          setSelectedCategory({
+            label: category.name_display || (typeof category.name === 'string' ? category.name : (category.name?.[i18n.language] || category.name?.ar || category.name?.en)),
+            value: category.id
+          });
+        }}
       />
 
       <ServiceDetailsDrawer
@@ -534,7 +559,14 @@ export default function ServicesPage() {
             </button>
           </div>
 
-          <div className="flex bg-[#F9FAFB] p-1 rounded-lg border border-gray-100 w-fit overflow-x-auto scrollbar-hide">
+          <div className="flex bg-[#F9FAFB] p-1 rounded-lg border border-gray-100 w-fit overflow-x-auto scrollbar-hide gap-2">
+            <CustomSelect
+              options={categoryOptions}
+              value={selectedCategory}
+              onChange={(option) => setSelectedCategory(option)}
+              placeholder={t("Services.SelectCategory") || "Select Category"}
+              className="!w-48 !min-w-[190px]"
+            />
             {filterOptions.map((option) => (
               <button
                 key={option.value}

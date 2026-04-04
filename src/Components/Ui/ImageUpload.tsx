@@ -9,11 +9,15 @@ interface ImageUploadProps {
   onImageSelect: (file: File | null) => void;
   initialImage?: string | null;
   label?: string;
+  className?: string;
+  previewClassName?: string;
   error?: string;
 }
 
 export default function ImageUpload({
   onImageSelect,
+  className,
+  previewClassName,
   initialImage = null,
   label = "",
   error,
@@ -79,7 +83,7 @@ export default function ImageUpload({
 
       {preview ? (
         <div className="relative group">
-          <div className="relative w-full h-48 rounded-lg overflow-hidden border-2 border-gray-200">
+          <div className={`relative w-full h-48 rounded-lg overflow-hidden border-2 border-gray-200 ${previewClassName}`}>
             <img
               src={preview}
               onError={(e) => {
@@ -110,7 +114,7 @@ export default function ImageUpload({
               : error
                 ? "border-red-300 bg-red-50"
                 : "border-gray-300 hover:border-gray-400 bg-gray-50"
-          }`}
+          } ${className}`}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}

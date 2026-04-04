@@ -49,12 +49,18 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                     {/* Service Details Grid */}
                     <section className="space-y-4">
                         <div className="grid grid-cols-2 gap-y-6 gap-x-4 bg-white rounded-[12px] p-4">
-                            <DetailItem label={t("Services.ServiceDetails.Name")} value={service?.display_title || service?.title?.ar || service?.title?.en || "خدمة أتمتة الرسائل"} />
+                            <DetailItem 
+                                label={t("Services.ServiceDetails.Name")} 
+                                value={service?.display_title || (typeof service?.title === 'string' ? service?.title : (service?.title?.[lang] || service?.title?.ar || service?.title?.en)) || "----"} 
+                            />
                             <DetailItem label={t("Services.ServiceDetails.Merchant")} value={service?.seller?.name || service?.merchant?.name || service?.merchant || "شركة التقنية"} />
                             <DetailItem label={t("Services.ServiceDetails.Price")} value={service?.price ? `$${service.price}` : "$125"} />
                             <DetailItem label={t("Services.ServiceDetails.LastSale")} value="منذ 8 ساعات" />
                             <DetailItem label={t("Services.ServiceDetails.Email")} value={service?.seller?.email || service?.merchant?.email || "abc@123.com"} />
-                            <DetailItem label={t("Services.ServiceDetails.Category")} value={service?.category?.name?.ar || service?.category?.name?.en || "التسويق"} />
+                            <DetailItem 
+                                label={t("Services.ServiceDetails.Category")} 
+                                value={service?.category?.display_name || (typeof service?.category?.name === 'string' ? service?.category?.name : (service?.category?.name?.[lang] || service?.category?.name?.ar || service?.category?.name?.en)) || "----"} 
+                            />
                         </div>
                     </section>
 

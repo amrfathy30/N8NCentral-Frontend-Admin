@@ -91,6 +91,7 @@
   "Common": {
     "All": "All",
     "Converted": "Converted",
+    "Edit": "Edit",
     "EmptyContentError": "Empty Notification Content Error",
     "Adoption": "Adoption",
     "Draft": "Draft",
@@ -513,6 +514,8 @@
   },
   "Services": {
     "Title": "Services",
+    "AllCategories": "All Categories",
+    "SelectCategory": "Select Category",
     "ConfirmStopMessage": "Are you sure you want to temporarily stop this services?",
     "Welcome": "Welcome back to N8NCentral Admin Panel",
     "TotalServices": "Total Services",
@@ -566,6 +569,7 @@
     "Categories": {
       "Title": "Categories",
       "AddCategory": "Add Category",
+      "EditCategory": "Edit Category",
       "ViewServices": "View Services",
       "DeleteCategory": "Delete Category",
       "Service": "Service",
@@ -578,7 +582,8 @@
       "Save": "Save",
       "Cancel": "Cancel",
       "DeleteConfirmMessage": "Are you sure you want to delete ({{name}})?",
-      "DeleteWarning": "All services related to this category will be permanently deleted."
+      "DeleteWarning": "All services related to this category will be permanently deleted.",
+      "CannotDeleteWithServices": "Cannot delete category because it contains related services"
     },
     "ServiceDetails": {
       "Title": "Service Details",

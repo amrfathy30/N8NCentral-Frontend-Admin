@@ -5,12 +5,14 @@ import { useDropDownMenuSettingsApi } from './Api/DropDownMenuSettings/useDropDo
 import { usePlansApi } from './Api/Setting/usePlansApi';
 import { useSellersApi } from './Api/users/Sellers/useSellersApi';
 import { useServicesApi } from './Api/Services/useServicesApi';
+import { useServiceCategoriesApi } from './Api/Services/useServiceCategoriesApi';
 
 export const store = configureStore({
     reducer: {
         [useUserAuthApi.reducerPath]: useUserAuthApi.reducer,
         [usePlansApi.reducerPath]: usePlansApi.reducer,
         [useSellersApi.reducerPath]: useSellersApi.reducer,
+        [useServiceCategoriesApi.reducerPath]: useServiceCategoriesApi.reducer,
         [useServicesApi.reducerPath]: useServicesApi.reducer,
         [useDropDownMenuSettingsApi.reducerPath]: useDropDownMenuSettingsApi.reducer,
         auth: authReducer,
@@ -21,6 +23,7 @@ export const store = configureStore({
             usePlansApi.middleware,
             useServicesApi.middleware,
             useSellersApi.middleware,
+            useServiceCategoriesApi.middleware,
             useDropDownMenuSettingsApi.middleware
         ),
 });

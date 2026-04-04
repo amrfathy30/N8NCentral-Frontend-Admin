@@ -93,6 +93,7 @@
     "Adoption": "اعتماد",
     "EmptyContentError": "محتوى الإشعار فارغ",
     "Pending": "قيد الانتظار",
+    "Edit": "تعديل",
     "Draft": "مسودة",
     "Cancel": "الغاء",
     "Send": "ارسال",
@@ -392,7 +393,7 @@
     "ConfirmStopTitle": "تأكيد الإيقاف المؤقت",
     "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف حساب هذا المستخدم مؤقتاً؟",
     "ConfirmBanTitle": "تأكيد الحظر النهائي",
-    "ConfirmBanMessage":"هل أنت متأكد من رغبتك في حظر هذا الحساب نهائياً؟",
+    "ConfirmBanMessage": "هل أنت متأكد من رغبتك في حظر هذا الحساب نهائياً؟",
     "AddedServices": {
       "Title": "الخدمات المضافة",
       "SearchPlaceholder": "ابحث عن خدمة",
@@ -444,7 +445,6 @@
       "ConfirmApprove": "هل أنت متأكد من الموافقة على {{docName}}؟",
       "ConfirmReject": "هل أنت متأكد من رفض {{docName}}؟"
     }
-    
   },
   "Merchants": {
     "Title": "التجار",
@@ -516,6 +516,8 @@
   },
   "Services": {
     "Title": "الخدمات",
+    "AllCategories": "جميع الفئات",
+    "SelectCategory": "اختر فئة",
     "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف هذه الخدمة مؤقتاً؟",
     "Welcome": "مرحباً بك في لوحة تحكم منصة الأتمتة",
     "TotalServices": "إجمالي الخدمات",
@@ -570,6 +572,7 @@
       "Title": "التصنيفات",
       "AddCategory": "إضافة تصنيف",
       "ViewServices": "عرض الخدمات",
+      "EditCategory": "تعديل التصنيف",
       "DeleteCategory": "حذف التصنيف",
       "Service": "خدمة",
       "CategoryTitle": "عنوان التصنيف",
@@ -579,10 +582,10 @@
       "CategoryImage": "صورة التصنيف",
       "UploadImage": "اضغط لرفع صورة",
       "Save": "حفظ",
-      "Cancel": "إلغاء"
-      "Service": "خدمة",
+      "Cancel": "إلغاء",
       "DeleteConfirmMessage": "هل أنت متأكد من حذف قسم ({{name}})؟",
-      "DeleteWarning": "سيتم حذف جميع الخدمات المرتبطة بهذا القسم نهائياً."
+      "DeleteWarning": "سيتم حذف جميع الخدمات المرتبطة بهذا القسم نهائياً.",
+      "CannotDeleteWithServices": "لا يمكن حذف القسم لأنه يحتوي على خدمات مرتبطة به"
     },
     "ServiceDetails": {
       "Title": "تفاصيل الخدمة",
