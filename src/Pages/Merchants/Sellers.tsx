@@ -173,7 +173,7 @@ export default function Sellers() {
                     body: (row: any) => (
                         <div className="flex justify-center">
                             <span className="bg-[#2B7B4C]/20 text-greenDark px-3 py-1 rounded-full text-[11px] flex items-center gap-1 w-fit">
-                                {t(`Merchants.${row.status.charAt(0).toUpperCase() + row.status.slice(1)}`)}<CheckCircle size={12} strokeWidth={3} />
+                                {t(`Merchants.${row.seller_status}`)}<CheckCircle size={12} strokeWidth={3} />
                             </span>
                         </div>
                     ),
@@ -225,10 +225,11 @@ export default function Sellers() {
                 { header: t("Merchants.BirthDate"), field: "birthDate" },
                 {
                     header: t("Merchants.Status"),
-                    body: () => (
+                    body: (row: any) => (
                         <div className="flex justify-center">
                             <span className="bg-[#F68713]/20 text-[#F68713] px-6 py-3 rounded-full text-[12px] flex items-center gap-1 w-fit">
-                                <Clock size={14} strokeWidth={3} /> {t("Merchants.WaitingVerification")}
+                                <Clock size={14} strokeWidth={3} />
+                                {t(`Merchants.${row.seller_status}`)}
                             </span>
                         </div>
                     ),
@@ -260,14 +261,46 @@ export default function Sellers() {
         } else {
             return [
                 ...baseColumns,
-                { header: t("Merchants.Type"), field: "type" },
-                { header: t("Merchants.StopReason"), field: "stopReason" },
-                { header: t("Merchants.StopDate"), field: "stopDate" },
-                { header: t("Merchants.RemainingBan"), field: "remainingBan" },
+                {
+                    header: t("Merchants.Type"),
+                    field: "activity_type",
+                    body: (row: any) => {
+                        return <span>
+                            {row.activity_type || "__"}
+                        </span>
+                    }
+                },
+                {
+                    header: t("Merchants.StopReason"),
+                    field: "ban_reason",
+                    body: (row: any) => {
+                        return <span>
+                            {row.ban_reason || "__"}
+                        </span>
+                    }
+                },
+                {
+                    header: t("Merchants.StopDate"),
+                    field: "suspended_at",
+                    body: (row: any) => {
+                        return <span>
+                            {row.suspended_at || "__"}
+                        </span>
+                    }
+                },
+                {
+                    header: t("Merchants.RemainingBan"),
+                    field: "ban_remaining_days",
+                    body: (row: any) => {
+                        return <span>
+                            {row.ban_remaining_days || "__"}
+                        </span>
+                    }
+                },
                 {
                     header: t("Merchants.Status"),
                     body: (row: any) => {
-                        const isVerified = row.status === "active";
+                        const isVerified = row.seller_status === "active";
 
                         return (
                             <div className="flex justify-center">
@@ -423,9 +456,9 @@ export default function Sellers() {
                     ) : (
                         <DynamicTable
                             data={sellersData?.data?.sellers?.filter((seller: any) => {
-                                if (activeFilter === "active") return seller.status === "active";
+                                if (activeFilter === "active") return seller.user_account_status !== "banned";
                                 if (activeFilter === "pending_kyc") return seller.status === "pending" || seller.status === "pending_kyc";
-                                if (activeFilter === "banned") return seller.status === "banned" || seller.status === "blocked";
+                                if (activeFilter === "banned") return seller.user_account_status === "banned";
                                 return true;
                             }) || []}
                             columns={getColumns()}

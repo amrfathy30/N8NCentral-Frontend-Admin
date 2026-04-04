@@ -27,10 +27,19 @@ export const useSellersApi = createApi({
             providesTags: ['useSellersApi'],
         }),
 
-        // get seller by id
-        getSellerById: builder.query<any, { id: string| number }>({
+        // get seller Details by id
+        getSellerDetailsById: builder.query<any, { seller_id: string | number }>({
+            query: ({ seller_id }: { seller_id: string }) => ({
+                url: `/sellers/${seller_id}/details`,
+                method: 'GET',
+            }),
+            providesTags: ['useSellersApi'],
+        }),
+
+        // get seller attachments
+        getSellerAttachments: builder.query<any, { id: string | number }>({
             query: ({ id }: { id: string }) => ({
-                url: `/sellers/${id}`,
+                url: `/sellers/${id}/details?include=verification`,
                 method: 'GET',
             }),
             providesTags: ['useSellersApi'],
@@ -46,7 +55,7 @@ export const useSellersApi = createApi({
         }),
 
         // reject seller
-        rejectSeller: builder.mutation<any, { id: string| number }>({
+        rejectSeller: builder.mutation<any, { id: string | number }>({
             query: ({ id }: { id: string }) => ({
                 url: `/sellers/${id}/reject`,
                 method: 'POST',
@@ -65,7 +74,7 @@ export const useSellersApi = createApi({
         }),
 
         // unBan seller
-        unBanSeller: builder.mutation<any, { sellerId: string| number }>({
+        unBanSeller: builder.mutation<any, { sellerId: string | number }>({
             query: ({ sellerId }: { sellerId: string }) => ({
                 url: `/sellers/${sellerId}/unban`,
                 method: 'POST',
@@ -74,10 +83,35 @@ export const useSellersApi = createApi({
         }),
 
         // stop seller
-        stopSeller: builder.mutation<any, { id: string| number }>({
+        stopSeller: builder.mutation<any, { id: string | number }>({
             query: ({ id }: { id: string }) => ({
                 url: `/sellers/${id}/stop`,
                 method: 'POST',
+            }),
+            invalidatesTags: ['useSellersApi'],
+        }),
+
+        // approve Seller Document
+        approveSellerDocument: builder.mutation<
+            any,
+            { sellerId: string | number; documentId: string | number }
+        >({
+            query: ({ sellerId, documentId }: { sellerId: string; documentId: string }) => ({
+                url: `/sellers/${sellerId}/verification-documents/${documentId}/approve`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['useSellersApi'],
+        }),
+
+        // reject Seller Document
+        rejectSellerDocument: builder.mutation<
+            any,
+            { sellerId: string | number; documentId: string | number; reason?: string }
+        >({
+            query: ({ sellerId, documentId, reason }) => ({
+                url: `/sellers/${sellerId}/verification-documents/${documentId}/reject`,
+                method: 'POST',
+                data: { reason },
             }),
             invalidatesTags: ['useSellersApi'],
         }),
@@ -86,11 +120,14 @@ export const useSellersApi = createApi({
 
 export const {
     useGetSellerStatsDataQuery,
-    useGetSellerByIdQuery,
+    useGetSellerDetailsByIdQuery,
     useGetAllSellerDataQuery,
     useApproveSellerMutation,
     useRejectSellerMutation,
     useBanSellerMutation,
     useUnBanSellerMutation,
     useStopSellerMutation,
+    useApproveSellerDocumentMutation,
+    useRejectSellerDocumentMutation,
+    useGetSellerAttachmentsQuery,
 } = useSellersApi;

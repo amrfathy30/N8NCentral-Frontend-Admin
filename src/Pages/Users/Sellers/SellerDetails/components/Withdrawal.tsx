@@ -1,16 +1,38 @@
+interface WithdrawalProps {
+    withdrawalRequests: any[];
+    t: any;
+    lang: string;
+}
 
-export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawalRequests: any[], t: any, lang: string }) {
+export default function Withdrawal({ withdrawalRequests, t, lang }: WithdrawalProps) {
+
+    if (!withdrawalRequests || withdrawalRequests.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center py-20 text-gray-400">
+                <p className="text-[16px] font-medium">{t("Common.NoDataFound")}</p>
+            </div>
+        );
+    }
+
+    const getStatusStyle = (status: string) => {
+        switch (status) {
+            case 'approved': return 'bg-green-100 text-greenDark border-green-200';
+            case 'rejected': return 'bg-red-100 text-red-600 border-red-200';
+            default: return 'bg-[#F6871333] text-[#F68713] border-orange-200';
+        }
+    };
+
     return (
         <div className="space-y-6">
             <h2 className="text-[20px] font-extrabold text-greenDark mb-4">
                 {t("AccountDetails.WithdrawalRequests")}
             </h2>
             <div className="space-y-4">
-                {withdrawalRequests.map((request) => (
+                {withdrawalRequests.map((request: any) => (
                     <div key={request.id} className="bg-white rounded-[18px] p-6 shadow-sm border border-gray-100 relative">
                         {/* Status Badge */}
                         <div className={`absolute top-6 ${lang === 'ar' ? 'left-6' : 'right-6'}`}>
-                            <span className="bg-[#F6871333] text-[#F68713] px-4 py-1.5 rounded-full text-[14px] font-semibold">
+                            <span className={`px-4 py-1.5 rounded-full text-[14px] font-semibold border ${getStatusStyle(request.status)}`}>
                                 {request.status}
                             </span>
                         </div>
@@ -22,7 +44,8 @@ export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawal
                                     {t("AccountDetails.Withdrawal.WithdrawalRequest")} #{request.id}
                                 </h3>
                                 <p className="text-greenDark text-[14px] font-semibold">
-                                    {t("AccountDetails.Withdrawal.RequestedOn")} {request.date}
+                                    {t("AccountDetails.Withdrawal.RequestedOn")}{" "}
+                                    {request.created_at ? new Date(request.created_at).toLocaleDateString() : "—"}
                                 </p>
                             </div>
 
@@ -30,15 +53,15 @@ export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawal
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-gray-50 pb-6">
                                 <div className="flex flex-col gap-1">
                                     <span className="text-[#606060] text-[14px] font-semibold">{t("AccountDetails.Withdrawal.AmountRequested")}</span>
-                                    <span className="text-[#010101] text-[17px] font-semibold">{request.amount}</span>
+                                    <span className="text-[#010101] text-[17px] font-semibold">{request.amount ?? "—"}</span>
                                 </div>
                                 <div className="flex flex-col gap-1">
                                     <span className="text-[#606060] text-[14px] font-semibold">{t("AccountDetails.Withdrawal.PaymentMethod")}</span>
-                                    <span className="text-[#010101] text-[17px] font-semibold">{request.method}</span>
+                                    <span className="text-[#010101] text-[17px] font-semibold">{request.payment_method ?? "—"}</span>
                                 </div>
                                 <div className="flex flex-col gap-1">
                                     <span className="text-[#606060] text-[14px] font-semibold">{t("AccountDetails.Withdrawal.AvailableBalance")}</span>
-                                    <span className="text-[#010101] text-[17px] font-semibold">{request.balance}</span>
+                                    <span className="text-[#010101] text-[17px] font-semibold">{request.available_balance ?? "—"}</span>
                                 </div>
                             </div>
 
@@ -55,5 +78,6 @@ export default function Withdrawal({ withdrawalRequests, t, lang }: { withdrawal
                     </div>
                 ))}
             </div>
-        </div>)
+        </div>
+    );
 }

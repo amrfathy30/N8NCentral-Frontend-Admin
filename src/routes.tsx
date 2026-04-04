@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useParams, useLocation, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams, Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 import i18n from './i18n/i18n';
 import NotFound from './Pages/NotFound/NotFound';
@@ -102,12 +102,6 @@ function LocaleWrapper() {
 }
 
 const AppRoutes = () => {
-    const { pathname } = useLocation();
-
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [pathname]);
-
     return (
         <>
             <>

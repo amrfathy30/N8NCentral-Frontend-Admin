@@ -2,12 +2,20 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar/Sidebar";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from "react";
 
 const Layout = () => {
   const location = useLocation();
   const { i18n } = useTranslation();
   const dir = i18n.dir();
   const lang = i18n.language;
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   const isLogin = location.pathname.includes(`/${lang}/admin/login`);
 
@@ -30,7 +38,7 @@ const Layout = () => {
           <Sidebar />
         </aside>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6 custom-scrollbar">
+        <main ref={mainRef} className="flex-1 overflow-y-auto p-4 lg:p-6 custom-scrollbar">
           <div className="max-w-[1600px] mx-auto">
             <Outlet />
           </div>

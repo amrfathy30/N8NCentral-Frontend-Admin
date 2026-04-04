@@ -24,7 +24,7 @@ interface UserDetailLayoutProps {
 export const InfoItem = ({ label, value }: { label: string; value: string }) => (
     <div className="flex items-center flex-wrap gap-1">
         <span className="text-greenDark text-[16px] font-bold flex items-center gap-2">
-            {label}
+            {label} : 
         </span>
         <span className="text-greenDark text-wrap text-[16px] font-semibold flex items-center gap-2">
             {value}

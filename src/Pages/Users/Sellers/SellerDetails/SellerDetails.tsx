@@ -6,19 +6,32 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import UserDetailLayout from "../../../../Components/Ui/UserDetailLayout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Overview from "./components/Overview";
 import Services from "./components/Services";
-import Sales from "./components/Sales";
 import Withdrawal from "./components/Withdrawal";
 import Verification from "./components/Verification";
 import Logs from "./components/Logs";
+import { useGetSellerDetailsByIdQuery } from "../../../../store/Api/users/Sellers/useSellersApi";
 
 export default function SellerDetails() {
     const { t, i18n } = useTranslation();
     const [activeTab, setActiveTab] = useState("overview");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const lang = i18n.language;
+
+    const { id: sellerId } = useParams();
+
+    const { data: sellerData, isLoading: isLoadingSellerData } = useGetSellerDetailsByIdQuery(
+        { seller_id: sellerId! },
+        { skip: !sellerId }
+    );
+
+    const overview = sellerData?.data?.overview;
+    const services = sellerData?.data?.services?.data ?? [];
+    const withdrawalRequests = sellerData?.data?.withdrawal_requests?.data ?? [];
+    const verificationDocuments = sellerData?.data?.verification_documents ?? [];
+    const activityLog = sellerData?.data?.activity_log?.data ?? [];
 
     const tabs = [
         { id: "overview", label: t("AccountDetails.Overview") },
@@ -30,19 +43,30 @@ export default function SellerDetails() {
 
     const serviceColumns = [
         {
-            field: "name", header: t("AccountDetails.ServiceName") || "الخدمة",
+            field: "name",
+            header: t("AccountDetails.ServiceName") || "الخدمة",
             body: (rowData: any) => (
-                <span className="block !w-[250px]">{rowData.name}</span>
+                <span className="block !w-[250px]">{rowData.name || rowData.title}</span>
             )
         },
         { field: "price", header: t("AccountDetails.Price") || "السعر" },
-        { field: "sales", header: t("AccountDetails.SalesCount") || "المبيعات" },
-        { field: "createdAt", header: t("AccountDetails.CreateDate") || "المبيعات" },
+        { field: "sales_count", header: t("AccountDetails.SalesCount") || "المبيعات" },
+        {
+            field: "created_at",
+            header: t("AccountDetails.CreateDate") || "التاريخ",
+            body: (rowData: any) => (
+                <span>
+                    {rowData.created_at.split("T")[0]}
+                </span>
+            )
+        },
         {
             field: "status",
             header: t("AccountDetails.Status") || "الحالة",
-            body: () => (
-                <span>مفعلة</span>
+            body: (rowData: any) => (
+                <span className={`px-2 py-1 rounded-full text-[11px] font-bold ${rowData.status === 'active' ? 'bg-green-100 text-greenDark' : rowData.status === 'draft' ? 'bg-yellow-100 text-yellow-600' : rowData.status === 'rejected' ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600'}`}>
+                    {t(`Merchants.${rowData.status}`)}
+                </span>
             )
         },
         {
@@ -64,66 +88,19 @@ export default function SellerDetails() {
                 </div>
             ),
         },
-
     ];
 
-    const servicesData = Array.from({ length: 2 }).map((_, i) => ({
-        id: i + 1,
-        name: "ربط WhatsApp مع Google Sheets",
-        price: "$45",
-        sales: "24",
-        status: "Active",
-        createdAt: "2024-05-10"
-    }));
-
-    const salesColumns = [
-        { field: "id", header: t("AccountDetails.OrderId") || "رقم الطلب" },
-        { field: "buyer", header: t("AccountDetails.Buyer") || "المشتري" },
-        { field: "amount", header: t("AccountDetails.Amount") || "المبلغ" },
-        { field: "date", header: t("AccountDetails.Date") || "التاريخ" },
-        { field: "status", header: t("AccountDetails.Status") || "الحالة" },
-    ];
-
-    const salesData = Array.from({ length: 10 }).map((_, i) => ({
-        id: `#ORD-${1000 + i}`,
-        buyer: "محمد أحمد",
-        amount: "$50",
-        date: "2024-05-10",
-        status: "مكتمل"
-    }));
-
-    const withdrawalRequests = [
-        {
-            id: "WD-2145",
-            date: "18 يونيو 2024",
-            amount: "$1,200",
-            method: t("AccountDetails.Withdrawal.BankTransfer"),
-            balance: "$1,450",
-            status: t("AccountDetails.Withdrawal.PendingReview")
-        },
-    ];
-
-    const verificationDocuments = [
-        {
-            id: "id-front",
-            title: t("AccountDetails.VerificationSection.IDFront"),
-            image: "/images/id-image.png",
-        },
-        {
-            id: "id-back",
-            title: t("AccountDetails.VerificationSection.IDBack"),
-            image: "/images/id-image.png",
-        },
-        {
-            id: "selfie",
-            title: t("AccountDetails.VerificationSection.SelfieWithID"),
-            image: "/images/id-image.png",
-        }
-    ];
+    if (isLoadingSellerData) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="w-8 h-8 border-4 border-greenDark border-t-transparent rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     return (
         <UserDetailLayout
-            userName="محمد علي"
+            userName={overview?.full_name ?? "—"}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             tabs={tabs}
@@ -131,15 +108,11 @@ export default function SellerDetails() {
         >
 
             {activeTab === "overview" && (
-                <Overview t={t} />
+                <Overview t={t} sellerData={sellerData} />
             )}
 
             {activeTab === "services" && (
-                <Services servicesData={servicesData} serviceColumns={serviceColumns} />
-            )}
-
-            {activeTab === "sales" && (
-                <Sales salesData={salesData} salesColumns={salesColumns} />
+                <Services servicesData={services} serviceColumns={serviceColumns} />
             )}
 
             {activeTab === "withdrawal" && (
@@ -147,11 +120,11 @@ export default function SellerDetails() {
             )}
 
             {activeTab === "verification" && (
-                <Verification verificationDocuments={verificationDocuments} t={t} />
+                <Verification verificationDocuments={verificationDocuments} t={t} sellerId={sellerId!} />
             )}
 
             {activeTab === "logs" && (
-                <Logs t={t} />
+                <Logs t={t} activityLog={activityLog} />
             )}
 
         </UserDetailLayout>
