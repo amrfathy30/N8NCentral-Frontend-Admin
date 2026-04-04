@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Drawer from "../../Components/Ui/Drawer";
 import Button from "../../Components/Ui/Button";
+import AddCategoryModal from "./AddCategoryModal";
 
 interface Category {
     id: number;
@@ -24,8 +26,14 @@ const mockCategories: Category[] = [
 export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerProps) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
+    const handleSaveCategory = (data: any) => {
+    console.log("Saving data...", data);
+    setIsAddModalOpen(false);
+};
     return (
+        <>
         <Drawer
             isOpen={isOpen}
             onClose={onClose}
@@ -66,12 +74,18 @@ export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerPr
                 <div className="pt-4 pb-6">
                     <Button
                         className="w-full !py-2"
-                        onClick={() => console.log("Add Category clicked")}
+                        onClick={() => setIsAddModalOpen(true)}
                     >
                         {t("Services.Categories.AddCategory")}
                     </Button>
                 </div>
             </div>
         </Drawer>
+        <AddCategoryModal 
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
+            onSave={handleSaveCategory} 
+        />
+            </>
     );
 }

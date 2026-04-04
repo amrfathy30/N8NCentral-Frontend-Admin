@@ -523,7 +523,15 @@
       "AddCategory": "إضافة تصنيف",
       "ViewServices": "عرض الخدمات",
       "DeleteCategory": "حذف التصنيف",
-      "Service": "خدمة"
+      "Service": "خدمة",
+      "CategoryTitle": "عنوان التصنيف",
+      "CategoryTitlePlaceholder": "أدخل عنوان التصنيف...",
+      "CategoryDescription": "الوصف",
+      "CategoryDescriptionPlaceholder": "اكتب وصفاً مختصراً للتصنيف...",
+      "CategoryImage": "صورة التصنيف",
+      "UploadImage": "اضغط لرفع صورة",
+      "Save": "حفظ",
+      "Cancel": "إلغاء"
     },
     "ServiceDetails": {
       "Title": "تفاصيل الخدمة",

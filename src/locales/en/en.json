@@ -519,7 +519,15 @@
       "AddCategory": "Add Category",
       "ViewServices": "View Services",
       "DeleteCategory": "Delete Category",
-      "Service": "Service"
+      "Service": "Service",
+      "CategoryTitle": "Category Title",
+      "CategoryTitlePlaceholder": "Enter category title...",
+      "CategoryDescription": "Description",
+      "CategoryDescriptionPlaceholder": "Write a brief description...",
+      "CategoryImage": "Category Image",
+      "UploadImage": "Click to upload image",
+      "Save": "Save",
+      "Cancel": "Cancel"
     },
     "ServiceDetails": {
       "Title": "Service Details",
