@@ -117,7 +117,12 @@
     "View": "View",
     "Stop": "Stop",
     "ConfirmStopTitle": "Confirm Temporary Stop",
-    "Ban": "Ban"
+    "ConfirmStopMessage": "Are you sure you want to temporarily suspend this account?",
+    "Ban": "Ban",
+    "ConfirmReactivateTitle": "Confirm Reactivation",
+    "ConfirmReactivateMessage": "Are you sure you want to reactivate this account?",
+    "ConfirmBanTitle": "Confirm Ban",
+    "ConfirmBanMessage": "Are you sure you want to permanently ban this account? This action cannot be undone."
   },
   "Permissions": {
     "PermissionsManagement": "Permissions Management",
@@ -377,6 +382,10 @@
     "Transactions": "Transactions",
     "Logs": "Logs",
     "StopAccount": "Stop Account",
+    "ConfirmStopTitle": "Confirm Temporary Suspension",
+    "ConfirmStopMessage": "Are you sure you want to temporarily suspend this user's account?",
+    "ConfirmBanTitle": "Confirm Permanent Ban",
+    "ConfirmBanMessage": "Are you sure you want to permanently ban this account?",
     "AddedServices": {
       "Title": "Added Services",
       "SearchPlaceholder": "Search for a service",
@@ -385,7 +394,9 @@
       "StatusInactive": "Inactive",
       "ExpectedCommission": "Expected Commission",
       "Stop": "Stop",
-      "ViewDetails": "View Details"
+      "ViewDetails": "View Details",
+      "ConfirmStopTitle": "Confirm Deactivation",
+      "ConfirmStopMessage": "Are you sure you want to stop this service?"
     },
     "Withdrawal": {
       "WithdrawalRequest": "Withdrawal Request #",
@@ -396,7 +407,11 @@
       "RejectRequest": "Reject Request",
       "ApproveRequest": "Approve Request",
       "BankTransfer": "Bank Transfer",
-      "PendingReview": "Pending Review"
+      "PendingReview": "Pending Review",
+      "ApproveTitle": "Approve Withdrawal Request",
+      "ApproveMessage": "Are you sure you want to approve this withdrawal request?",
+      "RejectTitle": "Reject Withdrawal Request",
+      "RejectMessage": "Are you sure you want to reject this request? This action cannot be undone."
     },
     "VerificationSection": {
       "Status": "Verification Status",
@@ -419,7 +434,9 @@
       "SelfieWithID": "Selfie with ID Card",
       "Approve": "Approve",
       "Reject": "Reject",
-      "StopAccount": "Stop Account"
+      "StopAccount": "Stop Account",
+      "ConfirmApprove": "Are you sure you want to approve {{docName}}?",
+      "ConfirmReject": "Are you sure you want to reject {{docName}}?"
     }
   },
   "Merchants": {
@@ -546,7 +563,9 @@
       "AddCategory": "Add Category",
       "ViewServices": "View Services",
       "DeleteCategory": "Delete Category",
-      "Service": "Service"
+      "Service": "Service",
+      "DeleteConfirmMessage": "Are you sure you want to delete ({{name}})?",
+      "DeleteWarning": "All services related to this category will be permanently deleted."
     },
     "ServiceDetails": {
       "Title": "Service Details",
@@ -588,6 +607,12 @@
         "Step4Desc": "Test the system and ensure success"
       },
       "Gold": "Gold"
+    },
+    "Messages": {
+      "StopTitle": "Service Suspension",
+      "StopConfirm": "Are you sure you want to temporarily suspend this service?",
+      "RejectTitle": "Confirm Rejection",
+      "RejectConfirm": "Are you sure you want to reject this service? The expert will be notified."
     }
   },
   "Analytics": {
@@ -687,7 +712,11 @@
       "AffiliateCommission": "Affiliate Commission",
       "Refund": "Refund",
       "Withdrawal": "Withdrawal",
-      "ViewDetails": "View Details"
+      "ViewDetails": "View Details",
+      "ApproveTitle": "Approve Withdrawal Request",
+      "ApproveMessage": "Are you sure you want to approve this withdrawal request?",
+      "RejectTitle": "Reject Withdrawal Request",
+      "RejectMessage": "Are you sure you want to reject this request? This action cannot be undone."
     },
     "Table": {
       "ID": "ID",

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,12 +13,17 @@ import {
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
 import Header from "../../../Components/Ui/Header";
+import ConfirmModal from "../../../Components/Ui/ConfirmModal";
 
 export default function Affiliates() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const dir = i18n.dir();
     const lang = i18n.language;
+
+    const [isStopModalOpen, setIsStopModalOpen] = useState(false);
+    const [isBanModalOpen, setIsBanModalOpen] = useState(false);
+    const [selectedAffiliate, setSelectedAffiliate] = useState<any>(null);
 
     const mockAffiliates = Array.from({ length: 6 }).map((_, i) => ({
         id: i + 1,
@@ -28,7 +34,14 @@ export default function Affiliates() {
         services: "12 خدمة",
         status: "verified",
     }));
-
+    const handleStopClick = (affiliate: any) => {
+        setSelectedAffiliate(affiliate);
+        setIsStopModalOpen(true);
+    };
+    const handleBanClick = (affiliate: any) => {
+        setSelectedAffiliate(affiliate);
+        setIsBanModalOpen(true);
+    };
     const columns = [
         {
             header: t("Affiliates.Name"),
@@ -79,10 +92,10 @@ export default function Affiliates() {
                     >
                         <Eye size={18} />
                     </button>
-                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors">
+                    <button onClick={() => handleStopClick(rowData)} className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors">
                         <Pause size={18} />
                     </button>
-                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors">
+                    <button onClick={() => handleBanClick(rowData)} className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors">
                         <Ban size={18} />
                     </button>
                 </div>
@@ -135,6 +148,30 @@ export default function Affiliates() {
                 columns={columns}
                 searchPlaceholder={t("Affiliates.SearchPlaceholder")}
                 filterOptions={filterOptions}
+            />
+            {/* stop modal */}
+            <ConfirmModal
+                isOpen={isStopModalOpen}
+                onClose={() => setIsStopModalOpen(false)}
+                onConfirm={() => {
+                    console.log("Stop API call for:", selectedAffiliate?.id);
+                    setIsStopModalOpen(false);
+                }}
+                title={t("Common.ConfirmStopTitle")}
+                message={t("Common.ConfirmStopMessage", { name: selectedAffiliate?.name })}
+                isStop={true}
+            />
+            {/* Ban modal */}
+            <ConfirmModal
+                isOpen={isBanModalOpen}
+                onClose={() => setIsBanModalOpen(false)}
+                onConfirm={() => {
+                    console.log("Ban API call for:", selectedAffiliate?.id);
+                    setIsBanModalOpen(false);
+                }}
+                title={t("Common.ConfirmBanTitle")}
+                message={t("Common.ConfirmBanMessage", { name: selectedAffiliate?.name })}
+                isDanger={true}
             />
         </div>
     );

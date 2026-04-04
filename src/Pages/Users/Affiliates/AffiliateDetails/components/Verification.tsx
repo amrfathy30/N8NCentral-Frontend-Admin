@@ -1,6 +1,27 @@
+import { useState } from "react";
 import { Shield } from "lucide-react";
+import ConfirmModal from "../../../../../Components/Ui/ConfirmModal";
 
 export default function Verification({verificationDocuments,t}: { verificationDocuments: any[]; t: any }) {
+    const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+    const [selectedDoc, setSelectedDoc] = useState<any>(null);
+    const handleApproveClick = (doc: any) => {
+        setSelectedDoc(doc);
+        setIsApproveModalOpen(true);
+    };
+    const handleConfirmApprove = () => {
+        console.log("Approving Document ID:", selectedDoc?.id);
+        setIsApproveModalOpen(false);
+    };
+    const handleRejectClick = (doc: any) => {
+        setSelectedDoc(doc);
+        setIsRejectModalOpen(true);
+    };
+    const handleConfirmReject = () => {
+        console.log("Rejecting Document ID:", selectedDoc?.id);
+        setIsRejectModalOpen(false);
+    };
     return (
         <div className="space-y-8">
             {/* Status Card */}
@@ -39,15 +60,34 @@ export default function Verification({verificationDocuments,t}: { verificationDo
                             <img src={doc.image} alt={doc.title} className="w-full h-[150px] object-center" />
                         </div>
                         <div className="flex gap-3">
-                            <button className="flex-1 bg-greenDark hover:bg-[#23663f] text-white py-3 rounded-[10px] font-semibold text-[16px] transition-all active:scale-[0.98]">
+                            <button onClick={() => handleApproveClick(doc)} className="flex-1 bg-greenDark hover:bg-[#23663f] text-white py-3 rounded-[10px] font-semibold text-[16px] transition-all active:scale-[0.98]">
                                 {t("AccountDetails.VerificationSection.Approve")}
                             </button>
-                            <button className="flex-1 bg-[#E7000B] hover:bg-[#b00707] text-white py-3 rounded-[10px] font-semibold text-[16px] transition-all active:scale-[0.98]">
+                            <button onClick={() => handleRejectClick(doc)} className="flex-1 bg-[#E7000B] hover:bg-[#b00707] text-white py-3 rounded-[10px] font-semibold text-[16px] transition-all active:scale-[0.98]">
                                 {t("AccountDetails.VerificationSection.Reject")}
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
+            {/* Approval Modal */}
+            <ConfirmModal
+                isOpen={isApproveModalOpen}
+                onClose={() => setIsApproveModalOpen(false)}
+                onConfirm={handleConfirmApprove}
+                title={t("AccountDetails.VerificationSection.Approve")}
+                message={t("AccountDetails.VerificationSection.ConfirmApprove", { docName: selectedDoc?.title })}
+                isDanger={false}
+            />
+
+            {/* Reject Modal */}
+            <ConfirmModal
+                isOpen={isRejectModalOpen}
+                onClose={() => setIsRejectModalOpen(false)}
+                onConfirm={handleConfirmReject}
+                title={t("AccountDetails.VerificationSection.Reject")}
+                message={t("AccountDetails.VerificationSection.ConfirmReject", { docName: selectedDoc?.title })}
+                isDanger={true}
+            />
         </div>)
 }

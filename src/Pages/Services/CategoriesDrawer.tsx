@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Drawer from "../../Components/Ui/Drawer";
 import Button from "../../Components/Ui/Button";
+import ConfirmModal from "../../Components/Ui/ConfirmModal";
 
 interface Category {
     id: number;
@@ -24,8 +26,20 @@ const mockCategories: Category[] = [
 export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerProps) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
+    const handleDeleteClick = (category: Category) => {
+        setSelectedCategory(category);
+        setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+        console.log("Deleting:", selectedCategory?.name);
+        setIsConfirmOpen(false);
+    };
     return (
+        <>
         <Drawer
             isOpen={isOpen}
             onClose={onClose}
@@ -54,7 +68,7 @@ export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerPr
                             </Button>
                             <Button
                                 className="flex-1 !bg-[#EF4444] !py-2 !text-[14px] !rounded-[4px] hover:!bg-red-600"
-                                onClick={() => console.log("Delete Category:", category.name)}
+                                onClick={() => handleDeleteClick(category)}
                             >
                                 {t("Services.Categories.DeleteCategory")}
                             </Button>
@@ -73,5 +87,15 @@ export default function CategoriesDrawer({ isOpen, onClose }: CategoriesDrawerPr
                 </div>
             </div>
         </Drawer>
+        <ConfirmModal
+                isOpen={isConfirmOpen}
+                onClose={() => setIsConfirmOpen(false)}
+                onConfirm={confirmDelete}
+                isDanger={true}
+                title={t("Services.Categories.DeleteCategory")} 
+                message={t("Services.Categories.DeleteConfirmMessage", { name: selectedCategory?.name })}
+                description={t("Services.Categories.DeleteWarning")}
+            />
+        </>
     );
 }

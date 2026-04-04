@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
     ChevronLeft,
@@ -342,6 +343,12 @@ export default function ServicesDetails() {
                                 {t("Services.Reactivate")}
                             </button>
                         )}
+                        <button className="flex-1 w-full py-2 rounded-full bg-greenDark text-white text-lg font-semibold hover:bg-greenDark/90 transition-all flex items-center justify-center gap-2">
+                            {t("Services.ServiceDetails.AcceptService")}
+                        </button>
+                        <button onClick={() => setIsRejectOpen(true)} className="flex-1 w-full py-2 rounded-full bg-red-600 text-white text-lg font-semibold hover:bg-red-700 transition-all flex items-center justify-center gap-2">
+                            {t("Services.ServiceDetails.RejectService")}
+                        </button>
                     </div>
                 </div>
 
@@ -358,6 +365,14 @@ export default function ServicesDetails() {
                     </a>
                 </div>
             </div>
+            <ConfirmModal 
+                isOpen={isRejectOpen}
+                onClose={() => setIsRejectOpen(false)}
+                onConfirm={() => { console.log("Service Rejected"); setIsRejectOpen(false); }}
+                isDanger={true}
+                title={t("Services.Messages.RejectTitle")}
+                message={t("Services.Messages.RejectConfirm")}
+            />
         </div>
     );
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,12 +13,17 @@ import {
 import StatsCard from "../../../Components/Ui/StatsCard";
 import DynamicTable from "../../../Components/Ui/DynamicTable";
 import Header from "../../../Components/Ui/Header";
+import ConfirmModal from "../../../Components/Ui/ConfirmModal";
 
 export default function Buyers() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const dir = i18n.dir();
     const lang = i18n.language;
+
+    const [isStopModalOpen, setIsStopModalOpen] = useState(false);
+    const [isBanModalOpen, setIsBanModalOpen] = useState(false);
+    const [selectedBuyerId, setSelectedBuyerId] = useState<number | null>(null);
 
     const mockBuyers = Array.from({ length: 7 }).map((_, i) => ({
         id: i + 1,
@@ -28,6 +34,16 @@ export default function Buyers() {
         disputes: "0",
         status: i % 3 === 0 ? "verified" : i % 3 === 1 ? "suspended" : "blocked",
     }));
+
+    const handleStopClick = (id: number) => {
+        setSelectedBuyerId(id);
+        setIsStopModalOpen(true);
+    };
+
+    const handleBanClick = (id: number) => {
+        setSelectedBuyerId(id);
+        setIsBanModalOpen(true);
+    };
 
     const columns = [
         {
@@ -79,8 +95,8 @@ export default function Buyers() {
                     >
                         <Eye size={18} />
                     </button>
-                    <button className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors"><Pause size={18} /></button>
-                    <button className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors"><Ban size={18} /></button>
+                    <button onClick={() => handleStopClick(rowData.id)} className="text-[#F68713] p-1 rounded-md hover:text-white hover:bg-[#F68713] transition-colors"><Pause size={18} /></button>
+                    <button onClick={() => handleBanClick(rowData.id)} className="text-[#D00808] p-1 rounded-md hover:text-white hover:bg-[#D00808] transition-colors"><Ban size={18} /></button>
                 </div>
             ),
         },
@@ -132,6 +148,30 @@ export default function Buyers() {
                 columns={columns}
                 searchPlaceholder={t("Buyers.SearchPlaceholder")}
                 filterOptions={filterOptions}
+            />
+            {/* Stop modal */}
+            <ConfirmModal
+                isOpen={isStopModalOpen}
+                onClose={() => setIsStopModalOpen(false)}
+                onConfirm={() => {
+                    console.log("Stopping buyer:", selectedBuyerId);
+                    setIsStopModalOpen(false);
+                }}
+                title={t("Common.ConfirmStopTitle")}
+                message={t("Common.ConfirmStopMessage")}
+                isStop={true}
+            />
+            {/* Ban modal */}
+            <ConfirmModal
+                isOpen={isBanModalOpen}
+                onClose={() => setIsBanModalOpen(false)}
+                onConfirm={() => {
+                    console.log("Banning buyer:", selectedBuyerId);
+                    setIsBanModalOpen(false);
+                }}
+                title={t("Common.ConfirmBanTitle")}
+                message={t("Common.ConfirmBanMessage")}
+                isDanger={true}
             />
         </div>
     );

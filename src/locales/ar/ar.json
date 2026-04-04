@@ -117,7 +117,12 @@
     "View": "عرض",
     "Stop": "إيقاف",
     "ConfirmStopTitle": "تأكيد الإيقاف المؤقت",
-    "Ban": "حظر"
+    "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف هذا الحساب مؤقتاً؟",
+    "Ban": "حظر",
+    "ConfirmReactivateTitle": "تأكيد إعادة التفعيل",
+    "ConfirmReactivateMessage": "هل أنت متأكد من رغبتك في إعادة تفعيل هذا الحساب؟",
+    "ConfirmBanTitle": "تأكيد الحظر",
+    "ConfirmBanMessage": "هل أنت متأكد من رغبتك في حظر هذا الحساب نهائياً؟ لا يمكن التراجع عن هذا الإجراء."
   },
   "Permissions": {
     "PermissionsManagement": "إدارة الصلاحيات",
@@ -378,6 +383,10 @@
     "Transactions": "المبيعات",
     "Logs": "السجل",
     "StopAccount": "وقف الحساب",
+    "ConfirmStopTitle": "تأكيد الإيقاف المؤقت",
+    "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف حساب هذا المستخدم مؤقتاً؟",
+    "ConfirmBanTitle": "تأكيد الحظر النهائي",
+    "ConfirmBanMessage":"هل أنت متأكد من رغبتك في حظر هذا الحساب نهائياً؟",
     "AddedServices": {
       "Title": "الخدمات المضافة",
       "SearchPlaceholder": "ابحث عن خدمة",
@@ -386,7 +395,9 @@
       "StatusInactive": "غير نشطة",
       "ExpectedCommission": "العمولة المتوقعة",
       "Stop": "إيقاف",
-      "ViewDetails": "عرض"
+      "ViewDetails": "عرض",
+      "ConfirmStopTitle": "تأكيد الإيقاف",
+      "ConfirmStopMessage": "هل أنت متأكد من رغبتك في إيقاف هذه الخدمة؟"
     },
     "Withdrawal": {
       "WithdrawalRequest": "طلب سحب رقم",
@@ -397,7 +408,11 @@
       "RejectRequest": "رفض الطلب",
       "ApproveRequest": "اعتماد الطلب",
       "BankTransfer": "تحويل بنكي",
-      "PendingReview": "بانتظار المراجعة"
+      "PendingReview": "بانتظار المراجعة",
+      "ApproveTitle": "اعتماد طلب السحب",
+      "ApproveMessage": "هل أنت متأكد من الموافقة على طلب السحب هذا؟",
+      "RejectTitle": "رفض طلب السحب",
+      "RejectMessage": "هل أنت متأكد من رفض طلب السحب هذا؟ لا يمكن التراجع عن هذا الإجراء."
     },
     "VerificationSection": {
       "Status": "حالة التوثيق",
@@ -419,8 +434,11 @@
       "SelfieWithID": "صورة سيلفي مع البطاقة",
       "Approve": "إعتماد",
       "Reject": "رفض",
-      "StopAccount": "وقف الحساب"
+      "StopAccount": "وقف الحساب",
+      "ConfirmApprove": "هل أنت متأكد من الموافقة على {{docName}}؟",
+      "ConfirmReject": "هل أنت متأكد من رفض {{docName}}؟"
     }
+    
   },
   "Merchants": {
     "Title": "التجار",
@@ -547,7 +565,9 @@
       "AddCategory": "إضافة تصنيف",
       "ViewServices": "عرض الخدمات",
       "DeleteCategory": "حذف التصنيف",
-      "Service": "خدمة"
+      "Service": "خدمة",
+      "DeleteConfirmMessage": "هل أنت متأكد من حذف قسم ({{name}})؟",
+      "DeleteWarning": "سيتم حذف جميع الخدمات المرتبطة بهذا القسم نهائياً."
     },
     "ServiceDetails": {
       "Title": "تفاصيل الخدمة",
@@ -588,6 +608,12 @@
       "ViewFullPage": "عرض الصفحة كاملة",
       "StopService": "وقف الخدمة",
       "Gold": "ذهبي"
+    },
+    "Messages": {
+      "StopTitle": "إيقاف الخدمه",
+      "StopConfirm": "هل أنت متأكد من رغبتك في إيقاف هذه الخدمة مؤقتاً؟",
+      "RejectTitle": "تأكيد الرفض",
+      "RejectConfirm": "هل أنت متأكد من رفض هذه الخدمة؟ سيتم إخطار الخبير بالقرار."
     }
   },
   "Analytics": {
@@ -687,7 +713,11 @@
       "AffiliateCommission": "عمولة أفلييت",
       "Refund": "استرداد",
       "Withdrawal": "سحب",
-      "ViewDetails": "عرض التفاصيل"
+      "ViewDetails": "عرض التفاصيل",
+      "ApproveTitle": "اعتماد طلب السحب",
+      "ApproveMessage": "هل أنت متأكد من الموافقة على طلب السحب هذا؟",
+      "RejectTitle": "رفض طلب السحب",
+      "RejectMessage": "هل أنت متأكد من رفض طلب السحب هذا؟ لا يمكن التراجع عن هذا الإجراء."
     },
     "Table": {
       "ID": "الرقم",
