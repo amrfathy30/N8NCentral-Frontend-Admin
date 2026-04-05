@@ -48,8 +48,6 @@ export default function ServicesDetails() {
     const [isExtraBanModalOpen, setIsExtraBanModalOpen] = useState(false);
     const [selectedExtraId, setSelectedExtraId] = useState<string | null>(null);
 
-    const currentLang = i18n.language as 'ar' | 'en';
-
     if (isLoading) {
         return <ServicesDetailsSkeleton />;
     }
@@ -193,7 +191,7 @@ export default function ServicesDetails() {
 
             {/* Header */}
             <div className="flex items-center justify-between">
-                <Header title={service?.title?.[currentLang] || service?.title} titleClassName="text-[24px] text-greenDark" />
+                <Header title={service?.category?.name} titleClassName="text-[24px] text-greenDark" />
                 <button
                     onClick={() => navigate(-1)}
                     className="flex items-center gap-2 text-[#505E56] hover:text-greenDark transition-colors font-bold"
@@ -209,11 +207,11 @@ export default function ServicesDetails() {
                 <div className="flex-1 space-y-6">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00BC7D1A] text-greenDark text-sm font-medium border border-[#00BC7D33]">
                         <Flash />
-                        {service?.category?.name}
+                        {t('Services.ServiceDetails.PremiumService')}
                     </div>
 
                     <h2 className="text-[24px] md:text-[40px] font-medium text-[#0A2F64] leading-tight line-clamp-2">
-                        {service?.display_title || service?.title?.ar || service?.title?.en || t("Services.ServiceDetails.FeaturedTitle")}
+                        {service?.title || service?.title?.ar || service?.title?.en}
                     </h2>
 
                     <p className="text-[#5C5C5C] text-[16px] md:text-[21px] leading-relaxed line-clamp-2">
@@ -384,7 +382,9 @@ export default function ServicesDetails() {
 
                 {/* download  */}
                 <div className="lg:col-span-1 flex items-center justify-center">
+                    {service?.is_file_downloadable && (
                     <a
+                        href={service?.attachments?.[0]?.url || "#"}
                         download
                         className="w-[180px] h-[180px] md:w-[220px] md:h-[220px] rounded-full bg-greenDark flex flex-col justify-center items-center text-white gap-3 shadow-lg hover:bg-greenDark/90 transition-all duration-300 cursor-pointer"
                     >
@@ -393,6 +393,7 @@ export default function ServicesDetails() {
                             <DownloadIcon />
                         </div>
                     </a>
+                    )}
                 </div>
             </div>
         </div>

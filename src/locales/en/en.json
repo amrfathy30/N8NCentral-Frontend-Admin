@@ -625,7 +625,8 @@
         "Step4Desc": "Test the system and ensure success"
       },
       "Gold": "Gold",
-      "Reviews": "Reviews"
+      "Reviews": "Reviews",
+      "PremiumService": "Premium Service"
     },
     "Messages": {
       "StopTitle": "Service Suspension",
