@@ -17,6 +17,7 @@ import Modal from "../../Components/Ui/Modal";
 import { Input } from "../../Components/Ui/Input";
 import { showToastSuccess, showToastError } from "../../Components/Helper/toastHelper";
 import { handleApiError } from "../../Components/Helper/handleApiError";
+import ServicesDetailsSkeleton from "../../Components/Skeleton/service/ServicesDetailsSkeleton";
 
 export default function ServicesDetails() {
     const { t, i18n } = useTranslation();
@@ -24,10 +25,10 @@ export default function ServicesDetails() {
     const { id } = useParams<{ id: string }>();
     const dir = i18n.dir();
 
-    const { data: serviceData } = useGetServiceByIdQuery({ service: id! }, { skip: !id });
+    const { data: serviceData, isLoading } = useGetServiceByIdQuery({ service: id! }, { skip: !id });
     const service = serviceData?.data;
-    const status = service?.status || "";
 
+    const status = service?.status || "";
     const isActive = status === "active";
     const isPending = status === "pending" || status === "pending_kyc" || status === "pending_review";
     const isRejected = status === "rejected" || status === "Rejected";
@@ -46,6 +47,9 @@ export default function ServicesDetails() {
 
     const currentLang = i18n.language as 'ar' | 'en';
 
+    if (isLoading) {
+        return <ServicesDetailsSkeleton />;
+    }
     const handleConfirmStop = async () => {
         try {
             const res = await stopService({ service: id! }).unwrap();
@@ -82,7 +86,6 @@ export default function ServicesDetails() {
             setIsReactivateModalOpen(false);
         } catch (error) { handleApiError(error); }
     };
-
     return (
         <div className="space-y-8 pb-10 p-" dir={dir}>
             {/* Modals */}
