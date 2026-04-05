@@ -99,21 +99,22 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, id, activeFilter
                             {t("Services.ServiceDetails.AdditionalServices")}
                         </h3>
                         <div className="space-y-3 bg-white rounded-[12px] p-4">
-                            {(service?.extras || [1, 2]).map((extra: any, idx: number) => (
-                                <div key={extra.id || idx} className="p-4 flex items-center justify-between flex-wrap gap-3">
-                                    <span className="text-greenDark font-bold text-[17px]">تنفيد بالأولوية</span>
-                                    <span className="text-greenDark font-semibold text-[17px]">$50</span>
+                            {service?.extras?.length > 0 ? (
+                                service.extras.map((extra: any) => (
+                                <div key={extra.id} className="p-4 flex items-center justify-between flex-wrap gap-3">
+                                    <span className="text-greenDark font-bold text-[17px]">{extra.title}</span>
+                                    <span className="text-greenDark font-semibold text-[17px]">${extra.price}</span>
                                     <span className="text-greenDark font-semibold text-[17px]">نشطة</span>
                                     <div className="flex items-center gap-2 md:gap-0">
                                         <button onClick={() => {
-                                            setSelectedExtraId(extra.id || idx);
+                                            setSelectedExtraId(extra.id);
                                             setIsExtraStopModalOpen(true);
                                         }}
                                             className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                             <Pause size={16} className="fill-[#F68713] text-[#F68713] " />
                                         </button>
                                         <button onClick={() => {
-                                            setSelectedExtraId(extra.id || idx.toString());
+                                            setSelectedExtraId(extra.id);
                                             setIsExtraBanModalOpen(true);
                                         }}
                                             className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
@@ -121,7 +122,10 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, id, activeFilter
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                            ))
+                            ) : (
+                                <p className="text-center text-gray-400 py-4">{t("Common.NoExtras")}</p>
+                            )}
                         </div>
                     </section>
 
