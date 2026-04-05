@@ -5,13 +5,14 @@ import Button from "../../Components/Ui/Button";
 import { Star, Ban, Pause } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
-import { showToastSuccess, showToastError } from "../../Components/Helper/toastHelper";
+import { showToastSuccess } from "../../Components/Helper/toastHelper";
 import { handleApiError } from "../../Components/Helper/handleApiError";
+import { useGetServiceByIdQuery } from "../../store/Api/Services/useServicesApi";
 
 interface ServiceDetailsDrawerProps {
     isOpen: boolean;
     onClose: () => void;
-    service: any;
+    id: any;
     activeFilter?: string;
     onStop?: (service: any) => void;
     onApprove?: (service: any) => void;
@@ -19,16 +20,18 @@ interface ServiceDetailsDrawerProps {
     onReactivate?: (service: any) => void;
 }
 
-export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeFilter, onStop, onApprove, onReject, onReactivate }: ServiceDetailsDrawerProps) {
+export default function ServiceDetailsDrawer({ isOpen, onClose, id, activeFilter, onStop, onApprove, onReject, onReactivate }: ServiceDetailsDrawerProps) {
     const { t, i18n } = useTranslation();
     const dir = i18n.dir();
     const lang = i18n.language
     const navigate = useNavigate()
     const [isStopModalOpen, setIsStopModalOpen] = useState(false);
-
     const [isExtraStopModalOpen, setIsExtraStopModalOpen] = useState(false);
     const [isExtraBanModalOpen, setIsExtraBanModalOpen] = useState(false);
     const [selectedExtraId, setSelectedExtraId] = useState<string | null>(null);
+
+    const { data: serviceData } = useGetServiceByIdQuery({ service: id! }, { skip: !id });
+    const service = serviceData?.data;
 
     const DetailItem = ({ label, value, className = "" }: { label: string; value: string; className?: string }) => (
         <div className={`flex items-center flex-wrap gap-2 ${className}`}>
@@ -37,24 +40,26 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
         </div>
     );
 
-        const handleConfirmExtraStop = async () => {
-            try {
-                if (!selectedExtraId) return;
-                showToastSuccess(t("Services.ExtraStopSuccess"));
-                setIsExtraStopModalOpen(false);
-            } catch (error) {
-                handleApiError(error);
-            }
-        };
-        const handleConfirmExtraBan = async () => {
-            try {
-                if (!selectedExtraId) return;
-                showToastSuccess(t("Services.ExtraBanSuccess"));
-                setIsExtraBanModalOpen(false);
-            } catch (error) {
-                handleApiError(error);
-            }
-        };
+    const handleConfirmExtraStop = async () => {
+        try {
+            if (!selectedExtraId) return;
+            showToastSuccess(t("Services.ExtraStopSuccess"));
+            setIsExtraStopModalOpen(false);
+        } catch (error) {
+            handleApiError(error);
+        }
+    };
+
+    const handleConfirmExtraBan = async () => {
+        try {
+            if (!selectedExtraId) return;
+            showToastSuccess(t("Services.ExtraBanSuccess"));
+            setIsExtraBanModalOpen(false);
+        } catch (error) {
+            handleApiError(error);
+        }
+    };
+
     return (
         <>
             <Drawer
@@ -73,17 +78,17 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                     {/* Service Details Grid */}
                     <section className="space-y-4">
                         <div className="grid grid-cols-2 gap-y-6 gap-x-4 bg-white rounded-[12px] p-4">
-                            <DetailItem 
-                                label={t("Services.ServiceDetails.Name")} 
-                                value={service?.display_title || (typeof service?.title === 'string' ? service?.title : (service?.title?.[lang] || service?.title?.ar || service?.title?.en)) || "----"} 
+                            <DetailItem
+                                label={t("Services.ServiceDetails.Name")}
+                                value={service?.display_title || (typeof service?.title === 'string' ? service?.title : (service?.title?.[lang] || service?.title?.ar || service?.title?.en)) || "----"}
                             />
                             <DetailItem label={t("Services.ServiceDetails.Merchant")} value={service?.seller?.name || service?.merchant?.name || service?.merchant || "شركة التقنية"} />
                             <DetailItem label={t("Services.ServiceDetails.Price")} value={service?.price} />
                             <DetailItem label={t("Services.ServiceDetails.LastSale")} value="منذ 8 ساعات" />
                             <DetailItem label={t("Services.ServiceDetails.Email")} value={service?.seller?.email} />
-                            <DetailItem 
-                                label={t("Services.ServiceDetails.Category")} 
-                                value={service?.category?.display_name || (typeof service?.category?.name === 'string' ? service?.category?.name : (service?.category?.name?.[lang] || service?.category?.name?.ar || service?.category?.name?.en)) || "----"} 
+                            <DetailItem
+                                label={t("Services.ServiceDetails.Category")}
+                                value={service?.category?.display_name || (typeof service?.category?.name === 'string' ? service?.category?.name : (service?.category?.name?.[lang] || service?.category?.name?.ar || service?.category?.name?.en)) || "----"}
                             />
                         </div>
                     </section>
@@ -101,17 +106,17 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                                     <span className="text-greenDark font-semibold text-[17px]">نشطة</span>
                                     <div className="flex items-center gap-2 md:gap-0">
                                         <button onClick={() => {
-                                                setSelectedExtraId(extra.id || idx);
-                                                setIsExtraStopModalOpen(true);
-                                            }}
-                                                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                                            setSelectedExtraId(extra.id || idx);
+                                            setIsExtraStopModalOpen(true);
+                                        }}
+                                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                             <Pause size={16} className="fill-[#F68713] text-[#F68713] " />
                                         </button>
-                                        <button  onClick={() => {
-                                                setSelectedExtraId(extra.id || idx.toString());
-                                                setIsExtraBanModalOpen(true);
-                                            }}
-                                           className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <button onClick={() => {
+                                            setSelectedExtraId(extra.id || idx.toString());
+                                            setIsExtraBanModalOpen(true);
+                                        }}
+                                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                             <Ban size={16} className="text-[#D00808]" />
                                         </button>
                                     </div>
@@ -142,9 +147,7 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                                 </div>
                                 <div className="flex gap-2 mt-2">
                                     {service?.tools_used?.map((tool: any, idx: number) => (
-                                    <span key={idx} className="bg-[#D0FAE5] text-greenDark px-3 py-1 rounded-full text-[12px]">{tool}</span>
-                                    // <span className="bg-[#DBEAFE] text-[#1447E6] px-3 py-1 rounded-full text-[12px]">Make.com</span>
-                                    // <span className="bg-[#F3E8FF] text-[#8200DB] px-3 py-1 rounded-full text-[12px]">Zapier</span>
+                                        <span key={idx} className="bg-[#D0FAE5] text-greenDark px-3 py-1 rounded-full text-[12px]">{tool}</span>
                                     ))}
                                 </div>
                             </div>
@@ -212,7 +215,8 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                         )}
                     </div>
                 </div>
-            </Drawer >
+            </Drawer>
+
             <ConfirmModal
                 isOpen={isStopModalOpen}
                 onClose={() => setIsStopModalOpen(false)}
@@ -224,6 +228,7 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                 title={t("Services.Messages.StopTitle")}
                 message={t("Services.Messages.StopConfirm")}
             />
+
             <ConfirmModal
                 isOpen={isExtraStopModalOpen}
                 onClose={() => setIsExtraStopModalOpen(false)}
@@ -232,6 +237,7 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                 message={t("Services.ConfirmExtraStopMessage")}
                 isStop={true}
             />
+
             <ConfirmModal
                 isOpen={isExtraBanModalOpen}
                 onClose={() => setIsExtraBanModalOpen(false)}

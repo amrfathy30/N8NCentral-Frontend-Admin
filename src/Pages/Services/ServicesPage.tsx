@@ -195,7 +195,8 @@ export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [approveService, { isLoading: isApproving }] = useApproveServiceMutation();
-  const [rejectService, { isLoading: isRejecting }] = useRejectServiceMutation();
+
+
   const [ReactivateService, { isLoading: isReactivating }] = useReactivateServiceMutation();
   const [stopService, { isLoading: isStopping }] = useStopServiceMutation();
 
@@ -206,6 +207,8 @@ export default function ServicesPage() {
   };
 
   const { data: statsData, isLoading: isStatsLoading } = useGetServicesStatsDataQuery();
+  const [rejectService, { isLoading: isRejecting }] = useRejectServiceMutation();
+
   const { data: categoriesData } = useGetAllServicesCategoriesQuery({ per_page: 100 });
 
   const { data: servicesData, isLoading: isServicesLoading, isFetching: isServicesFetching } = useGetAllServicesDataQuery({
@@ -317,7 +320,7 @@ export default function ServicesPage() {
     }
     try {
       const res = await rejectService({ service: selectedService.id, reason: rejectReason }).unwrap();
-      showToastSuccess(res.message || t("Services.RejectSuccess") || "تم رفض الخدمة بنجاح");
+      showToastSuccess(res.message || t("Services.RejectSuccess"));
       setIsRejectModalOpen(false);
       setSelectedService(null);
       setRejectReason({ ar: "", en: "" });
@@ -497,7 +500,7 @@ export default function ServicesPage() {
       <ServiceDetailsDrawer
         isOpen={isServiceDetailsDrawerOpen}
         onClose={() => setIsServiceDetailsDrawerOpen(false)}
-        service={selectedService}
+        id={selectedService?.id}
         activeFilter={activeFilter}
         onStop={handleStopClick}
         onApprove={handleApproveClick}

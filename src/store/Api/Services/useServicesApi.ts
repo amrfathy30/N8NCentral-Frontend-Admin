@@ -25,7 +25,7 @@ export const useServicesApi = createApi({
             }),
             providesTags: ['useServicesApi'],
         }),
-        
+
         // get services Stats
         getServicesStatsData: builder.query<any, void>({
             query: () => ({
@@ -46,14 +46,20 @@ export const useServicesApi = createApi({
 
         // reject data
         rejectService: builder.mutation({
-            query: ({ service, reason }: { service: string, reason?: { ar: string; en: string } }) => ({
+            query: ({
+                service,
+                reason,
+            }: {
+                service: string;
+                reason?: { ar: string; en: string };
+            }) => ({
                 url: `/services/${service}/reject`,
                 method: 'POST',
-                data: { reason }
+                data: { reason },
             }),
             invalidatesTags: ['useServicesApi'],
         }),
-        
+
         // stop data
         stopService: builder.mutation({
             query: ({ service }: { service: string }) => ({
