@@ -5,6 +5,8 @@ import Button from "../../Components/Ui/Button";
 import { Star, Ban, Pause } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../Components/Ui/ConfirmModal";
+import { showToastSuccess, showToastError } from "../../Components/Helper/toastHelper";
+import { handleApiError } from "../../Components/Helper/handleApiError";
 
 interface ServiceDetailsDrawerProps {
     isOpen: boolean;
@@ -24,6 +26,10 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
     const navigate = useNavigate()
     const [isStopModalOpen, setIsStopModalOpen] = useState(false);
 
+    const [isExtraStopModalOpen, setIsExtraStopModalOpen] = useState(false);
+    const [isExtraBanModalOpen, setIsExtraBanModalOpen] = useState(false);
+    const [selectedExtraId, setSelectedExtraId] = useState<string | null>(null);
+
     const DetailItem = ({ label, value, className = "" }: { label: string; value: string; className?: string }) => (
         <div className={`flex items-center flex-wrap gap-2 ${className}`}>
             <span className="text-greenDark text-[14px] font-bold">{label}</span>
@@ -31,6 +37,24 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
         </div>
     );
 
+        const handleConfirmExtraStop = async () => {
+            try {
+                if (!selectedExtraId) return;
+                showToastSuccess(t("Services.ExtraStopSuccess"));
+                setIsExtraStopModalOpen(false);
+            } catch (error) {
+                handleApiError(error);
+            }
+        };
+        const handleConfirmExtraBan = async () => {
+            try {
+                if (!selectedExtraId) return;
+                showToastSuccess(t("Services.ExtraBanSuccess"));
+                setIsExtraBanModalOpen(false);
+            } catch (error) {
+                handleApiError(error);
+            }
+        };
     return (
         <>
             <Drawer
@@ -70,16 +94,24 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                             {t("Services.ServiceDetails.AdditionalServices")}
                         </h3>
                         <div className="space-y-3 bg-white rounded-[12px] p-4">
-                            {[1, 2, 3].map((_, idx) => (
-                                <div key={idx} className="p-4 flex items-center justify-between flex-wrap gap-3">
+                            {(service?.extras || [1, 2]).map((extra: any, idx: number) => (
+                                <div key={extra.id || idx} className="p-4 flex items-center justify-between flex-wrap gap-3">
                                     <span className="text-greenDark font-bold text-[17px]">تنفيد بالأولوية</span>
                                     <span className="text-greenDark font-semibold text-[17px]">$50</span>
                                     <span className="text-greenDark font-semibold text-[17px]">نشطة</span>
                                     <div className="flex items-center gap-2 md:gap-0">
-                                        <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <button onClick={() => {
+                                                setSelectedExtraId(extra.id || idx);
+                                                setIsExtraStopModalOpen(true);
+                                            }}
+                                                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                             <Pause size={16} className="fill-[#F68713] text-[#F68713] " />
                                         </button>
-                                        <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <button  onClick={() => {
+                                                setSelectedExtraId(extra.id || idx.toString());
+                                                setIsExtraBanModalOpen(true);
+                                            }}
+                                           className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                             <Ban size={16} className="text-[#D00808]" />
                                         </button>
                                     </div>
@@ -191,6 +223,22 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                 isDanger={true}
                 title={t("Services.Messages.StopTitle")}
                 message={t("Services.Messages.StopConfirm")}
+            />
+            <ConfirmModal
+                isOpen={isExtraStopModalOpen}
+                onClose={() => setIsExtraStopModalOpen(false)}
+                onConfirm={handleConfirmExtraStop}
+                title={t("Common.ConfirmStopTitle")}
+                message={t("Services.ConfirmExtraStopMessage")}
+                isStop={true}
+            />
+            <ConfirmModal
+                isOpen={isExtraBanModalOpen}
+                onClose={() => setIsExtraBanModalOpen(false)}
+                onConfirm={handleConfirmExtraBan}
+                title={t("Common.ConfirmBanTitle")}
+                message={t("Services.ConfirmExtraBanMessage")}
+                isDanger={true}
             />
         </>
     );

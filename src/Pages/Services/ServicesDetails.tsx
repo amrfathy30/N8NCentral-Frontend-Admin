@@ -44,6 +44,9 @@ export default function ServicesDetails() {
     const [stopService, { isLoading: isStopping }] = useStopServiceMutation();
     const [reactivateService, { isLoading: isReactivating }] = useReactivateServiceMutation();
 
+    const [isExtraStopModalOpen, setIsExtraStopModalOpen] = useState(false);
+    const [isExtraBanModalOpen, setIsExtraBanModalOpen] = useState(false);
+    const [selectedExtraId, setSelectedExtraId] = useState<string | null>(null);
 
     const currentLang = i18n.language as 'ar' | 'en';
 
@@ -85,6 +88,24 @@ export default function ServicesDetails() {
             showToastSuccess(res.message || t("Services.UnBanSuccess"));
             setIsReactivateModalOpen(false);
         } catch (error) { handleApiError(error); }
+    };
+    const handleConfirmExtraStop = async () => {
+        try {
+            if (!selectedExtraId) return;
+            showToastSuccess(t("Services.ExtraStopSuccess"));
+            setIsExtraStopModalOpen(false);
+        } catch (error) {
+            handleApiError(error);
+        }
+    };
+    const handleConfirmExtraBan = async () => {
+        try {
+            if (!selectedExtraId) return;
+            showToastSuccess(t("Services.ExtraBanSuccess"));
+            setIsExtraBanModalOpen(false);
+        } catch (error) {
+            handleApiError(error);
+        }
     };
     return (
         <div className="space-y-8 pb-10 p-" dir={dir}>
@@ -153,6 +174,22 @@ export default function ServicesDetails() {
                     </div>
                 </div>
             </Modal>
+            <ConfirmModal
+                isOpen={isExtraStopModalOpen}
+                onClose={() => setIsExtraStopModalOpen(false)}
+                onConfirm={handleConfirmExtraStop}
+                title={t("Common.ConfirmStopTitle")}
+                message={t("Services.ConfirmExtraStopMessage")}
+                isStop={true}
+            />
+            <ConfirmModal
+                isOpen={isExtraBanModalOpen}
+                onClose={() => setIsExtraBanModalOpen(false)}
+                onConfirm={handleConfirmExtraBan}
+                title={t("Common.ConfirmBanTitle")}
+                message={t("Services.ConfirmExtraBanMessage")}
+                isDanger={true}
+            />
 
             {/* Header */}
             <div className="flex items-center justify-between">
@@ -239,10 +276,18 @@ export default function ServicesDetails() {
                                 <span className="text-greenDark font-semibold text-[17px]">{extra.price}$</span>
                                 {/* <span className="text-greenDark font-semibold text-[17px]">{svc.status}</span> */}
                                 <div className="flex items-center gap-2 md:gap-0">
-                                    <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <button onClick={() => {
+                                                setSelectedExtraId(extra.id);
+                                                setIsExtraStopModalOpen(true);
+                                            }}
+                                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                         <Pause size={16} className="fill-[#F68713] text-[#F68713] " />
                                     </button>
-                                    <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <button onClick={() => {
+                                                setSelectedExtraId(extra.id);
+                                                setIsExtraBanModalOpen(true);
+                                            }}
+                                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                         <Ban size={16} className="text-[#D00808]" />
                                     </button>
                                 </div>

@@ -632,7 +632,11 @@
       "StopConfirm": "Are you sure you want to temporarily suspend this service?",
       "RejectTitle": "Confirm Rejection",
       "RejectConfirm": "Are you sure you want to reject this service? The expert will be notified."
-    }
+    },
+    "ConfirmExtraStopMessage": "Are you sure you want to pause this extra service?",
+    "ConfirmExtraBanMessage": "Are you sure you want to ban this extra service? This action cannot be undone.",
+    "ExtraStopSuccess": "Extra service paused successfully",
+    "ExtraBanSuccess": "Extra service banned successfully"
   },
   "Analytics": {
     "Title": "Analytics Dashboard",
