@@ -54,9 +54,9 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                                 value={service?.display_title || (typeof service?.title === 'string' ? service?.title : (service?.title?.[lang] || service?.title?.ar || service?.title?.en)) || "----"} 
                             />
                             <DetailItem label={t("Services.ServiceDetails.Merchant")} value={service?.seller?.name || service?.merchant?.name || service?.merchant || "شركة التقنية"} />
-                            <DetailItem label={t("Services.ServiceDetails.Price")} value={service?.price ? `$${service.price}` : "$125"} />
+                            <DetailItem label={t("Services.ServiceDetails.Price")} value={service?.price} />
                             <DetailItem label={t("Services.ServiceDetails.LastSale")} value="منذ 8 ساعات" />
-                            <DetailItem label={t("Services.ServiceDetails.Email")} value={service?.seller?.email || service?.merchant?.email || "abc@123.com"} />
+                            <DetailItem label={t("Services.ServiceDetails.Email")} value={service?.seller?.email} />
                             <DetailItem 
                                 label={t("Services.ServiceDetails.Category")} 
                                 value={service?.category?.display_name || (typeof service?.category?.name === 'string' ? service?.category?.name : (service?.category?.name?.[lang] || service?.category?.name?.ar || service?.category?.name?.en)) || "----"} 
@@ -98,18 +98,22 @@ export default function ServiceDetailsDrawer({ isOpen, onClose, service, activeF
                             <div className="flex flex-col items-start gap-3">
 
                                 <div className="text-start">
-                                    <h4 className="text-greenDark font-semibold text-[20px]">أحمد الزهراني</h4>
+                                    <h4 className="text-greenDark font-semibold text-[20px]">
+                                        {`${service?.seller?.first_name}`}
+                                    </h4>
                                     <div className="flex items-center justify-center gap-1 mt-1">
                                         <Star size={14} className="text-greenDark fill-greenDark" />
                                         <span className="text-greenDark font-semibold text-[14px]">4.8</span>
                                         (
-                                        <span className="text-[#6A7282] text-[14px]">342 تقييم</span>)
+                                        <span className="text-[#6A7282] text-[14px]">{service?.reviews_count} {t("Services.ServiceDetails.Reviews")}</span>)
                                     </div>
                                 </div>
                                 <div className="flex gap-2 mt-2">
-                                    <span className="bg-[#D0FAE5] text-greenDark px-3 py-1 rounded-full text-[12px]">n8n</span>
-                                    <span className="bg-[#DBEAFE] text-[#1447E6] px-3 py-1 rounded-full text-[12px]">Make.com</span>
-                                    <span className="bg-[#F3E8FF] text-[#8200DB] px-3 py-1 rounded-full text-[12px]">Zapier</span>
+                                    {service?.tools_used?.map((tool: any, idx: number) => (
+                                    <span key={idx} className="bg-[#D0FAE5] text-greenDark px-3 py-1 rounded-full text-[12px]">{tool}</span>
+                                    // <span className="bg-[#DBEAFE] text-[#1447E6] px-3 py-1 rounded-full text-[12px]">Make.com</span>
+                                    // <span className="bg-[#F3E8FF] text-[#8200DB] px-3 py-1 rounded-full text-[12px]">Zapier</span>
+                                    ))}
                                 </div>
                             </div>
                             <Button className="mt-2 !w-fit !py-2 !px-4 !text-[14px] !font-semibold !rounded-full !text-white">

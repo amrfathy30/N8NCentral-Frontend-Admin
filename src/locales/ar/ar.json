@@ -625,7 +625,8 @@
       "EditService": "تعديل الخدمة",
       "ViewFullPage": "عرض الصفحة كاملة",
       "StopService": "وقف الخدمة",
-      "Gold": "ذهبي"
+      "Gold": "ذهبي",
+      "Reviews": "تقييم"
     },
     "Messages": {
       "StopTitle": "إيقاف الخدمه",

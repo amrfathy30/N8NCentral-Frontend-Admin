@@ -43,6 +43,9 @@ export default function ServicesDetails() {
     const [stopService, { isLoading: isStopping }] = useStopServiceMutation();
     const [reactivateService, { isLoading: isReactivating }] = useReactivateServiceMutation();
 
+
+    const currentLang = i18n.language as 'ar' | 'en';
+
     const handleConfirmStop = async () => {
         try {
             const res = await stopService({ service: id! }).unwrap();
@@ -79,19 +82,6 @@ export default function ServicesDetails() {
             setIsReactivateModalOpen(false);
         } catch (error) { handleApiError(error); }
     };
-
-    const additionalServices = [
-        { name: t("Services.ServiceDetails.PriorityExecution"), price: "55$", status: t("Common.Active") },
-        { name: t("Services.ServiceDetails.PriorityExecution"), price: "33$", status: t("Common.Active") },
-        { name: t("Services.ServiceDetails.PriorityExecution"), price: "11$", status: t("Common.Active") },
-    ];
-
-    const steps = [
-        { id: 1, title: t("Services.ServiceDetails.Steps.Step1Title"), desc: t("Services.ServiceDetails.Steps.Step1Desc") },
-        { id: 2, title: t("Services.ServiceDetails.Steps.Step2Title"), desc: t("Services.ServiceDetails.Steps.Step2Desc") },
-        { id: 3, title: t("Services.ServiceDetails.Steps.Step3Title"), desc: t("Services.ServiceDetails.Steps.Step3Desc") },
-        { id: 4, title: t("Services.ServiceDetails.Steps.Step4Title"), desc: t("Services.ServiceDetails.Steps.Step4Desc") },
-    ];
 
     return (
         <div className="space-y-8 pb-10 p-" dir={dir}>
@@ -163,7 +153,7 @@ export default function ServicesDetails() {
 
             {/* Header */}
             <div className="flex items-center justify-between">
-                <Header title={t("Services.ServiceDetails.HeaderTitle")} titleClassName="text-[24px] text-greenDark" />
+                <Header title={service?.title?.[currentLang] || service?.title} titleClassName="text-[24px] text-greenDark" />
                 <button
                     onClick={() => navigate(-1)}
                     className="flex items-center gap-2 text-[#505E56] hover:text-greenDark transition-colors font-bold"
@@ -179,7 +169,7 @@ export default function ServicesDetails() {
                 <div className="flex-1 space-y-6">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00BC7D1A] text-greenDark text-sm font-medium border border-[#00BC7D33]">
                         <Flash />
-                        {t("Services.FeaturedServices")}
+                        {service?.category?.name}
                     </div>
 
                     <h2 className="text-[24px] md:text-[40px] font-medium text-[#0A2F64] leading-tight line-clamp-2">
@@ -187,7 +177,7 @@ export default function ServicesDetails() {
                     </h2>
 
                     <p className="text-[#5C5C5C] text-[16px] md:text-[21px] leading-relaxed line-clamp-2">
-                        {service?.description?.ar || service?.description?.en || t("Services.ServiceDetails.FeaturedDescription")}
+                        {service?.short_description || service?.short_description?.ar || service?.short_description?.en || t("Services.ServiceDetails.FeaturedDescription")}
                     </p>
 
                     <div className="flex items-center flex-wrap gap-4 md:gap-16 pt-4">
@@ -196,7 +186,7 @@ export default function ServicesDetails() {
                                 <Star className="text-greenDark" />
                             </div>
                             <div>
-                                <div className="font-semibold text-greenDark">{service?.rating ?? "4.8"}</div>
+                                <div className="font-semibold text-greenDark">{service?.rating}</div>
                                 <div className="text-[14px] text-black">{t("Services.ServiceDetails.Rating")}</div>
                             </div>
                         </div>
@@ -206,7 +196,7 @@ export default function ServicesDetails() {
                                 <Users size={20} />
                             </div>
                             <div>
-                                <div className="font-semibold text-greenDark">{service?.sales_count ?? "0"}</div>
+                                <div className="font-semibold text-greenDark">{service?.sales_count}</div>
                                 <div className="text-[14px] text-black">{t("Services.ServiceDetails.Buyer")}</div>
                             </div>
                         </div>
@@ -216,7 +206,7 @@ export default function ServicesDetails() {
                                 <Clock size={20} />
                             </div>
                             <div>
-                                <div className="font-semibold text-greenDark">2-3 {t("Services.ServiceDetails.Days")}</div>
+                                <div className="font-semibold text-greenDark">{service?.delivery_time}</div>
                                 <div className="text-[14px] text-black">{t("Services.ServiceDetails.DeliveryTime")}</div>
                             </div>
                         </div>
@@ -240,11 +230,11 @@ export default function ServicesDetails() {
                 <div className="space-y-4">
                     <h3 className="text-lg font-bold text-greenDark">{t("Services.ServiceDetails.AdditionalServices")}</h3>
                     <div className="bg-white md:h-full p-4 rounded-[12px] flex flex-col gap-3">
-                        {additionalServices.map((svc, idx) => (
-                            <div key={idx} className="flex items-center justify-between flex-wrap gap-4">
-                                <span className="text-greenDark font-bold text-[17px]">{svc.name}</span>
-                                <span className="text-greenDark font-semibold text-[17px]">{svc.price}</span>
-                                <span className="text-greenDark font-semibold text-[17px]">{svc.status}</span>
+                        {(service?.extras || []).map((extra: any) => (
+                            <div key={extra.id } className="flex items-center justify-between flex-wrap gap-4">
+                                <span className="text-greenDark font-bold text-[17px]">{extra.title}</span>
+                                <span className="text-greenDark font-semibold text-[17px]">{extra.price}$</span>
+                                {/* <span className="text-greenDark font-semibold text-[17px]">{svc.status}</span> */}
                                 <div className="flex items-center gap-2 md:gap-0">
                                     <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
                                         <Pause size={16} className="fill-[#F68713] text-[#F68713] " />
@@ -262,10 +252,9 @@ export default function ServicesDetails() {
                 <div className="space-y-4">
                     <h3 className="text-lg font-bold text-greenDark">{t("Services.ServiceDetails.ToolsAndIntegrations")}</h3>
                     <div className="bg-white md:h-full p-4 rounded-[12px] flex flex-wrap gap-3 justify-center items-center">
-                        <span className="bg-[#FFE2E2] text-[#C10007] px-3 py-1 rounded-full text-[16px] font-medium">n8n</span>
-                        <span className="bg-[#DBEAFE] text-[#1447E6] px-3 py-1 rounded-full text-[16px] font-medium">Google Sheets</span>
-                        <span className="bg-[#F3E8FF] text-[#8200DB] px-3 py-1 rounded-full text-[16px] font-medium">Webhooks</span>
-                        <span className="bg-[#DCFCE7] text-[#008236] px-3 py-1 rounded-full text-[16px] font-medium">WhatsApp Business API</span>
+                        {service?.tools_used?.map((tool: any, idx: number) => (
+                        <span key={idx} className="bg-[#DCFCE7] text-[#008236] px-3 py-1 rounded-full text-[16px] font-medium">{tool}</span> 
+                        ))}
                     </div>
                 </div>
             </div>
@@ -274,7 +263,7 @@ export default function ServicesDetails() {
             <div className="space-y-4">
                 <h3 className="text-lg font-bold text-greenDark">{t("Services.ServiceDetails.ServiceDescription")}</h3>
                 <p className="text-[#364153] leading-loose text-[16px] bg-white rounded-[24px] p-4">
-                    {service?.description?.ar || service?.description?.en || t("Services.ServiceDetails.DetailedDescription")}
+                    {service?.description || service?.description?.ar || service?.description?.en}
                 </p>
             </div>
 
@@ -282,14 +271,14 @@ export default function ServicesDetails() {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-8">
                 <div className="lg:col-span-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                        {steps.map((step) => (
+                        {(service?.steps || []).map((step: any, index: number) => (
                             <div key={step.id} className="bg-[#ECFDF5] p-5 rounded-[10px] flex items-start gap-4">
                                 <div className="w-10 h-10 rounded-full bg-greenDark text-white flex items-center justify-center flex-shrink-0 font-bold">
-                                    {step.id}
+                                    {index + 1}
                                 </div>
                                 <div className="space-y-1">
                                     <h4 className="font-semibold text-greenDark">{step.title}</h4>
-                                    <p className="text-[#4A5565] leading-relaxed">{step.desc}</p>
+                                    <p className="text-[#4A5565] leading-relaxed">{step.description}</p>
                                 </div>
                             </div>
                         ))}
